@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.tanlifei.framework">
+          package="com.ytd.framework">
 
 
     <!-- 网络相关权限 -->
@@ -23,7 +23,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
-        android:name=".main.ui.BaseApplication"
+        android:name="com.ytd.framework.main.ui.BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/app_logo"
         android:label="@string/app_name"
@@ -32,16 +32,16 @@
 
         <!-- —————————————————————————————————— 准备工作  —————————————————————————————————————— -->
         <activity
-            android:name=".main.ui.activity.SplashActivity_"
+            android:name="com.ytd.framework.main.ui.activity.SplashActivity_"
             android:largeHeap="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".main.ui.activity.GuideActivity_"/>
+        <activity android:name="com.ytd.framework.main.ui.activity.GuideActivity_"/>
         <activity
-            android:name=".main.ui.activity.HomeActivity_"/>
+            android:name="com.ytd.framework.main.ui.activity.HomeActivity_"/>
 
 
         <!-- 当前应用分辨率参考标准 -->
@@ -52,13 +52,13 @@
             android:name="design_height"
             android:value="1920"/>
 
-        <service android:name=".main.ui.service.CheckAppUpdateService"/><!--检查app 升级服务-->
-        <service android:name=".main.ui.service.AppDownloadService"/><!--下载app servce-->
+        <service android:name="com.ytd.framework.main.ui.service.CheckAppUpdateService"/><!--检查app 升级服务-->
+        <service android:name="com.ytd.framework.main.ui.service.AppDownloadService"/><!--下载app servce-->
         <activity
-            android:name=".main.ui.activity.AppServiceActivity_"
+            android:name="com.ytd.framework.main.ui.activity.AppServiceActivity_"
             android:theme="@style/AppUpdateDialogStyle"/>
 
-        <receiver android:name=".main.ui.service.AppUpdateBroadcastReceiver">
+        <receiver android:name="com.ytd.framework.main.ui.service.AppUpdateBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.com.tanlifei.framework.broadcastreceiver.action.APPUPDATEACTION"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -69,61 +69,16 @@
 
         <!-- —————————————————————————————————— Photo  —————————————————————————————————————— -->
 
-        <activity android:name="com.tanlifei.common.ui.activity.photoview.BaseBrowsePhotoActivity"/>
-        <activity android:name="com.tanlifei.common.ui.activity.photoview.BaseDeletePhotoActivity"/>
+        <activity android:name="com.ytd.common.ui.activity.photoview.BaseBrowsePhotoActivity"/>
+        <activity android:name="com.ytd.common.ui.activity.photoview.BaseDeletePhotoActivity"/>
 
-
-        <!-- —————————————————————————————————— 示例  —————————————————————————————————————— -->
-
-
-        <activity android:name="com.tanlifei.exemple.main.ExempleHomeActivity_"/>
-        <!-- 所有公用的ActionBar -->
-        <activity android:name="com.tanlifei.exemple.actionbar.ExempleActionBarMainActivity"/>
-        <activity android:name="com.tanlifei.exemple.actionbar.ExempleActionBarOneActivity"/>
-        <activity android:name="com.tanlifei.exemple.actionbar.ExempleActionBarTwoActivity"/>
-        <activity android:name="com.tanlifei.exemple.actionbar.ExempleActionBarThreeActivity"/>
-        <activity android:name="com.tanlifei.exemple.actionbar.ExempleActionBarFourActivity"/>
-        <activity android:name="com.tanlifei.exemple.actionbar.ExempleActionBarFiveActivity"/>
-        <activity android:name="com.tanlifei.exemple.actionbar.ExempleActionBarSixActivity"/>
-
-
-        <!-- 所有公用的adapter -->
-        <activity android:name="com.tanlifei.exemple.baseadapter.ExempleBaseAdpterMainActivity"/><!-- 主界面 -->
-        <activity android:name="com.tanlifei.exemple.baseadapter.ExempleBaseAdapterSingleItemTypeActivity"/> <!-- 单个布局的adapter -->
-        <activity android:name="com.tanlifei.exemple.baseadapter.ExempleBaseAdpterMutliItemTypeActivity"/><!-- 多个布局的adapter -->
-
-        <!-- 所有公用的加载框 -->
-        <activity android:name="com.tanlifei.exemple.kprogresshud.ExempleKProgresshudMainActivity"/><!-- 主界面 -->
-
-        <!-- 所有公用的请求框 -->
-        <activity android:name="com.tanlifei.exemple.okhttp.ExempleOkHttpMainActivity"/><!--http 示范 -->
-
-        <!-- 下拉上拉 -->
-        <activity android:name="com.tanlifei.exemple.refreshview.ui.ExempleRefreshViewMainActivity"/><!--下拉上拉 示范 -->
-        <activity android:name="com.tanlifei.exemple.refreshview.ui.ExempleListViewAndAdActivity_"/>
-        <activity android:name="com.tanlifei.exemple.refreshview.ui.ExempleListViewActivity_"/>
-        <activity android:name="com.tanlifei.exemple.refreshview.ui.ExempleRecyclerViewActivity_"/>
-        <activity android:name="com.tanlifei.exemple.refreshview.ui.ExempleGridViewActivity_"/>
-        <activity android:name="com.tanlifei.exemple.refreshview.ui.ExempleScrollViewActivity_"/>
-
-        <!-- dialog -->
-
-        <activity android:name="com.tanlifei.exemple.dialog.ui.ExempleDialogSimpleHomeActivity"/>
-        <activity android:name="com.tanlifei.exemple.dialog.ui.ExempleDialogPopupHomeActivity"/>
-        <activity android:name="com.tanlifei.exemple.dialog.ui.ExempleDialogDialogHomeActivity"/>
-        <activity android:name="com.tanlifei.exemple.dialog.ui.ExempleDialogCustomPopupActivity"/>
-        <activity android:name="com.tanlifei.exemple.dialog.ui.ExempleDialogBubblePopupActivity"/>
-
-        <!-- Photo -->
-        <activity android:name="com.tanlifei.exemple.photo.ExemplePhotoMainActivity"/>
-        <activity android:name="com.tanlifei.exemple.photo.galleryfinal.ExempleGalleryFinalActivity_"/>
 
 
         <!-- —————————————————————————————————— 测试示范 ———————————————————————————————————— -->
 
-        <activity android:name="com.tanlifei.demo.eventbus.DemoEventBusOneActivity"/>
-        <activity android:name="com.tanlifei.demo.eventbus.DemoEventBusTwoActivity"/>
-        <activity android:name="com.tanlifei.demo.eventbus.DemoEventBusThreeActivity"/>
+        <activity android:name="com.ytd.demo.eventbus.DemoEventBusOneActivity"/>
+        <activity android:name="com.ytd.demo.eventbus.DemoEventBusTwoActivity"/>
+        <activity android:name="com.ytd.demo.eventbus.DemoEventBusThreeActivity"/>
 
     </application>
 

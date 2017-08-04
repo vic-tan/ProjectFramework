@@ -6,7 +6,7 @@ android {
     buildToolsVersion '25.0.0'
 
     defaultConfig {
-        applicationId "com.wb.framework"
+        applicationId "com.ytd.framework"
         minSdkVersion 15
         targetSdkVersion 22
         versionCode 1
@@ -27,7 +27,7 @@ android {
 apt {
     arguments {
         androidManifestFile variant.outputs[0].processResources.manifestFile
-        resourcePackageName "com.tanlifei.framework"
+        resourcePackageName "com.ytd.framework"
     }
 }
 

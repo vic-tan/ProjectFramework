@@ -7,7 +7,7 @@
                                         android:background="@android:color/white">
 
 
-    <com.tanlifei.uikit.actionbar.ActionBarView
+    <com.ytd.uikit.actionbar.ActionBarView
         android:id="@+id/actionbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/common_actionbar_standard_height"
