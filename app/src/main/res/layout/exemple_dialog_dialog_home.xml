@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.tlf.basic.base.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                      android:layout_width="match_parent"
+                                      android:layout_height="130px"
+                                      android:background="#ffffff"
+                                      android:gravity="center_vertical"
+                                      android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="130px"
+        android:orientation="horizontal">
+
+        <View
+            android:id="@+id/v_line"
+            android:layout_width="25px"
+            android:layout_height="match_parent"
+            android:background="#468ED0" />
+
+        <TextView
+            android:id="@+id/tv_bubble"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingLeft="40px"
+            android:text="Dialog"
+            android:textColor="#468ED0"
+            android:textSize="44px" />
+    </LinearLayout>
+
+    <include layout="@layout/common_split_line" />
+</com.tlf.basic.base.autolayout.AutoLinearLayout>

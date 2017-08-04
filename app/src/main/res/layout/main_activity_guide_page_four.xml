@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.tlf.basic.base.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                        xmlns:in="http://schemas.android.com/apk/res-auto"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:background="@mipmap/main_guide_view_four">
+
+
+    <com.tlf.basic.uikit.injection.SelectorImageButton
+        android:id="@+id/imgBtn_start"
+        android:layout_width="270px"
+        android:layout_height="90px"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="180px"
+        in:in_normal_drawable="@mipmap/main_guide_view_into_btn_normal"
+        in:in_pressed_drawable="@mipmap/main_guide_view_into_btn_pressed"/>
+</com.tlf.basic.base.autolayout.AutoRelativeLayout>

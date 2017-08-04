@@ -1,0 +1,48 @@
+apply plugin: 'com.android.application'
+apply plugin: 'android-apt'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion '25.0.0'
+
+    defaultConfig {
+        applicationId "com.wb.framework"
+        minSdkVersion 15
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        packagingOptions {
+            exclude 'META-INF/maven/org.androidannotations/androidannotations-api/pom.xml'
+            exclude 'META-INF/maven/org.androidannotations/androidannotations-api/pom.properties'
+        }
+    }
+    useLibrary 'org.apache.http.legacy'
+}
+apt {
+    arguments {
+        androidManifestFile variant.outputs[0].processResources.manifestFile
+        resourcePackageName "com.tanlifei.framework"
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    apt "org.androidannotations:androidannotations:3.3.2"
+    compile 'com.android.support:appcompat-v7:23.2.1'
+    compile 'com.android.support:design:23.2.1'
+    compile 'org.androidannotations:androidannotations:4.0.0'
+    compile 'org.greenrobot:eventbus:3.0.0'
+    compile 'com.vic-tan:basic-library-http:1.0.3'
+    compile 'com.vic-tan:basic-library-photoview:1.0.1'
+    compile 'com.vic-tan:basic-library-refreshview:1.0.0'
+    compile 'com.vic-tan:basic-library-uikit:1.0.6'
+    compile 'com.vic-tan:basic-library-utils:1.0.7'
+//    compile 'cn.bmob.android:bmob-sdk:3.5.5'
+    compile 'cn.bmob.android:http-legacy:1.0'
+}

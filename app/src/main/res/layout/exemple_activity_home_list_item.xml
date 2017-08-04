@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.tlf.basic.base.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                      android:layout_width="match_parent"
+                                      android:layout_height="match_parent"
+                                      android:background="@drawable/common_selector_item_bg"
+                                      android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/mexemple_list_item_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="40px"
+        android:layout_marginTop="10px"
+        android:gravity="center_vertical"
+        android:padding="5px"
+        android:singleLine="true"
+        android:textColor="#293b5f"
+        android:textSize="50px" />
+
+    <include layout="@layout/common_textview_expandable" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20px"
+        android:orientation="horizontal">
+
+        <include layout="@layout/common_split_line" />
+    </LinearLayout>
+
+
+</com.tlf.basic.base.autolayout.AutoLinearLayout>

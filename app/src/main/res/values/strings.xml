@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">BasicFramework</string>
+
+
+    <!-- —————————————————— 正在加载框  ——————————————————————————————— -->
+    <string name="common_dialog_loading">&#160;&#160;加载中...&#160;&#160;</string>
+    <string name="common_net_error">网络异常,请检查你的网络无误后再重试</string>
+    <string name="common_data_error">加载失败,请重试</string>
+    <string name="common_empty_data">^_^没有任何数据</string>
+
+    <!-- —————————————————— app 文字 ——————————————————————————————— -->
+    <string name="app_exit">再按一次退出程序</string>
+
+
+    <!-- —————————————————— app 版本更新提示文字 ——————————————————————————————— -->
+    <string name="app_update_done">更新完成</string>
+    <string name="app_update_downloading_title">正在更新版本</string>
+    <string name="app_update_downloading_desc">正在更新中</string>
+    <string name="app_update_notify">您有一条新通知</string>
+    <string name="app_update_dialog_title">版本升级</string>
+    <string name="app_update_socket_timeout">升级版本超时</string>
+</resources>

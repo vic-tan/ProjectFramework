@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- ————————————————————————————————————————— 上拉下拉刷新 ———————————————————————————————————————— -->
+    <item name="ptr_root_layout" type="id" />
+    <item name="ptr_layout" type="id" />
+    <!-- ————————————————————————————————————————— actionbar ———————————————————————————————————————— -->
+    <item name="actionbar" type="id" />
+
+    <!-- ————————————————————————————————————————— empty_view ———————————————————————————————————————— -->
+    <item name="fl_empty_view" type="id" />
+
+
+</resources>

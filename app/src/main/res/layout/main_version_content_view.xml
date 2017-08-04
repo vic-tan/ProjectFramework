@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.tlf.basic.base.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                  xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                  android:layout_width="match_parent"
+                                                  android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/mTvContent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:maxHeight="1500px"
+            android:paddingBottom="55px"
+            android:paddingLeft="35px"
+            android:paddingRight="35px"
+            android:paddingTop="65px"
+            android:textColor="@color/common_prompt_dialog_content"
+            android:textSize="@dimen/common_dialog_content_size"/>
+    </ScrollView>
+</com.tlf.basic.base.autolayout.AutoRelativeLayout>

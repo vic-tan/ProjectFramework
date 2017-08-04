@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <include layout="@layout/common_actionbar_title_view"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/actionbar"
+        android:background="@android:color/white">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingBottom="16dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="16dp">
+
+
+            <Button
+                android:id="@+id/B"
+                style="@style/base_button_corners"
+                android:layout_marginBottom="10dp"
+                android:onClick="B"
+                android:text="photoView 图片浏览"/>
+
+            <Button
+                android:id="@+id/C"
+                style="@style/base_button_corners"
+                android:layout_marginBottom="10dp"
+                android:onClick="C"
+                android:text="Galleryfinal 图片选择"/>
+
+        </LinearLayout>
+
+        <!--   <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="300px"
+               android:orientation="vertical">
+
+               <com.tanlifei.support.view.layout.PromptView
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent" />
+           </LinearLayout>-->
+
+    </ScrollView>
+</RelativeLayout>
+
+

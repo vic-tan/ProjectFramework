@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.tlf.basic.base.autolayout.AutoFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                     xmlns:in="http://schemas.android.com/apk/res-auto"
+                                     xmlns:tools="http://schemas.android.com/tools"
+                                     android:id="@+id/actionbar_rlly_root"
+                                     android:layout_width="match_parent"
+                                     android:layout_height="@dimen/common_actionbar_standard_height"
+                                     android:layout_alignParentTop="true"
+                                     android:orientation="horizontal">
+
+
+    <TextView
+        android:id="@+id/actionbar_title"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginLeft="220px"
+        android:layout_marginRight="220px"
+        android:ellipsize="marquee"
+        android:gravity="center"
+        android:paddingRight="6px"
+        android:singleLine="true"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/common_text_size_actionbar_title"
+        tools:text="请设置标题" />
+
+    <com.tlf.basic.base.autolayout.AutoRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/actionbar_back_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:background="@color/theme_color"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:id="@+id/actionbar_back_text"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="30px"
+                android:layout_marginRight="30px"
+                android:drawableLeft="@mipmap/actionbar_icon_back"
+                android:drawablePadding="10px"
+                android:gravity="center_vertical"
+                android:textColor="@color/common_actionbar_opt_text_selector"
+                android:textSize="@dimen/common_text_size_actionbar_opt"
+                android:visibility="visible"
+                tools:text="返回" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/actionbar_opt"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@color/theme_color"
+            android:orientation="horizontal"
+            android:paddingLeft="6px">
+
+            <TextView
+                android:id="@+id/actionbar_opt_right_text"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="20px"
+                android:gravity="center_vertical"
+                android:textColor="@color/common_actionbar_opt_text_selector"
+                android:textSize="@dimen/common_text_size_actionbar_opt"
+                android:visibility="visible"
+                tools:text="操作1" />
+
+            <Button
+                android:id="@+id/actionbar_opt_left_icon"
+                android:layout_width="110px"
+                android:layout_height="110px"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="20px"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/common_text_size_actionbar_opt"
+                android:visibility="gone"
+                tools:text="操作图片1" />
+
+
+            <TextView
+                android:id="@+id/actionbar_opt_left_text"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="20px"
+                android:gravity="center_vertical"
+                android:textColor="@color/common_actionbar_opt_text_selector"
+                android:textSize="@dimen/common_text_size_actionbar_opt"
+                android:visibility="visible"
+                tools:text="操作2" />
+
+            <Button
+                android:id="@+id/actionbar_opt_right_icon"
+                android:layout_width="110px"
+                android:layout_height="110px"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:visibility="gone" />
+
+
+        </LinearLayout>
+    </com.tlf.basic.base.autolayout.AutoRelativeLayout>
+
+
+</com.tlf.basic.base.autolayout.AutoFrameLayout>

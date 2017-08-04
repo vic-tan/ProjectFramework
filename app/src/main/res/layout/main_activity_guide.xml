@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.tlf.basic.base.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/guide_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <com.tlf.basic.uikit.viewpager.CircleIndicator
+        android:id="@id/indicator"
+        android:layout_width="match_parent"
+        android:layout_height="50px"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="58px"
+        app:ci_animator="@anim/guide_indicator_scale_with_alpha"
+        app:ci_drawable="@drawable/main_indicator_pressed_radius"
+        app:ci_drawable_unselected="@drawable/main_indicator_normal_radius"
+        app:ci_height="25px"
+        app:ci_width="25px"/>
+
+</com.tlf.basic.base.autolayout.AutoRelativeLayout>

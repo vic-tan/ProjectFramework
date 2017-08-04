@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.tlf.basic.base.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                        xmlns:abv="http://schemas.android.com/apk/res-auto"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:background="@android:color/white">
+
+    <include layout="@layout/common_actionbar_title_view" />
+
+    <ExpandableListView
+        android:id="@+id/elv"
+        android:layout_below="@id/actionbar"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#ffffff"
+        android:cacheColorHint="#00000000"
+        android:divider="@null"
+        android:fadingEdge="none"
+        android:groupIndicator="@null"
+        android:listSelector="#00000000"
+        android:scrollbars="none" />
+</com.tlf.basic.base.autolayout.AutoRelativeLayout>

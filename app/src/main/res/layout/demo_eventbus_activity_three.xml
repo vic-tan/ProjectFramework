@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.tlf.basic.base.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                        xmlns:abv="http://schemas.android.com/apk/res-auto"
+                                        xmlns:tools="http://schemas.android.com/tools"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:background="@android:color/white">
+
+
+    <com.tanlifei.uikit.actionbar.ActionBarView
+        android:id="@+id/actionbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_actionbar_standard_height"
+        abv:abv_title_text="示例"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/actionbar">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="16dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="16dp">
+
+                <Button
+                    android:id="@+id/indeterminate"
+                    style="@style/base_button_corners"
+                    android:layout_marginBottom="10dp"
+                    android:text="three"/>
+
+                <TextView
+                    android:id="@+id/tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="148px"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="40px"
+                    android:gravity="center_vertical"
+                    android:padding="5px"
+                    android:singleLine="true"
+                    android:textColor="#293b5f"
+                    android:textSize="45px"/>
+
+
+            </LinearLayout>
+        </ScrollView>
+
+
+    </LinearLayout>
+
+
+</com.tlf.basic.base.autolayout.AutoRelativeLayout>
+
