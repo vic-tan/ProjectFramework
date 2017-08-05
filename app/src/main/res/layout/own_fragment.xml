@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.tlf.basic.base.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                android:id="@+id/root_view"
+                                                xmlns:rv="http://schemas.android.com/apk/res-auto"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="match_parent"
+                                                android:background="@color/activity_bg"
+                                                android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="600px"
+        android:layout_marginTop="3px"
+        android:background="@mipmap/own_header_bg">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="250px"
+                android:layout_height="250px"
+                android:layout_centerHorizontal="true"
+                android:background="@mipmap/own_user_logo"/>
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="50px"
+                android:maxLines="1"
+                android:text="谭 飞"
+                android:textColor="@color/white"
+                android:textSize="45px"/>
+
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:layout_marginTop="40px"
+        android:background="@color/own_line"/>
+
+    <com.tlf.basic.uikit.roundview.RoundRelativeLayout
+        android:id="@+id/skin_layout"
+        android:layout_width="match_parent"
+        android:layout_height="130px"
+        android:orientation="horizontal"
+        rv:rv_backgroundColor="@color/white"
+        rv:rv_backgroundPressColor="#72ffffff">
+
+
+        <ImageView
+            android:id="@+id/skin_icon"
+            android:layout_width="80px"
+            android:layout_height="80px"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="40px"
+            android:background="@mipmap/own_skin"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="30px"
+            android:layout_toRightOf="@id/skin_icon"
+            android:text="换肤"
+            android:textColor="#999999"
+            android:textSize="50px"/>
+
+        <ImageView
+            android:layout_width="50px"
+            android:layout_height="80px"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="30px"
+            android:background="@mipmap/own_fangxiang"/>
+    </com.tlf.basic.uikit.roundview.RoundRelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:layout_marginLeft="150px"
+            android:background="@color/own_line"/>
+    </LinearLayout>
+
+
+    <com.tlf.basic.uikit.roundview.RoundRelativeLayout
+        android:id="@+id/lianxi_layout"
+        android:layout_width="match_parent"
+        android:layout_height="130px"
+        android:orientation="horizontal"
+        rv:rv_backgroundColor="@color/white"
+        rv:rv_backgroundPressColor="#72ffffff">
+
+        <ImageView
+            android:id="@+id/lianxi_icon"
+            android:layout_width="80px"
+            android:layout_height="80px"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="40px"
+            android:background="@mipmap/own_lianxi"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="30px"
+            android:layout_toRightOf="@id/lianxi_icon"
+            android:text="联系我们"
+            android:textColor="#999999"
+            android:textSize="50px"/>
+
+        <ImageView
+            android:layout_width="50px"
+            android:layout_height="80px"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="30px"
+            android:background="@mipmap/own_fangxiang"/>
+    </com.tlf.basic.uikit.roundview.RoundRelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:background="@color/own_line"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginRight="80px"
+        android:layout_marginTop="30px"
+        android:text="版本信息:v1.0"
+        android:textColor="#999999"
+        android:textSize="34px"/>
+
+
+    <com.tlf.basic.uikit.roundview.RoundTextView
+        android:id="@+id/eixt"
+        android:layout_width="match_parent"
+        android:layout_height="130px"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_vertical"
+        android:layout_marginTop="150px"
+        android:gravity="center"
+        android:text="退出登录"
+        android:textColor="#FC5830"
+        android:textSize="50px"
+        rv:rv_backgroundColor="@color/white"
+        rv:rv_backgroundPressColor="#72ffffff"/>
+
+
+</com.tlf.basic.base.autolayout.AutoLinearLayout>

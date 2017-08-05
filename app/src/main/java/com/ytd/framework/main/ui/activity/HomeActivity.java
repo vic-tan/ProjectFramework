@@ -1,72 +1,72 @@
 package com.ytd.framework.main.ui.activity;
 
-import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
-import android.widget.ListView;
 
-import com.tlf.basic.base.adapter.abslistview.AbsCommonAdapter;
-import com.tlf.basic.base.adapter.abslistview.AbsViewHolder;
-import com.tlf.basic.utils.StartActUtils;
 import com.ytd.common.ui.activity.actionbar.BaseActionBarActivity;
-import com.ytd.demo.eventbus.DemoEventBusOneActivity;
 import com.ytd.framework.R;
-import com.ytd.framework.main.ui.service.CheckAppUpdateService;
+import com.ytd.framework.main.adapter.HomeNavigatorFragmentAdapter;
+import com.ytd.framework.main.ui.navigator.FragmentNavigator;
+import com.ytd.framework.main.ui.view.HomeNavigatorView;
+import com.ytd.support.utils.UnFinshUtils;
+import com.ytd.uikit.actionbar.ActionBarOptViewTagLevel;
+import com.ytd.uikit.actionbar.OnOptClickListener;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 首页界面
  * Created by ytd on 16/1/19.
  */
 @EActivity(R.layout.main_activity_home)
-public class HomeActivity extends BaseActionBarActivity {
+public class HomeActivity extends BaseActionBarActivity implements HomeNavigatorView.OnBottomNavigatorViewItemClickListener {
 
     public static final String TAG = HomeActivity.class.getSimpleName();
+    private static final int DEFAULT_POSITION = 0;
+    @ViewById
+    HomeNavigatorView bottomNavigatorView;
+    private FragmentNavigator mNavigator;
 
-    List<String> list = new ArrayList<>();
-    @ViewById(R.id.main_lv_list)
-    ListView mList;
-
-    private void addList() {
-        list.add("集成示范");
-        list.add("测试示范");
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        mNavigator = new FragmentNavigator(getFragmentManager(), new HomeNavigatorFragmentAdapter(), R.id.container);
+        mNavigator.setDefaultPosition(DEFAULT_POSITION);
+        mNavigator.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState);
     }
-
-
 
     @AfterViews
     void init() {
-        startService(new Intent(this, CheckAppUpdateService.class));
+//        startService(new Intent(this, CheckAppUpdateService.class));
         initActionBar();
-        actionBarView.setActionbarTitle("首页");
+        actionBarView.setActionbarTitle("深圳市源泰达医院");
         actionBarView.setActionbarBackDimiss(true);
-        addList();
-        mList.setAdapter(new AbsCommonAdapter<String>(this, R.layout.main_activity_home_list_item, list) {
+        actionBarView.setOnOptClickListener(new OnOptClickListener() {
             @Override
-            protected void convert(final AbsViewHolder holder, String s, final int position) {
-                holder.setText(R.id.main_list_item_name, s);
-                holder.getConvertView().setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        switch (position) {
-                            case 0:
-//                                StartActUtils.start(mContext, ExempleHomeActivity_.class);
-                                break;
-                            case 1:
-                                StartActUtils.start(mContext, DemoEventBusOneActivity.class);
-                                break;
-                        }
-                    }
-                });
+            public void onClick(View v, ActionBarOptViewTagLevel viewTag) {
+                UnFinshUtils.unFinshToast(HomeActivity.this);
             }
         });
+        if (bottomNavigatorView != null) {
+            bottomNavigatorView.setOnBottomNavigatorViewItemClickListener(this);
+        }
+        setCurrentTab(mNavigator.getCurrentPosition());
+
     }
 
+
+    @Override
+    public void onBottomNavigatorViewItemClick(int position, View view) {
+        setCurrentTab(position);
+    }
+
+    public void setCurrentTab(int position) {
+        mNavigator.showFragment(position);
+        bottomNavigatorView.select(position);
+
+    }
 
 
     @Override

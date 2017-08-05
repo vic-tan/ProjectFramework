@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BasicFramework</string>
+    <string name="app_name">源泰达医院</string>
 
 
     <!-- —————————————————— 正在加载框  ——————————————————————————————— -->
@@ -19,4 +19,9 @@
     <string name="app_update_notify">您有一条新通知</string>
     <string name="app_update_dialog_title">版本升级</string>
     <string name="app_update_socket_timeout">升级版本超时</string>
+
+
+    <string name="login_name">tanlifei</string>
+    <string name="login_pwd">a123456</string>
+    <string name="wait">功能正在开发中,敬请期待！</string>
 </resources>

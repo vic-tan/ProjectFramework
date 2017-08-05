@@ -2,16 +2,17 @@
 <resources>
 
     <!-- ————————————————————————————————————— actionbar 颜色常量   ——————————————————————————————————————————————————— -->
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
     <color name="common_actionbar_title_normal">#ffffff</color> <!-- actionbar 字体颜色 -->
     <color name="common_actionbar_title_pressed">#80ffffff</color> <!-- actionbar 字体选中颜色 -->
 
     <!-- ————————————————————————————————————— 所有共用颜色常量   ——————————————————————————————————————————————————— -->
-    <color name="theme_color">#00C15C</color> <!-- actionbar 标题字体 -->
-
+    <color name="theme_color">#22CCCB</color> <!-- actionbar 标题字体 -->
 
     <!-- ————————————————————————————————————— button 颜色 ————————————————————————————————————————————————————————————————————————————— -->
     <color name="base_button_bg_normal">@color/theme_color</color><!-- 标准button默认颜色-->
-    <color name="base_button_bg_pressed">#8000C15C</color> <!-- 标准button 点击颜色 -->
+    <color name="base_button_bg_pressed">#D822CCCB</color> <!-- 标准button 点击颜色 -->
 
     <!-- —————————————————————————————————————  字体颜色常量   ——————————————————————————————————————————————————— -->
     <color name="common_text_desc">#666666</color> <!--  字体颜色 -->
@@ -20,6 +21,13 @@
 
     <!-- ————————————————————————————————————— list View   ——————————————————————————————————————————————————— -->
     <color name="list_item_bg_pressed">#eaeaef</color><!-- mRefreshList item 按下时的背景色 -->
+
+
+    <color name="common_navigator_color_tab_normal">#333333</color>
+    <color name="common_navigator_color_tab_pressed">@color/theme_color</color>
+    <color name="activity_bg">#EEEEEE</color>
+    <color name="own_line">#d2d2d2</color>
+
 
 
 

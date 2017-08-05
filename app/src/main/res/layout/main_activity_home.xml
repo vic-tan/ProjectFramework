@@ -1,22 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.tlf.basic.base.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                        xmlns:abv="http://schemas.android.com/apk/res-auto"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:background="@android:color/white">
+                                                  xmlns:abv="http://schemas.android.com/apk/res-auto"
+                                                  android:layout_width="match_parent"
+                                                  android:layout_height="match_parent"
+                                                  android:background="@android:color/white">
 
-    <include layout="@layout/common_actionbar_title_view" />
+    <com.ytd.uikit.actionbar.ActionBarView
+        android:id="@+id/actionbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_actionbar_standard_height"
+        android:layout_alignParentTop="true"
+        abv:abv_opt_left_iconDrawable_normol="@mipmap/main_home_barcode"
+        abv:abv_opt_left_iconDrawable_pressed="@mipmap/main_home_barcode"
+        />
 
-    <ListView
-        android:id="@+id/main_lv_list"
+
+    <com.tlf.basic.base.autolayout.AutoLinearLayout
+        android:id="@+id/bottomNavigatorView_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:background="#e1e1e1"/>
+
+        <com.ytd.framework.main.ui.view.HomeNavigatorView
+            android:id="@+id/bottomNavigatorView"
+            android:layout_width="match_parent"
+            android:layout_height="160px"
+            android:background="@color/white"
+            android:clipToPadding="false"/>
+
+    </com.tlf.basic.base.autolayout.AutoLinearLayout>
+
+    <com.tlf.basic.base.autolayout.AutoFrameLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/actionbar"
-        android:cacheColorHint="@android:color/transparent"
-        android:divider="@null"
-        android:listSelector="@drawable/mian_selector_home_list_item_bg"
-        android:scrollbars="none"
-        android:smoothScrollbar="true" />
-
+        android:layout_above="@id/bottomNavigatorView_layout"
+        android:layout_below="@id/actionbar"/>
 
 </com.tlf.basic.base.autolayout.AutoRelativeLayout>

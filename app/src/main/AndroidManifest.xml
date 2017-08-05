@@ -20,7 +20,7 @@
     <!--获取手机任务信息（进程,app列表）-->
     <uses-permission android:name="android.permission.GET_TASKS"/>
     <!--保持CPU 运转，屏幕和键盘灯有可能是关闭的,用于文件上传和下载 -->
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
     <application
         android:name="com.ytd.framework.main.ui.BaseApplication"
@@ -39,10 +39,15 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name="com.ytd.framework.main.ui.activity.GuideActivity_"/>
         <activity
-            android:name="com.ytd.framework.main.ui.activity.HomeActivity_"/>
-
+            android:name="com.ytd.framework.main.ui.activity.GuideActivity_"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name="com.ytd.framework.main.ui.activity.HomeActivity_"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".main.ui.activity.LoginActivity_"
+            android:screenOrientation="portrait"/>
 
         <!-- 当前应用分辨率参考标准 -->
         <meta-data
@@ -56,6 +61,7 @@
         <service android:name="com.ytd.framework.main.ui.service.AppDownloadService"/><!--下载app servce-->
         <activity
             android:name="com.ytd.framework.main.ui.activity.AppServiceActivity_"
+            android:screenOrientation="portrait"
             android:theme="@style/AppUpdateDialogStyle"/>
 
         <receiver android:name="com.ytd.framework.main.ui.service.AppUpdateBroadcastReceiver">
@@ -69,9 +75,12 @@
 
         <!-- —————————————————————————————————— Photo  —————————————————————————————————————— -->
 
-        <activity android:name="com.ytd.common.ui.activity.photoview.BaseBrowsePhotoActivity"/>
-        <activity android:name="com.ytd.common.ui.activity.photoview.BaseDeletePhotoActivity"/>
-
+        <activity
+            android:name="com.ytd.common.ui.activity.photoview.BaseBrowsePhotoActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name="com.ytd.common.ui.activity.photoview.BaseDeletePhotoActivity"
+            android:screenOrientation="portrait"/>
 
 
         <!-- —————————————————————————————————— 测试示范 ———————————————————————————————————— -->

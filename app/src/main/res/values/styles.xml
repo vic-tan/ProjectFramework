@@ -60,4 +60,36 @@
     </style>
 
 
+    <!-- 底部tabs merge公用样式 -->
+    <style name="common_fragmentnavigator_merge_layout_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">130px</item>
+        <item name="android:elevation">18px</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <!-- 底部tabs 布局公用样式 -->
+    <style name="common_fragmentnavigator_layout_style">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+
+    <!-- 底部tabs 图片公用样式 -->
+    <style name="common_fragmentnavigator_image_style2">
+        <item name="android:layout_width">82px</item>
+        <item name="android:layout_height">73px</item>
+    </style>
+    <!-- 底部tabs 字体公用样式 -->
+    <style name="common_fragmentnavigator_title_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">1px</item>
+        <item name="android:textColor">@color/common_fragmentnavigator_color_tab_text</item>
+        <item name="android:textSize">34px</item>
+    </style>
+
 </resources>

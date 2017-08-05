@@ -50,7 +50,7 @@ public class SplashActivity extends BaseActivity implements SplashView {
 
     @Override
     public void gotoHomeAct() {
-        startAct(HomeActivity_.class);//进入首页
+        startAct(LoginActivity_.class);//进入首页
     }
 
     /**

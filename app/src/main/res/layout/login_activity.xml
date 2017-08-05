@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.tlf.basic.base.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                  xmlns:rv="http://schemas.android.com/apk/res-auto"
+                                                  android:layout_width="match_parent"
+                                                  android:layout_height="match_parent"
+                                                  android:background="@mipmap/main_splash_bg">
+
+
+    <LinearLayout
+        android:layout_width="850px"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="240px"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="300px"
+            android:layout_height="300px"
+            android:layout_gravity="center_horizontal"
+            android:background="@mipmap/user_logo"/>
+
+
+        <com.tlf.basic.uikit.roundview.RoundRelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="150px"
+            android:layout_below="@+id/por_img"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="120px"
+            rv:rv_backgroundColor="#59ffffff"
+            rv:rv_cornerRadius="15px">
+
+            <ImageView
+                android:id="@+id/user_account_text"
+                android:layout_width="80px"
+                android:layout_height="80px"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="30px"
+                android:background="@mipmap/login_account_edit"/>
+
+
+            <com.ytd.uikit.edittext.MClearEditText
+                android:id="@+id/user_account_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="30px"
+                android:layout_marginRight="30px"
+                android:layout_toRightOf="@id/user_account_text"
+                android:background="@android:color/transparent"
+                android:ellipsize="end"
+                android:gravity="start"
+                android:hint="请输入工号或账号"
+                android:maxLines="1"
+                android:text="@string/login_name"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textCursorDrawable="@null"
+                android:textSize="48.0px"/>
+        </com.tlf.basic.uikit.roundview.RoundRelativeLayout>
+
+
+        <com.tlf.basic.uikit.roundview.RoundRelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="150px"
+            android:layout_below="@+id/por_img"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="80px"
+            rv:rv_backgroundColor="#59ffffff"
+            rv:rv_cornerRadius="15px">
+
+            <ImageView
+                android:id="@+id/user_pwd"
+                android:layout_width="80px"
+                android:layout_height="80px"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="30px"
+                android:src="@mipmap/login_pwd_edit"/>
+
+
+            <com.ytd.uikit.edittext.MClearEditText
+                android:id="@+id/user_pwd_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="30px"
+                android:layout_marginRight="30px"
+                android:layout_toRightOf="@id/user_pwd"
+                android:background="@android:color/transparent"
+                android:ellipsize="end"
+                android:gravity="start"
+                android:hint="请输入密码"
+                android:maxLines="1"
+                android:text="@string/login_pwd"
+                android:inputType="textPassword"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textCursorDrawable="@null"
+                android:textSize="48.0px"/>
+        </com.tlf.basic.uikit.roundview.RoundRelativeLayout>
+
+        <com.tlf.basic.uikit.roundview.RoundTextView
+            android:id="@+id/login"
+            android:layout_width="match_parent"
+            android:layout_height="140px"
+            android:layout_gravity="center"
+            android:layout_marginTop="80px"
+            android:gravity="center"
+            android:text="登  录"
+            android:textColor="@color/white"
+            android:textSize="50px"
+            rv:rv_backgroundColor="@color/base_button_bg_normal"
+            rv:rv_backgroundPressColor="@color/base_button_bg_pressed"
+            rv:rv_cornerRadius="15px"/>
+
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="60px"
+        android:text="深圳市源泰达科技有限公司"
+        android:textColor="#6b7c24"
+        android:textSize="50px"/>
+
+
+</com.tlf.basic.base.autolayout.AutoRelativeLayout>

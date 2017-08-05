@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+       style="@style/common_fragmentnavigator_merge_layout_style">
+
+    <com.tlf.basic.base.autolayout.AutoLinearLayout style="@style/common_fragmentnavigator_layout_style">
+
+        <ImageView
+            style="@style/common_fragmentnavigator_image_style2"
+            android:layout_width="82px"
+            android:layout_height="73px"
+            android:tag="0"/>
+
+        <TextView
+            style="@style/common_fragmentnavigator_title_style"
+            android:layout_marginTop="15px"
+            android:text="首页"/>
+    </com.tlf.basic.base.autolayout.AutoLinearLayout>
+
+    <com.tlf.basic.base.autolayout.AutoLinearLayout style="@style/common_fragmentnavigator_layout_style">
+
+        <ImageView
+            style="@style/common_fragmentnavigator_image_style2"
+            android:tag="1"/>
+
+        <TextView
+            style="@style/common_fragmentnavigator_title_style"
+            android:layout_marginTop="15px"
+            android:text="我的"/>
+    </com.tlf.basic.base.autolayout.AutoLinearLayout>
+
+</merge>

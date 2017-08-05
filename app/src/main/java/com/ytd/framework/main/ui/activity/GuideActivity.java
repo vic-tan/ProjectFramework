@@ -45,7 +45,7 @@ public class GuideActivity extends BaseActivity implements GuideView,
     @Override
     public void onClick(View v) {
         AppCacheUtils.getInstance(mContext).put(SplashPresenterImpl.FIRST_LAUNCHER_APP_TAG, false);//设置为已打开过该应用了
-        StartActUtils.start(mContext, HomeActivity_.class);
+        StartActUtils.start(mContext, LoginActivity_.class);
         StartActUtils.finish(mContext);
     }
 
