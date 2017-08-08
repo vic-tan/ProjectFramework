@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 专题头部tabs -->
+    <array name="sliding_tab_strip_pager">
+        <item>@string/sliding_tab_strip_pager_has</item>
+        <item>@string/sliding_tab_strip_pager_new</item>
+    </array>
+
+</resources>

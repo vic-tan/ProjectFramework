@@ -1,0 +1,496 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.tlf.basic.base.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                  xmlns:rv="http://schemas.android.com/apk/res-auto"
+                                                  android:id="@+id/root_view"
+                                                  android:layout_width="match_parent"
+                                                  android:layout_height="match_parent"
+                                                  android:background="@color/floral_white"
+                                                  android:orientation="vertical">
+
+    <com.tlf.basic.uikit.roundview.RoundTextView
+        android:id="@+id/save"
+        android:layout_width="match_parent"
+        android:layout_height="150px"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="保存"
+        android:textColor="@color/white"
+        android:textSize="50px"
+
+        rv:rv_backgroundColor="@color/base_button_bg_normal"
+        rv:rv_backgroundPressColor="@color/base_button_bg_pressed"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/save">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="70px"
+            android:layout_marginRight="70px"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="110px"
+                android:layout_marginTop="50px"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:id="@+id/name_titile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="50px"
+                    android:maxLines="1"
+                    android:text="盘点单名称:"
+                    android:textColor="@color/txt_color"
+                    android:textSize="38px"/>
+
+                <com.tlf.basic.uikit.roundview.RoundRelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20px"
+                    android:layout_toRightOf="@id/name_titile"
+                    rv:rv_backgroundColor="@color/whisper"
+                    rv:rv_cornerRadius="15px">
+
+                    <EditText
+                        android:id="@+id/name"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="100px"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:background="@null"
+                        android:paddingLeft="15px"
+                        android:textColor="@color/txt_color"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="15px"
+                        android:gravity="center_vertical"
+                        android:text="*必填"
+                        android:textColor="#E3162A"
+                        android:textSize="30px"/>
+                </com.tlf.basic.uikit.roundview.RoundRelativeLayout>
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="110px"
+                android:layout_marginLeft="112px"
+                android:layout_marginTop="50px"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:id="@+id/area_titile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="50px"
+                    android:maxLines="1"
+                    android:text="区域:"
+                    android:textColor="@color/txt_color"
+                    android:textSize="38px"/>
+
+                <com.tlf.basic.uikit.roundview.RoundRelativeLayout
+                    android:id="@+id/start_layout"
+                    android:layout_width="340px"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20px"
+                    android:layout_toRightOf="@id/area_titile"
+                    rv:rv_backgroundColor="@color/whisper"
+                    rv:rv_cornerRadius="15px">
+
+                    <EditText
+                        android:id="@+id/star_area_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="100px"
+                        android:background="@null"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:paddingLeft="15px"
+                        android:textColor="@color/txt_color"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="15px"
+                        android:gravity="center_vertical"
+                        android:text="仓库"
+                        android:textColor="@color/add_desc"
+                        android:textSize="30px"/>
+                </com.tlf.basic.uikit.roundview.RoundRelativeLayout>
+
+                <com.tlf.basic.uikit.roundview.RoundRelativeLayout
+                    android:layout_width="380px"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="40px"
+                    android:layout_toRightOf="@id/start_layout"
+                    rv:rv_backgroundColor="@color/whisper"
+                    rv:rv_cornerRadius="15px">
+
+                    <EditText
+                        android:id="@+id/end_area_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="100px"
+                        android:background="@null"
+                        android:paddingLeft="15px"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:textColor="@color/txt_color"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="15px"
+                        android:gravity="center_vertical"
+                        android:text="中心仓库"
+                        android:textColor="@color/add_desc"
+                        android:textSize="30px"/>
+                </com.tlf.basic.uikit.roundview.RoundRelativeLayout>
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="110px"
+                android:layout_marginLeft="35px"
+                android:layout_marginTop="50px"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:id="@+id/type_titile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="50px"
+                    android:maxLines="1"
+                    android:text="资产分类:"
+                    android:textColor="@color/txt_color"
+                    android:textSize="38px"/>
+
+                <com.tlf.basic.uikit.roundview.RoundRelativeLayout
+                    android:layout_width="340px"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20px"
+                    android:layout_toRightOf="@id/type_titile"
+                    rv:rv_backgroundColor="@color/whisper"
+                    rv:rv_cornerRadius="15px">
+
+                    <EditText
+                        android:id="@+id/type_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="100px"
+                        android:background="@null"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:paddingLeft="15px"
+                        android:textColor="@color/txt_color"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="15px"
+                        android:gravity="center_vertical"
+                        android:text="分类名称"
+                        android:textColor="@color/add_desc"
+                        android:textSize="30px"/>
+                </com.tlf.basic.uikit.roundview.RoundRelativeLayout>
+
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="110px"
+                android:layout_marginLeft="30px"
+                android:layout_marginTop="50px"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:id="@+id/date_titile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="50px"
+                    android:maxLines="1"
+                    android:text="启动日期:"
+                    android:textColor="@color/txt_color"
+                    android:textSize="38px"/>
+
+                <com.tlf.basic.uikit.roundview.RoundRelativeLayout
+                    android:id="@+id/start_date_layout"
+                    android:layout_width="340px"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20px"
+                    android:layout_toRightOf="@id/date_titile"
+                    rv:rv_backgroundColor="@color/whisper"
+                    rv:rv_cornerRadius="15px">
+
+                    <EditText
+                        android:id="@+id/star_date_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="100px"
+                        android:background="@null"
+                        android:paddingLeft="15px"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:textColor="@color/txt_color"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="15px"
+                        android:gravity="center_vertical"
+                        android:text="开始日期"
+                        android:textColor="@color/add_desc"
+                        android:textSize="30px"/>
+                </com.tlf.basic.uikit.roundview.RoundRelativeLayout>
+
+                <TextView
+                    android:id="@+id/temp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10px"
+                    android:layout_toRightOf="@id/start_date_layout"
+                    android:gravity="center_vertical"
+                    android:text="到"
+                    android:textColor="@color/txt_color"
+                    android:textSize="36px"/>
+
+                <com.tlf.basic.uikit.roundview.RoundRelativeLayout
+                    android:layout_width="380px"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20px"
+                    android:layout_toRightOf="@id/temp"
+                    android:gravity="center_vertical"
+                    rv:rv_backgroundColor="@color/whisper"
+                    rv:rv_cornerRadius="15px">
+
+                    <EditText
+                        android:id="@+id/end_date_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="100px"
+                        android:background="@null"
+                        android:paddingLeft="15px"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:textColor="@color/txt_color"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="15px"
+                        android:gravity="center_vertical"
+                        android:text="结束日期"
+                        android:textColor="@color/add_desc"
+                        android:textSize="30px"/>
+                </com.tlf.basic.uikit.roundview.RoundRelativeLayout>
+            </RelativeLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="110px"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="30px"
+                android:layout_marginTop="50px"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10px"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:text="价格区间:"
+                    android:textColor="@color/txt_color"
+                    android:textSize="38px"/>
+
+
+                <LinearLayout
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="20px"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="40px"
+                        android:layout_height="40px"
+                        android:background="@mipmap/select_true"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10px"
+                        android:text="一万以下 （含一万）"
+                        android:textColor="@color/common_text_desc"
+                        android:textSize="28px"/>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="30px"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="40px"
+                        android:layout_height="40px"
+                        android:background="@mipmap/select_false"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10px"
+                        android:text="一万-十万   (含十万）"
+                        android:textColor="@color/common_text_desc"
+                        android:textSize="28px"/>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="110px"
+                android:layout_marginLeft="210px"
+                android:layout_marginTop="10px"
+                android:orientation="horizontal">
+
+
+                <com.tlf.basic.uikit.roundview.RoundRelativeLayout
+                    android:id="@+id/start_price_layout"
+                    android:layout_width="340px"
+                    android:layout_height="match_parent"
+                    rv:rv_backgroundColor="@color/whisper"
+                    rv:rv_cornerRadius="15px">
+
+                    <EditText
+                        android:id="@+id/star_pripce_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="100px"
+                        android:background="@null"
+                        android:paddingLeft="15px"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:textColor="@color/txt_color"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="15px"
+                        android:gravity="center_vertical"
+                        android:text="(万)"
+                        android:textColor="@color/add_desc"
+                        android:textSize="30px"/>
+                </com.tlf.basic.uikit.roundview.RoundRelativeLayout>
+
+                <TextView
+                    android:id="@+id/pirce_temp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10px"
+                    android:layout_toRightOf="@id/start_price_layout"
+                    android:gravity="center_vertical"
+                    android:text="到"
+                    android:textColor="@color/txt_color"
+                    android:textSize="36px"/>
+
+                <com.tlf.basic.uikit.roundview.RoundRelativeLayout
+                    android:layout_width="380px"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20px"
+                    android:layout_toRightOf="@id/pirce_temp"
+                    android:gravity="center_vertical"
+                    rv:rv_backgroundColor="@color/whisper"
+                    rv:rv_cornerRadius="15px">
+
+                    <EditText
+                        android:id="@+id/end_price_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="100px"
+                        android:background="@null"
+                        android:paddingLeft="15px"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:textColor="@color/txt_color"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="15px"
+                        android:gravity="center_vertical"
+                        android:text="(万)"
+                        android:textColor="@color/add_desc"
+                        android:textSize="30px"/>
+                </com.tlf.basic.uikit.roundview.RoundRelativeLayout>
+            </RelativeLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</com.tlf.basic.base.autolayout.AutoRelativeLayout>

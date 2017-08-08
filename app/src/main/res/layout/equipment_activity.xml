@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.tlf.basic.base.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                xmlns:abv="http://schemas.android.com/apk/res-auto"
+                                                xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="match_parent"
+                                                android:background="@android:color/white"
+                                                android:orientation="vertical">
+
+    <com.ytd.uikit.actionbar.ActionBarView
+        android:id="@+id/actionbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_actionbar_standard_height"
+        abv:abv_back_text="盘点设备"
+        abv:abv_opt_left_iconDrawable_normol="@mipmap/main_home_input_search"
+        abv:abv_opt_left_iconDrawable_pressed="@mipmap/main_home_input_search"
+        abv:abv_opt_right_iconDrawable_normol="@mipmap/main_home_barcode"
+        abv:abv_opt_right_iconDrawable_pressed="@mipmap/main_home_barcode"/>
+
+
+    <com.ytd.uikit.slider.IndicatorWrapPagerSlider
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="120px"
+        android:background="#fefeff"
+        app:pstsDividerColor="@android:color/transparent"
+        app:pstsIndicatorColor="@color/theme_color"
+        app:pstsIndicatorHeight="2dp"
+        app:pstsShouldExpand="true"
+        app:pstsTabBackground="@drawable/common_pager_sliding_tab_strip_bg"
+        app:pstsUnderlineHeight="0.1dp"
+        app:selectedTabTextColor="@color/theme_color"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tabs"
+        android:background="@color/activity_bg"/>
+
+</com.tlf.basic.base.autolayout.AutoLinearLayout>

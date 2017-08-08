@@ -24,4 +24,8 @@
     <string name="login_name">tanlifei</string>
     <string name="login_pwd">a123456</string>
     <string name="wait">功能正在开发中,敬请期待！</string>
+
+
+    <string name="sliding_tab_strip_pager_has">已有盘点单</string>
+    <string name="sliding_tab_strip_pager_new">新增盘点单</string>
 </resources>

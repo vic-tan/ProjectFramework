@@ -3,33 +3,48 @@
     <!-- ——————————————————————————————————————————ActionBarView 自定义类 —————————————————————————————————————————— -->
     <declare-styleable name="ActionBarView">
         <!-- 标题及背影设置 -->
-        <attr name="abv_backgroundColor" format="color" /><!--actionbar 背影颜色-->
-        <attr name="abv_title_text" format="string" /><!--actionbar 标题-->
-        <attr name="abv_title_textColor" format="color" /><!--actionbar 标题颜色-->
-        <attr name="abv_title_textSize" format="dimension" /><!--actionbar 标题字体大小 单位 px-->
+        <attr name="abv_backgroundColor" format="color"/><!--actionbar 背影颜色-->
+        <attr name="abv_title_text" format="string"/><!--actionbar 标题-->
+        <attr name="abv_title_textColor" format="color"/><!--actionbar 标题颜色-->
+        <attr name="abv_title_textSize" format="dimension"/><!--actionbar 标题字体大小 单位 px-->
 
         <!-- 返回设置 -->
-        <attr name="abv_back_text" format="string" /><!--actionbar 返回文字-->
-        <attr name="abv_back_textColor" format="color" /><!--actionbar 返回文字颜色-->
-        <attr name="abv_back_textSize" format="dimension" /><!--actionbar 返回文字字体大小 单位 px-->
-        <attr name="abv_back_text_dimiss" format="boolean" /><!--actionbar 返回文字是否显示-->
+        <attr name="abv_back_text" format="string"/><!--actionbar 返回文字-->
+        <attr name="abv_back_textColor" format="color"/><!--actionbar 返回文字颜色-->
+        <attr name="abv_back_textSize" format="dimension"/><!--actionbar 返回文字字体大小 单位 px-->
+        <attr name="abv_back_text_dimiss" format="boolean"/><!--actionbar 返回文字是否显示-->
         <!--<attr name="abv_back_iconDrawable" format="reference" />&lt;!&ndash;actionbar 返回图标字体大小 单位 px&ndash;&gt;
         <attr name="abv_back_iconDrawableDimiss" format="boolean" />&lt;!&ndash;actionbar 返回图标是否显示 &ndash;&gt;-->
-        <attr name="abv_back_dimiss" format="boolean" /><!--actionbar 返回文字和图标是否显示 -->
+        <attr name="abv_back_dimiss" format="boolean"/><!--actionbar 返回文字和图标是否显示 -->
 
         <!-- 右边操作view ,提供两个文字view 和两个图片view, 它们在同一LinearLayout 上，顺序从左到右为abv_opt_right_text,abv_opt_left_iconDrawable ,abv_opt_left_text,abv_opt_right_iconDrawable-->
-        <attr name="abv_opt_right_text" format="string" /><!--actionbar 操作文字1-->
-        <attr name="abv_opt_right_textColor" format="reference" /><!--actionbar 操作文字1颜色-->
-        <attr name="abv_opt_right_textSize" format="dimension" /><!--actionbar 操作文字1字体大小 单位 px-->
-        <attr name="abv_opt_left_text" format="string" /><!--actionbar 操作文字2-->
-        <attr name="abv_opt_left_textColor" format="reference" /><!--actionbar 操作文字2颜色-->
-        <attr name="abv_opt_left_textSize" format="dimension" /><!--actionbar 操作文字2字体大小 单位 px -->
-        <attr name="abv_opt_right_iconDrawable_normol" format="reference" /><!--actionbar 操作图片1 未选中时显示-->
-        <attr name="abv_opt_right_iconDrawable_pressed" format="reference" /><!--actionbar 操作图片1 选中时显示-->
-        <attr name="abv_opt_left_iconDrawable_normol" format="reference" /><!--actionbar 操作图片2 未选中时显示-->
-        <attr name="abv_opt_left_iconDrawable_pressed" format="reference" /><!--actionbar 操作图片2 选中时显示-->
+        <attr name="abv_opt_right_text" format="string"/><!--actionbar 操作文字1-->
+        <attr name="abv_opt_right_textColor" format="reference"/><!--actionbar 操作文字1颜色-->
+        <attr name="abv_opt_right_textSize" format="dimension"/><!--actionbar 操作文字1字体大小 单位 px-->
+        <attr name="abv_opt_left_text" format="string"/><!--actionbar 操作文字2-->
+        <attr name="abv_opt_left_textColor" format="reference"/><!--actionbar 操作文字2颜色-->
+        <attr name="abv_opt_left_textSize" format="dimension"/><!--actionbar 操作文字2字体大小 单位 px -->
+        <attr name="abv_opt_right_iconDrawable_normol" format="reference"/><!--actionbar 操作图片1 未选中时显示-->
+        <attr name="abv_opt_right_iconDrawable_pressed" format="reference"/><!--actionbar 操作图片1 选中时显示-->
+        <attr name="abv_opt_left_iconDrawable_normol" format="reference"/><!--actionbar 操作图片2 未选中时显示-->
+        <attr name="abv_opt_left_iconDrawable_pressed" format="reference"/><!--actionbar 操作图片2 选中时显示-->
     </declare-styleable>
 
-
+    <!-- ——————————————————————————————————————————PagerSlidingTabStrip—————————————————————————————————————————— -->
+    <declare-styleable name="PagerSlidingTabStrip">
+        <attr name="pstsIndicatorColor" format="color"/>
+        <attr name="pstsUnderlineColor" format="color"/>
+        <attr name="pstsDividerColor" format="color"/>
+        <attr name="pstsIndicatorHeight" format="dimension"/>
+        <attr name="pstsUnderlineHeight" format="dimension"/>
+        <attr name="pstsDividerPadding" format="dimension"/>
+        <attr name="pstsTabPaddingLeftRight" format="dimension"/>
+        <attr name="pstsTabTextSize" format="dimension"/>
+        <attr name="pstsScrollOffset" format="dimension"/>
+        <attr name="pstsTabBackground" format="reference"/>
+        <attr name="pstsShouldExpand" format="boolean"/>
+        <attr name="pstsTextAllCaps" format="boolean"/>
+        <attr name="selectedTabTextColor" format="color"/>
+    </declare-styleable>
 
 </resources>
