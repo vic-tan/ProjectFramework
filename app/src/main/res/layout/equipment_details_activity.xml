@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.tlf.basic.base.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                  xmlns:abv="http://schemas.android.com/apk/res-auto"
+                                                  android:layout_width="match_parent"
+                                                  android:layout_height="match_parent"
+                                                  android:background="@color/floral_white"
+                                                  android:orientation="vertical">
+
+
+    <com.ytd.uikit.actionbar.ActionBarView
+        android:id="@+id/actionbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_actionbar_standard_height"
+        android:layout_alignParentTop="true"
+        abv:abv_back_text="盘点单"
+        abv:abv_opt_right_iconDrawable_normol="@mipmap/main_home_barcode"
+        abv:abv_opt_right_iconDrawable_pressed="@mipmap/main_home_barcode"/>
+
+    <LinearLayout
+        android:id="@+id/opt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="110px"
+        android:layout_alignParentBottom="true">
+
+        <com.tlf.basic.uikit.roundview.RoundTextView
+            android:id="@+id/updateLoadBtn"
+            android:layout_width="420px"
+            android:layout_height="100px"
+            android:layout_marginLeft="100px"
+            android:text="上传盘点单"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:textSize="42px"
+            abv:rv_backgroundColor="#159588"
+            abv:rv_backgroundPressColor="#72159588"
+            abv:rv_cornerRadius="200px"/>
+
+        <com.tlf.basic.uikit.roundview.RoundTextView
+            android:id="@+id/lookeEqBtn"
+            android:layout_width="420px"
+            android:layout_height="100px"
+            android:layout_marginLeft="40px"
+            android:text="开始盘点"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:textSize="42px"
+            abv:rv_backgroundColor="#159588"
+            abv:rv_backgroundPressColor="#72159588"
+            abv:rv_cornerRadius="200px"/>
+
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/opt"
+        android:layout_below="@id/actionbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="280px"
+                android:layout_marginTop="3px"
+                android:background="@mipmap/eq_deatils_header_bg">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="140px"
+                    android:layout_marginTop="80px"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/finshNum"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="189"
+                            android:textColor="@color/white"
+                            android:textSize="70px"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="/"
+                            android:textColor="@color/white"
+                            android:textSize="70px"/>
+
+                        <TextView
+                            android:id="@+id/totalNum"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="300"
+                            android:textColor="@color/white"
+                            android:textSize="42px"/>
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20px"
+                        android:text="台设备已盘点"
+                        android:textColor="@color/white"
+                        android:textSize="45px"/>
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="250px"
+                    android:layout_height="190px"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="180px"
+                    android:background="@mipmap/eq_details_header_icon"/>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10px"
+                android:background="@color/eq_details_bg"/>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/floral_white"
+                android:paddingBottom="10px"
+                android:paddingTop="20px">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="40px"
+                    android:text="查看资产>"
+                    android:textColor="#1DABEA"
+                    android:textSize="38px"/>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1.5px"
+                android:background="@color/list_line"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10px"
+                android:layout_marginRight="10px"
+                android:background="@color/floral_white"
+                android:orientation="horizontal"
+                android:paddingTop="20px">
+
+
+                <ImageView
+                    android:layout_width="70px"
+                    android:layout_height="100px"
+                    android:layout_marginLeft="50px"
+                    android:layout_marginRight="30px"
+                    android:background="@mipmap/eq_details_icon"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="30px">
+
+
+                    <TextView
+                        android:id="@+id/name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10px"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="盘点人:"
+                        android:textColor="@color/txt_color"
+                        android:textSize="40px"/>
+
+
+                    <TextView
+                        android:id="@+id/data"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15px"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="盘点日期:"
+                        android:textColor="@color/txt_color"
+                        android:textSize="40px"/>
+
+                    <TextView
+                        android:id="@+id/title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15px"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="盘点单名称:"
+                        android:textColor="@color/txt_color"
+                        android:textSize="40px"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20px"
+                android:background="@color/eq_details_bg"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/floral_white"
+                android:paddingBottom="15px"
+                android:paddingTop="15px">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="20px"
+                    android:text="盘点单详情"
+                    android:textColor="#607FD3"
+                    android:textSize="42px"/>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1.5px"
+                android:background="@color/list_line"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#F0FCFF"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="15px"
+                    android:paddingLeft="50px"
+                    android:paddingTop="20px">
+
+                    <TextView
+                        android:id="@+id/area"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="盘点区域："
+                        android:textColor="#949898"
+                        android:textSize="35px"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1.5px"
+                    android:background="@color/list_line"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#F0FCFF"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="15px"
+                    android:paddingLeft="50px"
+                    android:paddingTop="20px">
+
+                    <TextView
+                        android:id="@+id/address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="资产分类："
+                        android:textColor="#949898"
+                        android:textSize="35px"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1.5px"
+                    android:background="@color/list_line"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#F0FCFF"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="15px"
+                    android:paddingLeft="50px"
+                    android:paddingTop="20px">
+
+                    <TextView
+                        android:id="@+id/startDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="启用日期："
+                        android:textColor="#949898"
+                        android:textSize="35px"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1.5px"
+                    android:background="@color/list_line"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#F0FCFF"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="15px"
+                    android:paddingLeft="50px"
+                    android:paddingTop="20px">
+
+                    <TextView
+                        android:id="@+id/price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="价格区间："
+                        android:textColor="#949898"
+                        android:textSize="35px"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1.5px"
+                    android:background="@color/list_line"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#F0FCFF"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="15px"
+                    android:paddingLeft="100px"
+                    android:paddingTop="20px">
+
+                    <TextView
+                        android:id="@+id/qeSumNum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="设  备："
+                        android:textColor="#949898"
+                        android:textSize="35px"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1.5px"
+                    android:background="@color/list_line"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#F0FCFF"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="15px"
+                    android:paddingLeft="50px"
+                    android:paddingTop="20px">
+
+                    <TextView
+                        android:id="@+id/startProperty"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="资产原值："
+                        android:textColor="#949898"
+                        android:textSize="35px"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1.5px"
+                    android:background="@color/list_line"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#F0FCFF"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="15px"
+                    android:paddingLeft="50px"
+                    android:paddingTop="20px">
+
+                    <TextView
+                        android:id="@+id/endProperty"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="资产净值："
+                        android:textColor="#949898"
+                        android:textSize="35px"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1.5px"
+                    android:background="@color/list_line"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#F0FCFF"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="15px"
+                    android:paddingLeft="10px"
+                    android:paddingTop="20px">
+
+                    <TextView
+                        android:id="@+id/updateload"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="盘点单上传："
+                        android:textColor="#949898"
+                        android:textSize="35px"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1.5px"
+                    android:background="@color/list_line"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="100px"
+                android:background="#F0FCFF"
+                android:orientation="vertical">
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</com.tlf.basic.base.autolayout.AutoRelativeLayout>

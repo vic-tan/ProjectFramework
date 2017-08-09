@@ -11,9 +11,9 @@ import org.androidannotations.annotations.EActivity;
  * Created by ytd on 16/1/19.
  */
 @EActivity(R.layout.equipment_search_activity)
-public class EquipmentSearchActivity extends BaseActionBarActivity {
+public class PropertySearchActivity extends BaseActionBarActivity {
 
-    public static final String TAG = EquipmentSearchActivity.class.getSimpleName();
+    public static final String TAG = PropertySearchActivity.class.getSimpleName();
 
 
     @AfterViews

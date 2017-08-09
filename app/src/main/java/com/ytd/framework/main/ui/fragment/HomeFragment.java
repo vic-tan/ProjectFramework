@@ -7,7 +7,7 @@ import android.view.View;
 import com.tlf.basic.utils.StartActUtils;
 import com.tlf.basic.utils.ToastUtils;
 import com.ytd.framework.R;
-import com.ytd.framework.equipment.ui.activity.EquipmentActivity_;
+import com.ytd.framework.equipment.ui.activity.PropertyActivity_;
 
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
@@ -25,7 +25,7 @@ public class HomeFragment extends Fragment {
     void click(View v) {
         switch (v.getId()) {
             case R.id.equipment:
-                StartActUtils.start(getActivity(), EquipmentActivity_.class);
+                StartActUtils.start(getActivity(), PropertyActivity_.class);
                 break;
             case R.id.more:
                 ToastUtils.show(getActivity(), R.string.wait);

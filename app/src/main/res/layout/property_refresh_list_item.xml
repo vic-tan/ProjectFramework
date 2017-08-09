@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.tlf.basic.base.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:background="@color/floral_white"
+                                                android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20px"
+        android:layout_marginRight="10px"
+        android:layout_marginTop="30px"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="140px"
+            android:layout_height="160px"
+            android:layout_marginLeft="50px"
+            android:layout_marginRight="30px"
+            android:background="@mipmap/list_eq_icon"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/stutas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="25px"
+                    android:text="已完成"
+                    android:textColor="@color/txt_color"
+                    android:textSize="32px"/>
+
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@id/stutas"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="汪科长盘点"
+                    android:textColor="@color/txt_color"
+                    android:textSize="48px"/>
+
+            </RelativeLayout>
+
+
+            <TextView
+                android:id="@+id/phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10px"
+                android:layout_toLeftOf="@id/stutas"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="12823297564"
+                android:textColor="@color/txt_color"
+                android:textSize="32px"/>
+
+
+            <TextView
+                android:id="@+id/price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10px"
+                android:layout_toLeftOf="@id/stutas"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="一万元以下"
+                android:textColor="@color/txt_color"
+                android:textSize="32px"/>
+
+            <TextView
+                android:id="@+id/arce"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10px"
+                android:layout_toLeftOf="@id/stutas"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="中心仓库"
+                android:textColor="@color/txt_color"
+                android:textSize="32px"/>
+
+            <TextView
+                android:id="@+id/add"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10px"
+                android:layout_toLeftOf="@id/stutas"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="中心实验室"
+                android:textColor="@color/txt_color"
+                android:textSize="32px"/>
+
+            <TextView
+                android:id="@+id/num"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="一共300/300台设备已盘点"
+                android:textColor="@color/txt_color"
+                android:textSize="32px"/>
+
+
+            <TextView
+                android:id="@+id/data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:text="2017年05月12号-2017年05月18号"
+                android:textColor="#E3162A"
+                android:textSize="32px"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.9px"
+        android:background="@color/list_line"/>
+</com.tlf.basic.base.autolayout.AutoLinearLayout>

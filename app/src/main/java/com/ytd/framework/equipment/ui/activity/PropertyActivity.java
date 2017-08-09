@@ -6,10 +6,10 @@ import android.view.View;
 
 import com.tlf.basic.utils.StartActUtils;
 import com.ytd.framework.R;
-import com.ytd.framework.equipment.ui.fragment.AddEquipmentFragment;
-import com.ytd.framework.equipment.ui.fragment.AddEquipmentFragment_;
-import com.ytd.framework.equipment.ui.fragment.ListEquipmentFragment;
-import com.ytd.framework.equipment.ui.fragment.ListEquipmentFragment_;
+import com.ytd.framework.equipment.ui.fragment.AddPropertyFragment;
+import com.ytd.framework.equipment.ui.fragment.AddPropertyFragment_;
+import com.ytd.framework.equipment.ui.fragment.ListPropertyFragment;
+import com.ytd.framework.equipment.ui.fragment.ListPropertyFragment_;
 import com.ytd.framework.equipment.ui.navigator.BaseSlidingTabStripActivity;
 import com.ytd.support.utils.UnFinshUtils;
 import com.ytd.uikit.actionbar.ActionBarOptViewTagLevel;
@@ -24,17 +24,17 @@ import org.androidannotations.annotations.ViewById;
  * 首页界面
  * Created by ytd on 16/1/19.
  */
-@EActivity(R.layout.equipment_activity)
-public class EquipmentActivity extends BaseSlidingTabStripActivity {
+@EActivity(R.layout.property_activity)
+public class PropertyActivity extends BaseSlidingTabStripActivity {
 
-    public static final String TAG = EquipmentActivity.class.getSimpleName();
+    public static final String TAG = PropertyActivity.class.getSimpleName();
 
     @ViewById(R.id.tabs)
     IndicatorWrapPagerSlider mTabs;
     @ViewById(R.id.pager)
     ViewPager mPager;
-    private ListEquipmentFragment listFragment;
-    private AddEquipmentFragment addFragment;
+    private ListPropertyFragment listFragment;
+    private AddPropertyFragment addFragment;
     @AfterViews
     void init() {
         initActionBar();
@@ -42,7 +42,7 @@ public class EquipmentActivity extends BaseSlidingTabStripActivity {
             @Override
             public void onClick(View v, ActionBarOptViewTagLevel viewTag) {
                 if (viewTag == ActionBarOptViewTagLevel.LEFT_ICON_DRAWABLE) {
-                    StartActUtils.start(mContext, EquipmentSearchActivity_.class);
+                    StartActUtils.start(mContext, PropertySearchActivity_.class);
                 } else if (viewTag == ActionBarOptViewTagLevel.RIGHT_ICON_DRAWABLE) {
                     UnFinshUtils.unFinshToast(mContext);
                 }
@@ -57,20 +57,20 @@ public class EquipmentActivity extends BaseSlidingTabStripActivity {
         switch (position) {
             case 0:
                 if (listFragment == null) {
-                    listFragment =  new ListEquipmentFragment_();
+                    listFragment =  new ListPropertyFragment_();
 
                 }
                 return listFragment;
             case 1:
                 if (addFragment == null) {
-                    addFragment =new AddEquipmentFragment_();
+                    addFragment =new AddPropertyFragment_();
 
                 }
                 return addFragment;
 
             default:
                 if (listFragment == null) {
-                    listFragment =new ListEquipmentFragment_();
+                    listFragment =new ListPropertyFragment_();
 
                 }
                 return listFragment;

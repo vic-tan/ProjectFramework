@@ -15,8 +15,8 @@ import org.androidannotations.annotations.ViewById;
  * A simple {@link Fragment} subclass.
  */
 @EFragment(R.layout.add_equipment_fragment)
-public class AddEquipmentFragment extends Fragment {
-    public static final String TAG = AddEquipmentFragment.class.getSimpleName();
+public class AddPropertyFragment extends Fragment {
+    public static final String TAG = AddPropertyFragment.class.getSimpleName();
 
 
     @ViewById

@@ -82,10 +82,13 @@
             android:name="com.ytd.common.ui.activity.photoview.BaseDeletePhotoActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".equipment.ui.activity.EquipmentActivity_"
+            android:name=".equipment.ui.activity.PropertyActivity_"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".equipment.ui.activity.EquipmentSearchActivity_"
+            android:name=".equipment.ui.activity.PropertySearchActivity_"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".equipment.ui.activity.PropertyDetailsActivity_"
             android:screenOrientation="portrait"/>
 
 
