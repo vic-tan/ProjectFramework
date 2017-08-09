@@ -4,6 +4,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.tlf.basic.uikit.roundview.RoundTextView;
+import com.tlf.basic.utils.StartActUtils;
 import com.ytd.common.ui.activity.actionbar.BaseActionBarActivity;
 import com.ytd.framework.R;
 import com.ytd.framework.equipment.bean.PropertyBean;
@@ -20,7 +21,7 @@ import org.androidannotations.annotations.ViewById;
  * 首页界面
  * Created by ytd on 16/1/19.
  */
-@EActivity(R.layout.equipment_details_activity)
+@EActivity(R.layout.property_details_activity)
 public class PropertyDetailsActivity extends BaseActionBarActivity {
 
     public static final String TAG = PropertyDetailsActivity.class.getSimpleName();
@@ -57,7 +58,6 @@ public class PropertyDetailsActivity extends BaseActionBarActivity {
     private PropertyBean bean;
 
 
-
     @AfterViews
     void init() {
         initActionBar();
@@ -71,33 +71,34 @@ public class PropertyDetailsActivity extends BaseActionBarActivity {
         setData();
     }
 
-    private void setData(){
+    private void setData() {
         finshNum.setText(bean.getFinshNum());
         totalNum.setText(bean.getTotalNum());
 
-        name.setText("盘点人:"+bean.getName());
-        data.setText("盘点日期:"+bean.getEnd_data());
-        title.setText("盘点单名称:"+bean.getTitle());
+        name.setText("盘点人:" + bean.getName());
+        data.setText("盘点日期:" + bean.getEnd_data());
+        title.setText("盘点单名称:" + bean.getTitle());
 
-        area.setText("盘点区域："+bean.getArea());
-        address.setText("资产分类："+bean.getAddress());
-        startDate.setText("启用日期:"+bean.getStart_data());
-        price.setText("价格区间:"+bean.getPrice());
-        qeSumNum.setText("设  备:"+bean.getTotalNum());
-        startProperty.setText("资产原值:"+bean.getStart_property());
-        endProperty.setText("资产净值:"+bean.getEnd_property());
-        updateload.setText("盘点单上传:"+bean.getTotalNum());
+        area.setText("盘点区域：" + bean.getArea());
+        address.setText("资产分类：" + bean.getAddress());
+        startDate.setText("启用日期:" + bean.getStart_data());
+        price.setText("价格区间:" + bean.getPrice());
+        qeSumNum.setText("设  备:" + bean.getTotalNum());
+        startProperty.setText("资产原值:" + bean.getStart_property());
+        endProperty.setText("资产净值:" + bean.getEnd_property());
+        updateload.setText("盘点单上传:" + bean.getTotalNum());
 
 
     }
 
-    @Click({R.id.lookeEqBtn,R.id.updateLoadBtn})
-    void click(View v){
-        switch (v.getId()){
+    @Click({R.id.lookeEqBtn, R.id.updateLoadBtn})
+    void click(View v) {
+        switch (v.getId()) {
             case R.id.updateLoadBtn://上传
                 UnFinshUtils.unFinshToast(mContext);
                 break;
-            case  R.id.lookeEqBtn://查看
+            case R.id.lookeEqBtn://查看
+                StartActUtils.start(mContext, EquipmentActivity_.class);
                 break;
         }
     }

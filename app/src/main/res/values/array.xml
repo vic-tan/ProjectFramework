@@ -7,4 +7,11 @@
         <item>@string/sliding_tab_strip_pager_new</item>
     </array>
 
+
+    <array name="eq_sliding_tab_strip_pager">
+        <item>@string/sliding_tab_strip_pager_all</item>
+        <item>@string/sliding_tab_strip_pager_finish</item>
+        <item>@string/sliding_tab_strip_pager_unfinish</item>
+    </array>
+
 </resources>

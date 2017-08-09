@@ -90,6 +90,9 @@
         <activity
             android:name=".equipment.ui.activity.PropertyDetailsActivity_"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".equipment.ui.activity.EquipmentActivity_"
+            android:screenOrientation="portrait"/>
 
 
         <!-- —————————————————————————————————— 测试示范 ———————————————————————————————————— -->

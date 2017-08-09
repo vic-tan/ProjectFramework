@@ -28,4 +28,8 @@
 
     <string name="sliding_tab_strip_pager_has">已有盘点单</string>
     <string name="sliding_tab_strip_pager_new">新增盘点单</string>
+
+    <string name="sliding_tab_strip_pager_all">全部</string>
+    <string name="sliding_tab_strip_pager_finish">已盘点</string>
+    <string name="sliding_tab_strip_pager_unfinish">未盘点</string>
 </resources>

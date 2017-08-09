@@ -261,7 +261,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="盘点区域："
-                        android:textColor="#949898"
+                        android:textColor="@color/txt_desc_color"
                         android:textSize="35px"/>
 
                 </LinearLayout>
@@ -291,7 +291,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="资产分类："
-                        android:textColor="#949898"
+                        android:textColor="@color/txt_desc_color"
                         android:textSize="35px"/>
 
                 </LinearLayout>
@@ -321,7 +321,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="启用日期："
-                        android:textColor="#949898"
+                        android:textColor="@color/txt_desc_color"
                         android:textSize="35px"/>
 
                 </LinearLayout>
@@ -351,7 +351,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="价格区间："
-                        android:textColor="#949898"
+                        android:textColor="@color/txt_desc_color"
                         android:textSize="35px"/>
 
                 </LinearLayout>
@@ -381,7 +381,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="设  备："
-                        android:textColor="#949898"
+                        android:textColor="@color/txt_desc_color"
                         android:textSize="35px"/>
 
                 </LinearLayout>
@@ -411,7 +411,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="资产原值："
-                        android:textColor="#949898"
+                        android:textColor="@color/txt_desc_color"
                         android:textSize="35px"/>
 
                 </LinearLayout>
@@ -441,7 +441,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="资产净值："
-                        android:textColor="#949898"
+                        android:textColor="@color/txt_desc_color"
                         android:textSize="35px"/>
 
                 </LinearLayout>
@@ -471,7 +471,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="盘点单上传："
-                        android:textColor="#949898"
+                        android:textColor="@color/txt_desc_color"
                         android:textSize="35px"/>
 
                 </LinearLayout>

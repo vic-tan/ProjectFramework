@@ -10,7 +10,7 @@ import org.androidannotations.annotations.EActivity;
  * 首页界面
  * Created by ytd on 16/1/19.
  */
-@EActivity(R.layout.equipment_search_activity)
+@EActivity(R.layout.property_search_activity)
 public class PropertySearchActivity extends BaseActionBarActivity {
 
     public static final String TAG = PropertySearchActivity.class.getSimpleName();

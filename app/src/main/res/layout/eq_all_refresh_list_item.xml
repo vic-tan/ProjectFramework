@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.tlf.basic.base.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:background="@color/activity_bg"
+                                                android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70px"
+        android:background="@color/floral_white"
+        android:paddingBottom="15px"
+        android:paddingTop="15px">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="40px"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:text="血管仿真模型"
+            android:textColor="@color/txt_desc_color"
+            android:textSize="40px"/>
+
+        <RelativeLayout
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="20px"
+                android:layout_weight="1"
+                android:text="台"
+                android:textColor="@color/txt_desc_color"
+                android:textSize="40px"/>
+
+            <TextView
+                android:id="@+id/count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="40px"
+                android:layout_weight="1"
+                android:text="x1"
+                android:textColor="@color/txt_desc_color"
+                android:textSize="40px"/>
+
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20px"
+        android:layout_marginRight="10px"
+        android:layout_marginTop="30px"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="120px"
+            android:layout_height="120px"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="80px"
+            android:background="@mipmap/eq_icon"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40px"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/eqType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10px"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="设备型号："
+                android:textColor="@color/txt_desc_color"
+                android:textSize="32px"/>
+
+
+            <TextView
+                android:id="@+id/propertyID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10px"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="资产编号:"
+                android:textColor="@color/txt_desc_color"
+                android:textSize="32px"/>
+
+            <TextView
+                android:id="@+id/useAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10px"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="使用科室:"
+                android:textColor="@color/txt_desc_color"
+                android:textSize="32px"/>
+
+            <TextView
+                android:id="@+id/startDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10px"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="："
+                android:textColor="@color/txt_desc_color"
+                android:textSize="32px"/>
+
+            <TextView
+                android:id="@+id/propertyStutas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="资产状态："
+                android:textColor="@color/txt_desc_color"
+                android:textSize="32px"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100px"
+        android:background="@color/floral_white"
+        android:orientation="horizontal"
+        android:paddingBottom="15px"
+        android:paddingTop="15px">
+
+        <ImageView
+            android:id="@+id/selectTag"
+            android:layout_width="50px"
+            android:layout_height="50px"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="50px"
+            android:background="@mipmap/select"/>
+
+        <TextView
+            android:id="@+id/selectText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10px"
+            android:layout_toRightOf="@id/selectTag"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:text="已盘点"
+            android:textColor="@color/txt_desc_color"
+            android:textSize="32px"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.tlf.basic.uikit.roundview.RoundTextView
+                android:id="@+id/startWork"
+                android:layout_width="200px"
+                android:layout_height="70px"
+                android:layout_marginRight="30px"
+                android:gravity="center"
+                android:text="盘点"
+                android:textColor="@color/theme_color"
+                android:textSize="32px"
+                app:rv_cornerRadius="100px"
+                app:rv_strokeColor="@color/theme_color"
+                app:rv_strokeWidth="2px"/>
+
+            <com.tlf.basic.uikit.roundview.RoundTextView
+                android:id="@+id/lookDetails"
+                android:layout_width="200px"
+                android:layout_height="70px"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="60px"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="查看详情"
+                android:textColor="@color/txt_color"
+                android:textSize="32px"
+                app:rv_cornerRadius="100px"
+                app:rv_strokeColor="@color/txt_color"
+                app:rv_strokeWidth="2px"/>
+
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.9px"
+        android:background="@color/list_line"/>
+</com.tlf.basic.base.autolayout.AutoLinearLayout>
