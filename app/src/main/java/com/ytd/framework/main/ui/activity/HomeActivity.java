@@ -3,12 +3,13 @@ package com.ytd.framework.main.ui.activity;
 import android.os.Bundle;
 import android.view.View;
 
+import com.tlf.basic.utils.StartActUtils;
 import com.ytd.common.ui.activity.actionbar.BaseActionBarActivity;
 import com.ytd.framework.R;
+import com.ytd.framework.equipment.ui.activity.EquipmentScanResultActivity_;
 import com.ytd.framework.main.adapter.HomeNavigatorFragmentAdapter;
 import com.ytd.framework.main.ui.navigator.FragmentNavigator;
 import com.ytd.framework.main.ui.view.HomeNavigatorView;
-import com.ytd.support.utils.UnFinshUtils;
 import com.ytd.uikit.actionbar.ActionBarOptViewTagLevel;
 import com.ytd.uikit.actionbar.OnOptClickListener;
 
@@ -46,7 +47,8 @@ public class HomeActivity extends BaseActionBarActivity implements HomeNavigator
         actionBarView.setOnOptClickListener(new OnOptClickListener() {
             @Override
             public void onClick(View v, ActionBarOptViewTagLevel viewTag) {
-                UnFinshUtils.unFinshToast(HomeActivity.this);
+                StartActUtils.start(mContext,
+                        EquipmentScanResultActivity_.class);
             }
         });
         if (bottomNavigatorView != null) {

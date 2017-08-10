@@ -13,7 +13,6 @@ import com.ytd.framework.equipment.ui.fragment.EqFinishFragment_;
 import com.ytd.framework.equipment.ui.fragment.EqUnFinishFragment;
 import com.ytd.framework.equipment.ui.fragment.EqUnFinishFragment_;
 import com.ytd.framework.equipment.ui.navigator.BaseSlidingTabStripActivity;
-import com.ytd.support.utils.UnFinshUtils;
 import com.ytd.uikit.actionbar.ActionBarOptViewTagLevel;
 import com.ytd.uikit.actionbar.OnOptClickListener;
 import com.ytd.uikit.slider.IndicatorWrapPagerSlider;
@@ -48,7 +47,8 @@ public class EquipmentActivity extends BaseSlidingTabStripActivity {
                 if (viewTag == ActionBarOptViewTagLevel.LEFT_ICON_DRAWABLE) {
                     StartActUtils.start(mContext, PropertySearchActivity_.class);
                 } else if (viewTag == ActionBarOptViewTagLevel.RIGHT_ICON_DRAWABLE) {
-                    UnFinshUtils.unFinshToast(mContext);
+                    StartActUtils.start(mContext,
+                            EquipmentScanResultActivity_.class);
                 }
             }
         });

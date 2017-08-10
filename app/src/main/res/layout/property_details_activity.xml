@@ -140,6 +140,7 @@
                 android:paddingTop="20px">
 
                 <TextView
+                    android:id="@+id/lookQe"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"

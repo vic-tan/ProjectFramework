@@ -20,7 +20,8 @@ import com.ytd.common.ui.fragment.refreshview.BaseAbsRefreshFragment;
 import com.ytd.framework.R;
 import com.ytd.framework.equipment.bean.EquipmentBean;
 import com.ytd.framework.equipment.bean.PropertyBean;
-import com.ytd.framework.equipment.ui.activity.PropertyDetailsActivity_;
+import com.ytd.framework.equipment.ui.activity.EquipmentDetailsActivity_;
+import com.ytd.framework.equipment.ui.activity.EquipmentScanResultActivity_;
 import com.ytd.support.constants.fixed.UrlConstants;
 import com.ytd.support.utils.ResUtils;
 
@@ -100,7 +101,7 @@ public class EqUnFinishFragment extends BaseAbsRefreshFragment {
             @Override
             protected void convert(AbsViewHolder holder, final EquipmentBean bean, int position) {
                 holder.setText(R.id.title, bean.getTitle());
-                holder.setText(R.id.count, "x"+bean.getCount());
+                holder.setText(R.id.count, "x" + bean.getCount());
                 holder.setText(R.id.eqType, "设备型号：" + bean.getEqType());
                 holder.setText(R.id.propertyID, "资产编号：" + bean.getEqId());
                 holder.setText(R.id.useAddress, "使用科室：" + bean.getUseAddress());
@@ -121,10 +122,17 @@ public class EqUnFinishFragment extends BaseAbsRefreshFragment {
                     startWork.setVisibility(View.GONE);
                 }
 
-                holder.getConvertView().setOnClickListener(new View.OnClickListener() {
+                lookDetails.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        StartActUtils.start(mContext, PropertyDetailsActivity_.class, "bean", bean);
+                        StartActUtils.start(mContext, EquipmentDetailsActivity_.class, "bean", bean);
+                    }
+                });
+                startWork.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        StartActUtils.start(mContext,
+                                EquipmentScanResultActivity_.class);
                     }
                 });
 

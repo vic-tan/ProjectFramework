@@ -21,7 +21,8 @@ import com.ytd.common.ui.fragment.refreshview.BaseAbsRefreshFragment;
 import com.ytd.framework.R;
 import com.ytd.framework.equipment.bean.EquipmentBean;
 import com.ytd.framework.equipment.bean.PropertyBean;
-import com.ytd.framework.equipment.ui.activity.PropertyDetailsActivity_;
+import com.ytd.framework.equipment.ui.activity.EquipmentDetailsActivity_;
+import com.ytd.framework.equipment.ui.activity.EquipmentScanResultActivity_;
 import com.ytd.support.constants.fixed.UrlConstants;
 import com.ytd.support.utils.ResUtils;
 
@@ -122,13 +123,21 @@ public class EqAllFragment extends BaseAbsRefreshFragment {
                     startWork.setVisibility(View.GONE);
                 }
 
-                holder.getConvertView().setOnClickListener(new View.OnClickListener() {
+                lookDetails.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        StartActUtils.start(mContext, PropertyDetailsActivity_.class, "bean", bean);
+                        StartActUtils.start(mContext,
+                                EquipmentDetailsActivity_.class, "bean", bean);
                     }
                 });
 
+                startWork.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        StartActUtils.start(mContext,
+                                EquipmentScanResultActivity_.class);
+                    }
+                });
 
             }
 
