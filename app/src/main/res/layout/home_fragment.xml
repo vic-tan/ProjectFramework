@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.tlf.basic.base.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                xmlns:app="http://schemas.android.com/apk/res-auto"
                                                 xmlns:rv="http://schemas.android.com/apk/res-auto"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="match_parent"
@@ -7,11 +8,26 @@
                                                 android:orientation="vertical">
 
 
-    <ImageView
-        android:layout_width="1080px"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="446px"
-        android:background="@mipmap/banner"
-        android:scaleType="fitXY"/>
+        android:orientation="vertical">
+
+        <com.tlf.basic.uikit.viewpager.ChildViewPager
+            android:id="@+id/vp_banner"
+            android:layout_width="match_parent"
+            android:layout_height="446px"/>
+
+        <com.tlf.basic.uikit.viewpager.CircleIndicator
+            android:id="@+id/indicator"
+            android:layout_width="match_parent"
+            android:layout_height="48px"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="center_horizontal"
+            app:ci_animator="@anim/scale_with_alpha"
+            app:ci_drawable="@drawable/green_radius"
+            app:ci_drawable_unselected="@drawable/white_radius"/>
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -55,11 +71,11 @@
                     android:text="资产设备扫码盘点"
                     android:textColor="@color/white"
                     android:textSize="32px"/>
-                
+
                 <ImageView
-                    android:layout_alignParentRight="true"
                     android:layout_width="100px"
                     android:layout_height="140px"
+                    android:layout_alignParentRight="true"
                     android:layout_marginRight="40px"
                     android:layout_marginTop="90px"
                     android:background="@mipmap/home_pandian"/>
@@ -105,9 +121,9 @@
                     android:textSize="44px"/>
 
                 <ImageView
-                    android:layout_alignParentRight="true"
                     android:layout_width="110px"
                     android:layout_height="100px"
+                    android:layout_alignParentRight="true"
                     android:layout_marginRight="20px"
                     android:layout_marginTop="140px"
                     android:background="@mipmap/home_more"/>

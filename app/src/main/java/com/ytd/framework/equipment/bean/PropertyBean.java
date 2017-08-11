@@ -3,11 +3,13 @@ package com.ytd.framework.equipment.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.litepal.crud.DataSupport;
+
 /**
  * Created by tanlifei on 2017/8/8.
  */
 
-public class PropertyBean implements Parcelable  {
+public class PropertyBean extends DataSupport implements Parcelable  {
 
     private String title;//名称单名称
     private String name;//盘点人

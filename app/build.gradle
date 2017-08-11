@@ -43,6 +43,7 @@ dependencies {
     compile 'com.vic-tan:basic-library-refreshview:1.0.0'
     compile 'com.vic-tan:basic-library-uikit:1.0.7'
     compile 'com.vic-tan:basic-library-utils:1.0.7'
+    compile 'org.litepal.android:core:1.5.1'
 //    compile 'cn.bmob.android:bmob-sdk:3.5.5'
     compile 'cn.bmob.android:http-legacy:1.0'
 }

@@ -6,6 +6,8 @@ import android.content.Context;
 
 import com.ytd.support.utils.ConfigurationUtils;
 
+import org.litepal.LitePal;
+
 /**
  * 全局Application
  *
@@ -21,6 +23,7 @@ public class BaseApplication extends Application {
         super.onCreate();
         appContext = this;
         init();
+        LitePal.initialize(this);
     }
 
     public void init() {

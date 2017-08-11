@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<litepal>
+    <dbname value="ytd"/>
+    <version value="1"/>
+    <list>
+        <mapping class="com.ytd.framework.equipment.bean.EquipmentBean"/>
+        <mapping class="com.ytd.framework.equipment.bean.PropertyBean"/>
+    </list>
+</litepal>
