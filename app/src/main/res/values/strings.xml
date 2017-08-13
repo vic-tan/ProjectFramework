@@ -26,7 +26,8 @@
     <string name="wait">功能正在开发中,敬请期待！</string>
 
 
-    <string name="sliding_tab_strip_pager_has">已有盘点单</string>
+    <string name="sliding_tab_strip_pager_has_heaer">已有盘点单</string>
+    <string name="sliding_tab_strip_pager_has">已有盘点单  (0)</string>
     <string name="sliding_tab_strip_pager_new">新增盘点单</string>
 
     <string name="sliding_tab_strip_pager_all">全部</string>

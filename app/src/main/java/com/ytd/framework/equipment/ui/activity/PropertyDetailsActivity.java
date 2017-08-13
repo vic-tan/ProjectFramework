@@ -1,13 +1,19 @@
 package com.ytd.framework.equipment.ui.activity;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.tlf.basic.uikit.roundview.RoundTextView;
 import com.tlf.basic.utils.StartActUtils;
+import com.tlf.basic.utils.StringUtils;
 import com.ytd.common.ui.activity.actionbar.BaseActionBarActivity;
 import com.ytd.framework.R;
 import com.ytd.framework.equipment.bean.PropertyBean;
+import com.ytd.support.utils.ResUtils;
 import com.ytd.support.utils.UnFinshUtils;
 import com.ytd.uikit.actionbar.ActionBarOptViewTagLevel;
 import com.ytd.uikit.actionbar.OnOptClickListener;
@@ -25,6 +31,8 @@ import org.androidannotations.annotations.ViewById;
 public class PropertyDetailsActivity extends BaseActionBarActivity {
 
     public static final String TAG = PropertyDetailsActivity.class.getSimpleName();
+    @ViewById
+    LinearLayout opt;
     @ViewById
     RoundTextView updateLoadBtn;
     @ViewById
@@ -54,10 +62,14 @@ public class PropertyDetailsActivity extends BaseActionBarActivity {
     @ViewById
     TextView endProperty;
     @ViewById
+    ImageView selectTag;
+    @ViewById
     TextView updateload;
+
     private PropertyBean bean;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @AfterViews
     void init() {
         initActionBar();
@@ -72,6 +84,7 @@ public class PropertyDetailsActivity extends BaseActionBarActivity {
         setData();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     private void setData() {
         finshNum.setText(bean.getFinshNum());
         totalNum.setText(bean.getTotalNum());
@@ -87,7 +100,15 @@ public class PropertyDetailsActivity extends BaseActionBarActivity {
         qeSumNum.setText("设  备:" + bean.getTotalNum());
         startProperty.setText("资产原值:" + bean.getStart_property());
         endProperty.setText("资产净值:" + bean.getEnd_property());
-        updateload.setText("盘点单上传:" + bean.getTotalNum());
+        if (StringUtils.isEquals(bean.getUpdateload(), "0")) {//未上传
+            selectTag.setBackground(ResUtils.getDrawable(R.mipmap.unselect));
+            updateload.setText("未上传");
+            opt.setVisibility(View.VISIBLE);
+        } else {
+            selectTag.setBackground(ResUtils.getDrawable(R.mipmap.select));
+            updateload.setText("已上传");
+            opt.setVisibility(View.GONE);
+        }
 
 
     }
@@ -100,7 +121,7 @@ public class PropertyDetailsActivity extends BaseActionBarActivity {
                 break;
             case R.id.lookQe://查看
             case R.id.lookeEqBtn://查看
-                StartActUtils.start(mContext, EquipmentActivity_.class);
+                StartActUtils.start(mContext, EquipmentActivity_.class,"bean",bean);
                 break;
         }
     }

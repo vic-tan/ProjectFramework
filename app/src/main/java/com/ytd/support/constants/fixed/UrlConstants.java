@@ -15,5 +15,8 @@ public class UrlConstants {
     //分页测试列表
     public static final String LIST_URL = DOMAIN_NAME + "/train/class/publicList";
 
+    //分页测试列表
+//    public static final String LIST_URL = DOMAIN_NAME + "/news/newsList";
+
 }
 

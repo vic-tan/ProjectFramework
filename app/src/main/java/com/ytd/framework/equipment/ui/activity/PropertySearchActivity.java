@@ -66,7 +66,8 @@ public class PropertySearchActivity extends BaseActionBarActivity {
                 holder.setText(R.id.price, bean.getPrice());
                 holder.setText(R.id.arce, bean.getArea());
                 holder.setText(R.id.add, bean.getAddress());
-                holder.setText(R.id.num, "一共有:" + bean.getFinshNum() + "/" + bean.getTotalNum() + "台设备已盘点");
+                holder.setText(R.id.start_num, bean.getFinshNum());
+                holder.setText(R.id.end_num, "/" + bean.getTotalNum());
                 holder.setText(R.id.data, bean.getStart_data() + "一" + bean.getEnd_data());
 
                 holder.getConvertView().setOnClickListener(new View.OnClickListener() {

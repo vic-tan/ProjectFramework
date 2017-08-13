@@ -3,14 +3,23 @@ package com.ytd.framework.equipment.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.Gson;
+import com.ytd.support.utils.GsonJsonUtils;
+
 import org.litepal.crud.DataSupport;
+
+import java.util.List;
+
+import static com.tlf.basic.http.okhttp.callback.Callback.replaceId;
 
 /**
  * Created by tanlifei on 2017/8/8.
  */
 
-public class PropertyBean extends DataSupport implements Parcelable  {
+public class PropertyBean extends DataSupport implements Parcelable {
 
+
+    private String my_id;//资产ID;
     private String title;//名称单名称
     private String name;//盘点人
     private String phone;//手机号
@@ -25,6 +34,33 @@ public class PropertyBean extends DataSupport implements Parcelable  {
     private String start_property;//资产原值；
     private String end_property;//资产净值；
     private String updateload;//盘点单是否上传
+    private String loginName;
+
+    private List<EquipmentBean> eqList;
+
+    public String getMy_id() {
+        return my_id;
+    }
+
+    public void setMy_id(String my_id) {
+        this.my_id = my_id;
+    }
+
+    public List<EquipmentBean> getEqList() {
+        return eqList;
+    }
+
+    public void setEqList(List<EquipmentBean> eqList) {
+        this.eqList = eqList;
+    }
+
+    public String getLoginName() {
+        return loginName;
+    }
+
+    public void setLoginName(String loginName) {
+        this.loginName = loginName;
+    }
 
     public String getTitle() {
         return title;
@@ -141,6 +177,144 @@ public class PropertyBean extends DataSupport implements Parcelable  {
     public PropertyBean() {
     }
 
+
+    public static PropertyBean addTestBean() {
+        String jsonStr ="{\n" +
+                "    \"id\": \"8a9a975b5dbcbe9c015dbd05f8700085\",\n" +
+                "    \"title\": \"报告显示：去年中国互联网百强企业收入破万亿元\",\n" +
+                "    \"name\": \"汪科长\",\n" +
+                "    \"phone\": \"13823297564\",\n" +
+                "    \"price\": \"一万元以下\",\n" +
+                "    \"area\": \"中心仓库\",\n" +
+                "    \"address\": \"中心实现室\",\n" +
+                "    \"start_data\": \"2017年05月12日\",\n" +
+                "    \"end_data\": \"2017年05月10日\",\n" +
+                "    \"totalNum\": \"300\",\n" +
+                "    \"finshNum\": \"200\",\n" +
+                "    \"status\": \"1\",\n" +
+                "    \"start_property\": \"1002323.123\",\n" +
+                "    \"end_property\": \"983673.343\",\n" +
+                "    \"updateload\": \"1\"\n" +
+                "}";
+        return new Gson().fromJson(replaceId(jsonStr), PropertyBean.class);
+    }
+
+    public static List<PropertyBean> addTestListBean(){
+        String jsonStr ="[\n" +
+                "    {\n" +
+                "        \"id\": \"8a9a975b5dbcbe9c015dbd05f8700085\",\n" +
+                "        \"title\": \"去年中国互联网百强企业收入破万亿元\",\n" +
+                "        \"name\": \"汪科长盘点\",\n" +
+                "        \"phone\": \"13823297564\",\n" +
+                "        \"price\": \"一万元以下\",\n" +
+                "        \"area\": \"中心仓库\",\n" +
+                "        \"address\": \"中心实现室\",\n" +
+                "        \"start_data\": \"2017年05月12日\",\n" +
+                "        \"end_data\": \"2017年05月10日\",\n" +
+                "        \"totalNum\": \"300\",\n" +
+                "        \"finshNum\": \"200\",\n" +
+                "        \"status\": \"1\",\n" +
+                "        \"start_property\": \"1002323.123\",\n" +
+                "        \"end_property\": \"983673.343\",\n" +
+                "        \"updateload\": \"1\",\n" +
+                "        \"eqList\": [\n" +
+                "            {\n" +
+                "                \"id\": \"8a9a975b5dbcbe9c015WDdbd05f898w\",\n" +
+                "                \"title\": \"血管仿真模型\",\n" +
+                "                \"count\": \"1\",\n" +
+                "                \"eqType\": \"HT-EW-DAFALFSDS\",\n" +
+                "                \"eqId\": \"983673q23489341\",\n" +
+                "                \"useAddress\": \"中心实现室\",\n" +
+                "                \"start_data\": \"2017年05月10日\",\n" +
+                "                \"propertyStatus\": \"在用\",\n" +
+                "                \"unitName\": \"台\",\n" +
+                "                \"eqStandard\": \"GD/DEFD\",\n" +
+                "                \"saveAddress\": \"深圳市\",\n" +
+                "                \"start_property\": \"1002323.123\",\n" +
+                "                \"end_property\": \"983673.343\",\n" +
+                "                \"old_property\": \"83673.343\",\n" +
+                "                \"barCode\": \"da12321se321\",\n" +
+                "                \"lookStatus\": \"0\"\n" +
+                "            },\n" +
+                "            {\n" +
+                "                \"id\": \"8a9a975b5dbcbe9c015Ddbd05f898w\",\n" +
+                "                \"title\": \"血管仿真模型2\",\n" +
+                "                \"count\": \"1\",\n" +
+                "                \"eqType\": \"HT-EW-DAFALFS\",\n" +
+                "                \"eqId\": \"983673q23489341\",\n" +
+                "                \"useAddress\": \"中心实现室\",\n" +
+                "                \"start_data\": \"2017年06月10日\",\n" +
+                "                \"propertyStatus\": \"在用\",\n" +
+                "                \"unitName\": \"台\",\n" +
+                "                \"eqStandard\": \"GD/DEFD\",\n" +
+                "                \"saveAddress\": \"深圳市\",\n" +
+                "                \"start_property\": \"1002323.123\",\n" +
+                "                \"end_property\": \"983673.343\",\n" +
+                "                \"old_property\": \"83673.343\",\n" +
+                "                \"barCode\": \"da12321se321\",\n" +
+                "                \"lookStatus\": \"1\"\n" +
+                "            }\n" +
+                "        ]\n" +
+                "    },\n" +
+                "    {\n" +
+                "        \"id\": \"8a9a975b5dbcbe9c015dbd0FSS0085\",\n" +
+                "        \"title\": \"互联网百强企业收入破万亿元\",\n" +
+                "        \"name\": \"李科长盘点\",\n" +
+                "        \"phone\": \"13823297572\",\n" +
+                "        \"price\": \"十万元以下\",\n" +
+                "        \"area\": \"中心仓库\",\n" +
+                "        \"address\": \"中心实现室\",\n" +
+                "        \"start_data\": \"2017年03月12日\",\n" +
+                "        \"end_data\": \"2017年05月10日\",\n" +
+                "        \"totalNum\": \"440\",\n" +
+                "        \"finshNum\": \"230\",\n" +
+                "        \"status\": \"0\",\n" +
+                "        \"start_property\": \"1002323.123\",\n" +
+                "        \"end_property\": \"983673.343\",\n" +
+                "        \"updateload\": \"0\",\n" +
+                "        \"eqList\": [\n" +
+                "            {\n" +
+                "                \"id\": \"8a9a975b5dbcbe9c015WDdbd05f898w\",\n" +
+                "                \"title\": \"血管仿真模型3\",\n" +
+                "                \"count\": \"1\",\n" +
+                "                \"eqType\": \"HT-EW-DAFALFSDS\",\n" +
+                "                \"eqId\": \"983673q23489341\",\n" +
+                "                \"useAddress\": \"中心实现室\",\n" +
+                "                \"start_data\": \"2017年05月10日\",\n" +
+                "                \"propertyStatus\": \"在用\",\n" +
+                "                \"unitName\": \"台\",\n" +
+                "                \"eqStandard\": \"GD/DEFD\",\n" +
+                "                \"saveAddress\": \"深圳市\",\n" +
+                "                \"start_property\": \"1002323.123\",\n" +
+                "                \"end_property\": \"983673.343\",\n" +
+                "                \"old_property\": \"83673.343\",\n" +
+                "                \"barCode\": \"da12321se321\",\n" +
+                "                \"lookStatus\": \"0\"\n" +
+                "            },\n" +
+                "            {\n" +
+                "                \"id\": \"8a9a975b5dbcbe9c015Ddbd05f898w\",\n" +
+                "                \"title\": \"血管仿真模型4\",\n" +
+                "                \"count\": \"1\",\n" +
+                "                \"eqType\": \"HT-EW-DAFALFS\",\n" +
+                "                \"eqId\": \"983673q23489341\",\n" +
+                "                \"useAddress\": \"中心实现室\",\n" +
+                "                \"start_data\": \"2017年06月10日\",\n" +
+                "                \"propertyStatus\": \"在用\",\n" +
+                "                \"unitName\": \"台\",\n" +
+                "                \"eqStandard\": \"GD/DEFD\",\n" +
+                "                \"saveAddress\": \"深圳市\",\n" +
+                "                \"start_property\": \"1002323.123\",\n" +
+                "                \"end_property\": \"983673.343\",\n" +
+                "                \"old_property\": \"83673.343\",\n" +
+                "                \"barCode\": \"da12321se321\",\n" +
+                "                \"lookStatus\": \"1\"\n" +
+                "            }\n" +
+                "        ]\n" +
+                "    }\n" +
+                "]";
+        return GsonJsonUtils.fromJsonArray(replaceId(jsonStr), PropertyBean.class);
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -148,6 +322,7 @@ public class PropertyBean extends DataSupport implements Parcelable  {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.my_id);
         dest.writeString(this.title);
         dest.writeString(this.name);
         dest.writeString(this.phone);
@@ -162,9 +337,12 @@ public class PropertyBean extends DataSupport implements Parcelable  {
         dest.writeString(this.start_property);
         dest.writeString(this.end_property);
         dest.writeString(this.updateload);
+        dest.writeString(this.loginName);
+        dest.writeTypedList(this.eqList);
     }
 
     protected PropertyBean(Parcel in) {
+        this.my_id = in.readString();
         this.title = in.readString();
         this.name = in.readString();
         this.phone = in.readString();
@@ -179,6 +357,8 @@ public class PropertyBean extends DataSupport implements Parcelable  {
         this.start_property = in.readString();
         this.end_property = in.readString();
         this.updateload = in.readString();
+        this.loginName = in.readString();
+        this.eqList = in.createTypedArrayList(EquipmentBean.CREATOR);
     }
 
     public static final Creator<PropertyBean> CREATOR = new Creator<PropertyBean>() {

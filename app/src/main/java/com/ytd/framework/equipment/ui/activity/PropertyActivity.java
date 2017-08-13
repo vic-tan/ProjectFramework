@@ -78,6 +78,10 @@ public class PropertyActivity extends BaseSlidingTabStripActivity {
         }
     }
 
+    public IndicatorWrapPagerSlider getmTabs() {
+        return mTabs;
+    }
+
     @Override
     public int getStringArrayResId() {
         return R.array.sliding_tab_strip_pager;

@@ -2,13 +2,13 @@ apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
 
 android {
-    compileSdkVersion 23
+    compileSdkVersion 25
     buildToolsVersion '25.0.0'
 
     defaultConfig {
         applicationId "com.ytd.framework"
         minSdkVersion 15
-        targetSdkVersion 22
+        targetSdkVersion 25
         versionCode 1
         versionName "1.0"
     }
@@ -34,8 +34,8 @@ apt {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     apt "org.androidannotations:androidannotations:3.3.2"
-    compile 'com.android.support:appcompat-v7:23.2.1'
-    compile 'com.android.support:design:23.2.1'
+    compile 'com.android.support:appcompat-v7:25.1.1'
+    compile 'com.android.support:design:25.1.1'
     compile 'org.androidannotations:androidannotations:4.0.0'
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.vic-tan:basic-library-http:1.0.4'
@@ -44,6 +44,7 @@ dependencies {
     compile 'com.vic-tan:basic-library-uikit:1.0.7'
     compile 'com.vic-tan:basic-library-utils:1.0.7'
     compile 'org.litepal.android:core:1.5.1'
+    compile 'cn.yipianfengye.android:zxing-library:2.2'
 //    compile 'cn.bmob.android:bmob-sdk:3.5.5'
     compile 'cn.bmob.android:http-legacy:1.0'
 }

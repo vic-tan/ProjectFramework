@@ -18,6 +18,8 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Fullscreen;
 import org.androidannotations.annotations.ViewById;
 
+import static com.ytd.support.constants.fixed.GlobalConstants.APP_LOGIN_NAME;
+
 /**
  * 登录
  * * Created by ytd on 16/1/19.
@@ -64,7 +66,7 @@ public class LoginActivity extends BaseActivity {
                     ToastUtils.show(this, "密码不正确，请输入测试账号或工号密码为" + ResUtils.getStr(R.string.login_pwd));
                     break;
                 }
-                AppCacheUtils.getInstance(this).put("user_name",user_account_edit.getText().toString());
+                AppCacheUtils.getInstance(this).put(APP_LOGIN_NAME,user_account_edit.getText().toString());
                 StartActUtils.start(this, HomeActivity_.class);
                 StartActUtils.finish(this);
                 break;

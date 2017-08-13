@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.tlf.basic.utils.StartActUtils;
 import com.ytd.framework.R;
+import com.ytd.framework.equipment.bean.PropertyBean;
 import com.ytd.framework.equipment.ui.fragment.EqAllFragment;
 import com.ytd.framework.equipment.ui.fragment.EqAllFragment_;
 import com.ytd.framework.equipment.ui.fragment.EqFinishFragment;
@@ -37,10 +38,12 @@ public class EquipmentActivity extends BaseSlidingTabStripActivity {
     private EqAllFragment allFragment;
     private EqFinishFragment finishFragment;
     private EqUnFinishFragment unfinishFragment;
+    PropertyBean propertyBean;
 
     @AfterViews
     void init() {
         initActionBar();
+        propertyBean = getIntent().getParcelableExtra("bean");
         actionBarView.setOnOptClickListener(new OnOptClickListener() {
             @Override
             public void onClick(View v, ActionBarOptViewTagLevel viewTag) {
@@ -86,6 +89,14 @@ public class EquipmentActivity extends BaseSlidingTabStripActivity {
                 return allFragment;
 
         }
+    }
+
+    public PropertyBean getPropertyBean() {
+        return propertyBean;
+    }
+
+    public IndicatorWrapPagerSlider getmTabs() {
+        return mTabs;
     }
 
     @Override

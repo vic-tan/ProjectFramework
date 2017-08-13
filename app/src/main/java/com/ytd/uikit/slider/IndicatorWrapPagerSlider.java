@@ -97,6 +97,14 @@ public class IndicatorWrapPagerSlider extends HorizontalScrollView{
 
     private Locale locale;
 
+    public AutoLinearLayout getTabsContainer() {
+        return tabsContainer;
+    }
+
+    public int getTabCount() {
+        return tabCount;
+    }
+
     public IndicatorWrapPagerSlider(Context context) {
         this(context, null);
     }

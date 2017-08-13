@@ -1,20 +1,30 @@
 package com.ytd.framework.equipment.ui.fragment;
 
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.tlf.basic.base.adapter.abslistview.AbsCommonAdapter;
 import com.tlf.basic.base.adapter.abslistview.AbsViewHolder;
 import com.tlf.basic.refreshview.more.ListViewFinal;
 import com.tlf.basic.refreshview.more.OnLoadMoreListener;
+import com.tlf.basic.utils.ListUtils;
 import com.tlf.basic.utils.StartActUtils;
+import com.tlf.basic.utils.StringUtils;
 import com.ytd.common.ui.fragment.refreshview.BaseAbsRefreshFragment;
 import com.ytd.framework.R;
 import com.ytd.framework.equipment.bean.PropertyBean;
+import com.ytd.framework.equipment.presenter.IProperyPresenter;
+import com.ytd.framework.equipment.presenter.impl.ProperyPresenterImpl;
+import com.ytd.framework.equipment.ui.activity.PropertyActivity;
 import com.ytd.framework.equipment.ui.activity.PropertyDetailsActivity_;
 import com.ytd.support.constants.fixed.UrlConstants;
+import com.ytd.support.utils.ResUtils;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
@@ -33,15 +43,18 @@ public class ListPropertyFragment extends BaseAbsRefreshFragment {
 
     public static final String TAG = ListPropertyFragment.class.getSimpleName();
 
+
     @ViewById(R.id.ptr_root_layout)
     RelativeLayout ptrRootLayout;
     @ViewById(R.id.lv_games)
     ListViewFinal mLvGames;
+    IProperyPresenter properyPresenter;
 
 
     @AfterViews
     void init() {
         super.supperInit(getActivity());
+        properyPresenter = new ProperyPresenterImpl();
         mLvGames.setAdapter(getmRefreshAdapter());
         mLvGames.setEmptyView(mFlEmptyView);
         mLvGames.setOnLoadMoreListener(new OnLoadMoreListener() {
@@ -50,6 +63,8 @@ public class ListPropertyFragment extends BaseAbsRefreshFragment {
                 requestLoadMore();
             }
         });
+
+        mRefreshList.addAll(properyPresenter.findAll(getActivity()));
 
     }
 
@@ -88,6 +103,7 @@ public class ListPropertyFragment extends BaseAbsRefreshFragment {
     @Override
     public AbsCommonAdapter setRefreshAdapter() {
         return new AbsCommonAdapter<PropertyBean>(getActivity(), R.layout.property_refresh_list_item, (List<PropertyBean>) mRefreshList) {
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             protected void convert(AbsViewHolder holder, final PropertyBean bean, int position) {
                 holder.setText(R.id.title, bean.getTitle());
@@ -95,13 +111,23 @@ public class ListPropertyFragment extends BaseAbsRefreshFragment {
                 holder.setText(R.id.price, bean.getPrice());
                 holder.setText(R.id.arce, bean.getArea());
                 holder.setText(R.id.add, bean.getAddress());
-                holder.setText(R.id.num, "一共有:" + bean.getFinshNum() + "/" + bean.getTotalNum() + "台设备已盘点");
+                ImageView selectTag = holder.getView(R.id.selectTag);
+                TextView selectText = holder.getView(R.id.stutas);
+                if (StringUtils.isEquals(bean.getStatus(), "0")) {//未完成
+                    selectTag.setBackground(ResUtils.getDrawable(R.mipmap.unselect));
+                    selectText.setText("未完成");
+                } else {
+                    selectTag.setBackground(ResUtils.getDrawable(R.mipmap.select));
+                    selectText.setText("已完成");
+                }
+                holder.setText(R.id.start_num, bean.getFinshNum());
+                holder.setText(R.id.end_num, "/" + bean.getTotalNum());
                 holder.setText(R.id.data, bean.getStart_data() + "一" + bean.getEnd_data());
 
                 holder.getConvertView().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        StartActUtils.start(mContext, PropertyDetailsActivity_.class,"bean",bean);
+                        StartActUtils.start(mContext, PropertyDetailsActivity_.class, "bean", bean);
                     }
                 });
             }
@@ -111,20 +137,14 @@ public class ListPropertyFragment extends BaseAbsRefreshFragment {
 
     @Override
     public void after() {
-        PropertyBean bean = new PropertyBean();
-        bean.setName("汪总");
-        bean.setStart_property("1002323.123");
-        bean.setEnd_property("983673.343");
-        bean.setTitle("汪科长的盘点");
-        bean.setPrice("一万以下");
-        bean.setAddress("中心实现室");
-        bean.setEnd_data("2017年05月12日");
-        bean.setStart_data("2017年05月10日");
-        bean.setPhone("13823297564");
-        bean.setArea("中心仓库");
-        bean.setFinshNum("200");
-        bean.setTotalNum("300");
-        mRefreshList.add(bean);
+        //TODO
+        if (ListUtils.isEmpty(mRefreshList)) {
+            mRefreshList.addAll(PropertyBean.addTestListBean());
+            properyPresenter.save(getActivity(), mRefreshList);
+        }
+        ((TextView) (((PropertyActivity) getActivity()).getmTabs().getTabsContainer().getChildAt(0))).setText(ResUtils.getStr(R.string.sliding_tab_strip_pager_has_heaer) + "  ("+mRefreshList.size()+")");
         mRefreshAdapter.notifyDataSetChanged();
     }
+
+
 }

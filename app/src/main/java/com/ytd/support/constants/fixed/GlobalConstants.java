@@ -42,11 +42,10 @@ public class GlobalConstants {
      * 缓存在app 目录下的 路径
      */
     public static final String APP_CACHE_NAME = "appCache";
+    public static final String APP_LOGIN_NAME = "user_name";
 
-    /**
-     * 数据库名字
-     **/
-    public static final String DB_NAME = "basic_framework_db";
+
+
 
 
 
