@@ -676,7 +676,7 @@
             app:qrcv_isShowTipTextAsSingleLine="false"
             app:qrcv_isTipTextBelowRect="false"
             app:qrcv_maskColor="#33FFFFFF"
-            app:qrcv_qrCodeTipText="将二维码/条码放入设备上方的扫码器上，对准后按右方黄色按钮"
+            app:qrcv_qrCodeTipText="将二维码/条码对准设备顶部的扫码器，然后按两边黄色按钮即可"
             app:qrcv_rectWidth="200dp"
             app:qrcv_scanLineColor="@color/theme_color"
             app:qrcv_toolbarHeight="56dp"
