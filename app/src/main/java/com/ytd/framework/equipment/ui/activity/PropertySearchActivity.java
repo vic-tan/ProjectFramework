@@ -1,5 +1,7 @@
 package com.ytd.framework.equipment.ui.activity;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -19,6 +21,7 @@ import com.ytd.framework.R;
 import com.ytd.framework.equipment.bean.PropertyBean;
 import com.ytd.framework.equipment.presenter.IProperyPresenter;
 import com.ytd.framework.equipment.presenter.impl.ProperyPresenterImpl;
+import com.ytd.support.utils.ResUtils;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -62,6 +65,7 @@ public class PropertySearchActivity extends BaseActionBarActivity {
         flEmptyView.setVisibility(View.GONE);
         presenter = new ProperyPresenterImpl();
         adapter = new AbsCommonAdapter<PropertyBean>(mContext, R.layout.property_refresh_list_item, (List<PropertyBean>) listData) {
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             protected void convert(AbsViewHolder holder, final PropertyBean bean, int position) {
                 holder.setText(R.id.title, bean.getTitle());
@@ -69,6 +73,18 @@ public class PropertySearchActivity extends BaseActionBarActivity {
                 holder.setText(R.id.price, bean.getPrice());
                 holder.setText(R.id.arce, bean.getArea());
                 holder.setText(R.id.add, bean.getAddress());
+                holder.setText(R.id.start_num, bean.getFinshNum());
+                holder.setText(R.id.end_num, "/" + bean.getTotalNum());
+                holder.setText(R.id.data, bean.getStart_data() + "一" + bean.getEnd_data());
+                ImageView selectTag = holder.getView(R.id.selectTag);
+                TextView selectText = holder.getView(R.id.stutas);
+                if (StringUtils.isEquals(bean.getStatus(), "0")) {//未完成
+                    selectTag.setBackground(ResUtils.getDrawable(R.mipmap.unselect));
+                    selectText.setText("未完成");
+                } else {
+                    selectTag.setBackground(ResUtils.getDrawable(R.mipmap.select));
+                    selectText.setText("已完成");
+                }
                 holder.setText(R.id.start_num, bean.getFinshNum());
                 holder.setText(R.id.end_num, "/" + bean.getTotalNum());
                 holder.setText(R.id.data, bean.getStart_data() + "一" + bean.getEnd_data());

@@ -1,648 +1,703 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.tlf.basic.base.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                  xmlns:abv="http://schemas.android.com/apk/res-auto"
+                                                  xmlns:app="http://schemas.android.com/apk/res-auto"
                                                   android:layout_width="match_parent"
                                                   android:layout_height="match_parent"
                                                   android:background="@color/floral_white"
                                                   android:orientation="vertical">
 
-
-    <com.ytd.uikit.actionbar.ActionBarView
-        android:id="@+id/actionbar"
+    <com.tlf.basic.base.autolayout.AutoRelativeLayout
+        android:id="@+id/resultLayout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/common_actionbar_standard_height"
-        android:layout_alignParentTop="true"
-        abv:abv_back_text="设备详情"
-        abv:abv_opt_left_text="测试扫描"
-        />
+        android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/opt"
-        android:layout_width="match_parent"
-        android:layout_height="140px"
-        android:layout_alignParentBottom="true">
 
-        <com.tlf.basic.uikit.roundview.RoundTextView
-            android:id="@+id/updateBtn"
-            android:layout_width="0px"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="修改"
-            android:textColor="@color/white"
-            android:textSize="42px"
-            abv:rv_backgroundColor="#FC5830"
-            abv:rv_backgroundPressColor="#72FC5830"
+        <com.ytd.uikit.actionbar.ActionBarView
+            android:id="@+id/actionbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/common_actionbar_standard_height"
+            android:layout_alignParentTop="true"
+            app:abv_back_text="设备详情"
             />
 
-
-        <com.tlf.basic.uikit.roundview.RoundTextView
-            android:id="@+id/saveBtn"
-            android:layout_width="0px"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="保存"
-            android:textColor="@color/white"
-            android:textSize="42px"
-            abv:rv_backgroundColor="@color/base_button_bg_normal"
-            abv:rv_backgroundPressColor="@color/base_button_bg_pressed"/>
-
-
-    </LinearLayout>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/opt"
-        android:layout_below="@id/actionbar">
-
         <LinearLayout
+            android:id="@+id/opt"
+            android:layout_width="match_parent"
+            android:layout_height="140px"
+            android:layout_alignParentBottom="true">
+
+            <com.tlf.basic.uikit.roundview.RoundTextView
+                android:id="@+id/updateBtn"
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="修改"
+                android:textColor="@color/white"
+                android:textSize="42px"
+                app:rv_backgroundColor="#FC5830"
+                app:rv_backgroundPressColor="#72FC5830"
+                />
+
+
+            <com.tlf.basic.uikit.roundview.RoundTextView
+                android:id="@+id/saveBtn"
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="保存"
+                android:textColor="@color/white"
+                android:textSize="42px"
+                app:rv_backgroundColor="@color/base_button_bg_normal"
+                app:rv_backgroundPressColor="@color/base_button_bg_pressed"/>
+
+
+        </LinearLayout>
+
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/floral_white"
-                android:paddingBottom="15px"
-                android:paddingTop="15px">
-
-                <View
-                    android:layout_width="10px"
-                    android:layout_height="40px"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="20px"
-                    android:background="#607FD3"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="20px"
-                    android:text="资产详情信息"
-                    android:textColor="#607FD3"
-                    android:textSize="42px"/>
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1.5px"
-                android:background="@color/list_line"/>
+            android:layout_above="@id/opt"
+            android:layout_below="@id/actionbar">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="80px"
-                android:layout_marginRight="80px"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingBottom="15px"
-                        android:paddingLeft="50px"
-                        android:paddingTop="20px">
-
-                        <TextView
-                            android:id="@+id/title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="资产名称："
-                            android:textColor="@color/txt_desc_color"
-                            android:textSize="32px"/>
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1.5px"
-                        android:background="@color/list_line"/>
-                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingBottom="15px"
-                        android:paddingLeft="50px"
-                        android:paddingTop="10px">
-
-                        <TextView
-                            android:id="@+id/address"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="资产编号："
-                            android:textColor="@color/txt_desc_color"
-                            android:textSize="32px"/>
-
-                    </LinearLayout>
+                    android:background="@color/floral_white"
+                    android:paddingBottom="15px"
+                    android:paddingTop="15px">
 
                     <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1.5px"
-                        android:background="@color/list_line"/>
-                </LinearLayout>
+                        android:layout_width="10px"
+                        android:layout_height="40px"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="20px"
+                        android:background="#607FD3"/>
 
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingBottom="15px"
-                        android:paddingLeft="10px"
-                        android:paddingTop="20px">
-
-                        <TextView
-                            android:id="@+id/eqNumber"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="资产条码号："
-                            android:textColor="@color/txt_desc_color"
-                            android:textSize="32px"/>
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1.5px"
-                        android:background="@color/list_line"/>
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginLeft="20px"
+                        android:text="资产详情信息"
+                        android:textColor="#607FD3"
+                        android:textSize="42px"/>
                 </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingBottom="15px"
-                        android:paddingLeft="50px"
-                        android:paddingTop="20px">
-
-                        <TextView
-                            android:id="@+id/useAddress"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="使用科室："
-                            android:textColor="@color/txt_desc_color"
-                            android:textSize="32px"/>
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1.5px"
-                        android:background="@color/list_line"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingBottom="15px"
-                        android:paddingLeft="50px"
-                        android:paddingTop="20px">
-
-                        <TextView
-                            android:id="@+id/eqStandard"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="资产规格："
-                            android:textColor="@color/txt_desc_color"
-                            android:textSize="32px"/>
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1.5px"
-                        android:background="@color/list_line"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingBottom="15px"
-                        android:paddingLeft="120px"
-                        android:paddingTop="20px">
-
-                        <TextView
-                            android:id="@+id/unitName"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="单位："
-                            android:textColor="@color/txt_desc_color"
-                            android:textSize="32px"/>
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1.5px"
-                        android:background="@color/list_line"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingBottom="15px"
-                        android:paddingLeft="50px"
-                        android:paddingTop="20px">
-
-                        <TextView
-                            android:id="@+id/startDate"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="启用日期："
-                            android:textColor="@color/txt_desc_color"
-                            android:textSize="32px"/>
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1.5px"
-                        android:background="@color/list_line"/>
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingBottom="15px"
-                        android:paddingLeft="120px"
-                        android:paddingTop="20px">
-
-                        <TextView
-                            android:id="@+id/startProperty"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="原值："
-                            android:textColor="@color/txt_desc_color"
-                            android:textSize="32px"/>
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1.5px"
-                        android:background="@color/list_line"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingBottom="15px"
-                        android:paddingLeft="120px"
-                        android:paddingTop="20px">
-
-                        <TextView
-                            android:id="@+id/oldProperty"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="折旧："
-                            android:textColor="@color/txt_desc_color"
-                            android:textSize="32px"/>
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1.5px"
-                        android:background="@color/list_line"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingBottom="15px"
-                        android:paddingLeft="120px"
-                        android:paddingTop="20px">
-
-                        <TextView
-                            android:id="@+id/endProperty"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="净值："
-                            android:textColor="@color/txt_desc_color"
-                            android:textSize="32px"/>
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1.5px"
-                        android:background="@color/list_line"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingBottom="15px"
-                        android:paddingLeft="50px"
-                        android:paddingTop="20px">
-
-                        <TextView
-                            android:id="@+id/eqType"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="资产分类："
-                            android:textColor="@color/txt_desc_color"
-                            android:textSize="32px"/>
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1.5px"
-                        android:background="@color/list_line"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingBottom="30px"
-                        android:paddingLeft="50px"
-                        android:paddingTop="20px">
-
-                        <TextView
-                            android:id="@+id/saveAddress"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="存放地点："
-                            android:textColor="@color/txt_desc_color"
-                            android:textSize="32px"/>
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1.5px"
-                        android:background="@color/list_line"/>
-                </LinearLayout>
-
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="25px"
-                android:background="@color/eq_details_bg"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/floral_white"
-                android:paddingBottom="15px"
-                android:paddingTop="15px">
 
                 <View
-                    android:layout_width="10px"
-                    android:layout_height="40px"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="20px"
-                    android:background="#607FD3"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="1.5px"
+                    android:background="@color/list_line"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="20px"
-                    android:text="盘点详情"
-                    android:textColor="#607FD3"
-                    android:textSize="42px"/>
-            </LinearLayout>
+                    android:layout_marginLeft="80px"
+                    android:layout_marginRight="80px"
+                    android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="80px"
-                android:layout_marginRight="80px"
-                android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
-                <RelativeLayout
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingBottom="15px"
+                            android:paddingLeft="50px"
+                            android:paddingTop="20px">
+
+                            <TextView
+                                android:id="@+id/title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="资产名称："
+                                android:textColor="@color/txt_desc_color"
+                                android:textSize="32px"/>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1.5px"
+                            android:background="@color/list_line"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingBottom="15px"
+                            android:paddingLeft="50px"
+                            android:paddingTop="10px">
+
+                            <TextView
+                                android:id="@+id/address"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="资产编号："
+                                android:textColor="@color/txt_desc_color"
+                                android:textSize="32px"/>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1.5px"
+                            android:background="@color/list_line"/>
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingBottom="15px"
+                            android:paddingLeft="10px"
+                            android:paddingTop="20px">
+
+                            <TextView
+                                android:id="@+id/eqNumber"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="资产条码号："
+                                android:textColor="@color/txt_desc_color"
+                                android:textSize="32px"/>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1.5px"
+                            android:background="@color/list_line"/>
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingBottom="15px"
+                            android:paddingLeft="50px"
+                            android:paddingTop="20px">
+
+                            <TextView
+                                android:id="@+id/useAddress"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="使用科室："
+                                android:textColor="@color/txt_desc_color"
+                                android:textSize="32px"/>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1.5px"
+                            android:background="@color/list_line"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingBottom="15px"
+                            android:paddingLeft="50px"
+                            android:paddingTop="20px">
+
+                            <TextView
+                                android:id="@+id/eqStandard"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="资产规格："
+                                android:textColor="@color/txt_desc_color"
+                                android:textSize="32px"/>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1.5px"
+                            android:background="@color/list_line"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingBottom="15px"
+                            android:paddingLeft="120px"
+                            android:paddingTop="20px">
+
+                            <TextView
+                                android:id="@+id/unitName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="单位："
+                                android:textColor="@color/txt_desc_color"
+                                android:textSize="32px"/>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1.5px"
+                            android:background="@color/list_line"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingBottom="15px"
+                            android:paddingLeft="50px"
+                            android:paddingTop="20px">
+
+                            <TextView
+                                android:id="@+id/startDate"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="启用日期："
+                                android:textColor="@color/txt_desc_color"
+                                android:textSize="32px"/>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1.5px"
+                            android:background="@color/list_line"/>
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingBottom="15px"
+                            android:paddingLeft="120px"
+                            android:paddingTop="20px">
+
+                            <TextView
+                                android:id="@+id/startProperty"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="原值："
+                                android:textColor="@color/txt_desc_color"
+                                android:textSize="32px"/>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1.5px"
+                            android:background="@color/list_line"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingBottom="15px"
+                            android:paddingLeft="120px"
+                            android:paddingTop="20px">
+
+                            <TextView
+                                android:id="@+id/oldProperty"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="折旧："
+                                android:textColor="@color/txt_desc_color"
+                                android:textSize="32px"/>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1.5px"
+                            android:background="@color/list_line"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingBottom="15px"
+                            android:paddingLeft="120px"
+                            android:paddingTop="20px">
+
+                            <TextView
+                                android:id="@+id/endProperty"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="净值："
+                                android:textColor="@color/txt_desc_color"
+                                android:textSize="32px"/>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1.5px"
+                            android:background="@color/list_line"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingBottom="15px"
+                            android:paddingLeft="50px"
+                            android:paddingTop="20px">
+
+                            <TextView
+                                android:id="@+id/eqType"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="资产分类："
+                                android:textColor="@color/txt_desc_color"
+                                android:textSize="32px"/>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1.5px"
+                            android:background="@color/list_line"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingBottom="30px"
+                            android:paddingLeft="50px"
+                            android:paddingTop="20px">
+
+                            <TextView
+                                android:id="@+id/saveAddress"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="存放地点："
+                                android:textColor="@color/txt_desc_color"
+                                android:textSize="32px"/>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1.5px"
+                            android:background="@color/list_line"/>
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <View
                     android:layout_width="match_parent"
-                    android:layout_height="80px"
-                    android:layout_marginLeft="50px"
-                    android:layout_marginRight="50px"
-                    android:layout_marginTop="10px"
-                    android:orientation="horizontal">
+                    android:layout_height="25px"
+                    android:background="@color/eq_details_bg"/>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/floral_white"
+                    android:paddingBottom="15px"
+                    android:paddingTop="15px">
+
+                    <View
+                        android:layout_width="10px"
+                        android:layout_height="40px"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="20px"
+                        android:background="#607FD3"/>
 
                     <TextView
-                        android:id="@+id/stutas_titile"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="50px"
-                        android:maxLines="1"
-                        android:text="资产状态    :"
-                        android:textColor="@color/txt_color"
-                        android:textSize="30px"/>
-
-                    <com.tlf.basic.uikit.roundview.RoundRelativeLayout
-                        android:layout_width="450px"
-                        android:layout_height="match_parent"
+                        android:layout_alignParentLeft="true"
                         android:layout_marginLeft="20px"
-                        android:layout_toRightOf="@id/stutas_titile"
-                        abv:rv_backgroundColor="@color/whisper"
-                        abv:rv_cornerRadius="15px">
+                        android:text="盘点详情"
+                        android:textColor="#607FD3"
+                        android:textSize="42px"/>
+                </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/useStatus"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginRight="10px"
-                            android:gravity="center_vertical"
-                            android:background="@null"
-                            android:ellipsize="end"
-                            android:maxLines="1"
-                            android:textSize="35px"
-                            android:paddingLeft="15px"
-                            android:textColor="@color/txt_color"
-                            />
-
-
-                    </com.tlf.basic.uikit.roundview.RoundRelativeLayout>
-                </RelativeLayout>
-
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="80px"
-                    android:layout_marginLeft="50px"
-                    android:layout_marginRight="50px"
-                    android:layout_marginTop="20px"
-                    android:orientation="horizontal">
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="80px"
+                    android:layout_marginRight="80px"
+                    android:orientation="vertical">
 
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="80px"
+                        android:layout_marginLeft="50px"
+                        android:layout_marginRight="50px"
+                        android:layout_marginTop="10px"
+                        android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/name_titile"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="50px"
-                        android:maxLines="1"
-                        android:text="盘点日期    :"
-                        android:textColor="@color/txt_color"
-                        android:textSize="30px"/>
-
-                    <com.tlf.basic.uikit.roundview.RoundRelativeLayout
-                        android:layout_width="450px"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="20px"
-                        android:layout_centerVertical="true"
-                        android:layout_toRightOf="@id/name_titile"
-                        abv:rv_backgroundColor="@color/whisper"
-                        abv:rv_cornerRadius="15px">
 
                         <TextView
-                            android:id="@+id/date"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginRight="10px"
-                            android:background="@null"
-                            android:gravity="center_vertical"
-                            android:ellipsize="end"
-                            android:maxLines="1"
-                            android:paddingLeft="15px"
+                            android:id="@+id/stutas_titile"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:textSize="35px"
-                            android:text=""
-                            android:focusableInTouchMode="true"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="50px"
+                            android:maxLines="1"
+                            android:text="资产状态    :"
                             android:textColor="@color/txt_color"
-                            />
+                            android:textSize="30px"/>
 
-                    </com.tlf.basic.uikit.roundview.RoundRelativeLayout>
-                </RelativeLayout>
+                        <com.tlf.basic.uikit.roundview.RoundRelativeLayout
+                            android:layout_width="450px"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="20px"
+                            android:layout_toRightOf="@id/stutas_titile"
+                            app:rv_backgroundColor="@color/whisper"
+                            app:rv_cornerRadius="15px">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="90px"
-                    android:layout_marginTop="20px"
-                    android:orientation="horizontal">
+                            <TextView
+                                android:id="@+id/useStatus"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginRight="10px"
+                                android:background="@null"
+                                android:ellipsize="end"
+                                android:gravity="center_vertical"
+                                android:maxLines="1"
+                                android:paddingLeft="15px"
+                                android:textColor="@color/txt_color"
+                                android:textSize="35px"
+                                />
 
 
-                    <TextView
-                        android:id="@+id/date_titile"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:maxLines="1"
-                        android:text="备注     :"
-                        android:textColor="@color/txt_color"
-                        android:textSize="32px"/>
+                        </com.tlf.basic.uikit.roundview.RoundRelativeLayout>
+                    </RelativeLayout>
 
-                    <com.tlf.basic.uikit.roundview.RoundRelativeLayout
-                        android:id="@+id/start_date_layout"
-                        android:layout_width="740px"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="20px"
-                        android:layout_toRightOf="@id/date_titile"
-                        abv:rv_backgroundColor="@color/whisper"
-                        abv:rv_cornerRadius="15px">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="80px"
+                        android:layout_marginLeft="50px"
+                        android:layout_marginRight="50px"
+                        android:layout_marginTop="20px"
+                        android:orientation="horizontal">
 
-                        <EditText
-                            android:id="@+id/remark"
-                            android:layout_width="match_parent"
-                            android:layout_height="200px"
-                            android:layout_marginRight="10px"
-                            android:background="@null"
-                            android:ellipsize="end"
-                            android:gravity="top"
-                            android:paddingLeft="15px"
-                            android:paddingTop="15px"
-                            android:textSize="35px"
-                            android:textColor="@color/txt_color"
-                            />
 
                         <TextView
+                            android:id="@+id/name_titile"
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_alignParentBottom="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginRight="15px"
-                            android:gravity="center_vertical"
-                            android:paddingBottom="20px"
-                            android:paddingRight="20px"
-                            android:text="还可以输入0/200个字"
-                            android:textColor="@color/add_desc"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="50px"
+                            android:maxLines="1"
+                            android:text="盘点日期    :"
+                            android:textColor="@color/txt_color"
                             android:textSize="30px"/>
-                    </com.tlf.basic.uikit.roundview.RoundRelativeLayout>
-                </RelativeLayout>
+
+                        <com.tlf.basic.uikit.roundview.RoundRelativeLayout
+                            android:layout_width="450px"
+                            android:layout_height="match_parent"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="20px"
+                            android:layout_toRightOf="@id/name_titile"
+                            app:rv_backgroundColor="@color/whisper"
+                            app:rv_cornerRadius="15px">
+
+                            <TextView
+                                android:id="@+id/date"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_centerVertical="true"
+                                android:layout_marginRight="10px"
+                                android:background="@null"
+                                android:ellipsize="end"
+                                android:focusableInTouchMode="true"
+                                android:gravity="center_vertical"
+                                android:maxLines="1"
+                                android:paddingLeft="15px"
+                                android:text=""
+                                android:textColor="@color/txt_color"
+                                android:textSize="35px"
+                                />
+
+                        </com.tlf.basic.uikit.roundview.RoundRelativeLayout>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="90px"
+                        android:layout_marginTop="20px"
+                        android:orientation="horizontal">
+
+
+                        <TextView
+                            android:id="@+id/date_titile"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:maxLines="1"
+                            android:text="备注     :"
+                            android:textColor="@color/txt_color"
+                            android:textSize="32px"/>
+
+                        <com.tlf.basic.uikit.roundview.RoundRelativeLayout
+                            android:id="@+id/start_date_layout"
+                            android:layout_width="740px"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="20px"
+                            android:layout_toRightOf="@id/date_titile"
+                            app:rv_backgroundColor="@color/whisper"
+                            app:rv_cornerRadius="15px">
+
+                            <EditText
+                                android:id="@+id/remark"
+                                android:layout_width="match_parent"
+                                android:layout_height="200px"
+                                android:layout_marginRight="10px"
+                                android:background="@null"
+                                android:ellipsize="end"
+                                android:gravity="top"
+                                android:paddingLeft="15px"
+                                android:paddingTop="15px"
+                                android:textColor="@color/txt_color"
+                                android:textSize="35px"
+                                />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_alignParentBottom="true"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginRight="15px"
+                                android:gravity="center_vertical"
+                                android:paddingBottom="20px"
+                                android:paddingRight="20px"
+                                android:text="还可以输入0/200个字"
+                                android:textColor="@color/add_desc"
+                                android:textSize="30px"/>
+                        </com.tlf.basic.uikit.roundview.RoundRelativeLayout>
+                    </RelativeLayout>
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
+        </ScrollView>
+    </com.tlf.basic.base.autolayout.AutoRelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/scanLayout"
+        style="@style/MatchMatch">
+
+
+        <cn.bingoogolapple.qrcode.zbar.ZBarView
+            android:id="@+id/zbarview"
+            style="@style/MatchMatch"
+            app:qrcv_animTime="1000"
+            app:qrcv_barCodeTipText="将条码放入框内，即可自动扫描"
+            app:qrcv_barcodeRectHeight="140dp"
+            app:qrcv_borderColor="@android:color/white"
+            app:qrcv_borderSize="1dp"
+            app:qrcv_cornerColor="@color/theme_color"
+            app:qrcv_cornerLength="20dp"
+            app:qrcv_cornerSize="3dp"
+            app:qrcv_customGridScanLineDrawable="@mipmap/custom_scan_line"
+            app:qrcv_isBarcode="false"
+            app:qrcv_isCenterVertical="false"
+            app:qrcv_isOnlyDecodeScanBoxArea="false"
+            app:qrcv_isShowDefaultGridScanLineDrawable="true"
+            app:qrcv_isShowDefaultScanLineDrawable="true"
+            app:qrcv_isShowTipBackground="true"
+            app:qrcv_isShowTipTextAsSingleLine="false"
+            app:qrcv_isTipTextBelowRect="false"
+            app:qrcv_maskColor="#33FFFFFF"
+            app:qrcv_qrCodeTipText="将二维码/条码放入设备上方的扫码器上，对准后按右方黄色按钮"
+            app:qrcv_rectWidth="200dp"
+            app:qrcv_scanLineColor="@color/theme_color"
+            app:qrcv_toolbarHeight="56dp"
+            app:qrcv_topOffset="90dp"/>
+
+
+        <com.tlf.basic.uikit.roundview.RoundTextView
+            android:id="@+id/testResult"
+            android:layout_width="300px"
+            android:layout_height="100px"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="50px"
+            android:gravity="center"
+            android:text="测试扫描结果"
+            android:textColor="@color/white"
+            android:textSize="42px"
+            app:rv_backgroundColor="@color/base_button_bg_normal"
+            app:rv_backgroundPressColor="@color/base_button_bg_pressed"
+            app:rv_cornerRadius="10px"/>
+    </RelativeLayout>
+
 
 </com.tlf.basic.base.autolayout.AutoRelativeLayout>

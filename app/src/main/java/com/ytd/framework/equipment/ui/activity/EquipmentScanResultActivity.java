@@ -10,6 +10,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bigkoo.pickerview.OptionsPickerView;
@@ -46,6 +47,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import cn.bingoogolapple.qrcode.core.QRCodeView;
 
 /**
  * Created by ytd on 16/1/19.
@@ -97,7 +100,13 @@ public class EquipmentScanResultActivity extends BaseActionBarActivity {
     EditText remark;
     @ViewById
     RoundRelativeLayout startDateLayout;
+    @ViewById
+    RelativeLayout resultLayout;
+    @ViewById
+    RelativeLayout scanLayout;
 
+    @ViewById
+    QRCodeView zbarview;
 
     protected KProgressHUD hud;
     PropertyBean propertyBean;
@@ -112,18 +121,22 @@ public class EquipmentScanResultActivity extends BaseActionBarActivity {
     private static final String RES_ACTION = "android.intent.action.SCANRESULT";
     NormalDialog dialog;
 
+    private String testScanID = "324EWa975b5dbcbefdd9c015WDdbd05f898w";
+
     @AfterViews
     void init() {
         initActionBar();
+
         propertyBean = getIntent().getParcelableExtra("bean");
         equipmentPresenter = new EquipmentPresenterImpl();
         actionBarView.setOnOptClickListener(new OnOptClickListener() {
             @Override
             public void onClick(View v, ActionBarOptViewTagLevel viewTag) {
-                findScanResult("324EWa975b5dbcbefdd9c015WDdbd05f898w");
+                findScanResult(testScanID);
             }
         });
         initScanner();
+        showScanView();
         opt.setVisibility(View.GONE);
         hud = KProgressHUD.create(mContext)
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
@@ -131,6 +144,19 @@ public class EquipmentScanResultActivity extends BaseActionBarActivity {
                 .setLabel(mContext.getResources().getString(R.string.common_dialog_loading))
                 .setCancellable(false);
         dialog = new NormalDialog(mContext);
+    }
+
+    /**
+     * 显示扫描控件
+     */
+    private void showScanView() {
+        scanLayout.setVisibility(View.VISIBLE);
+        resultLayout.setVisibility(View.GONE);
+    }
+
+    private void showResltLayoutView() {
+        scanLayout.setVisibility(View.GONE);
+        resultLayout.setVisibility(View.VISIBLE);
     }
 
 
@@ -184,7 +210,8 @@ public class EquipmentScanResultActivity extends BaseActionBarActivity {
                 /**
                  * 扫码ID是写死的，还有资产ID，到时修改
                  */
-                findScanResult("8a9a975b5dbcbefdd9c015WDdbd05f898w");
+
+                findScanResult(testScanID);
             }
         }
     }
@@ -199,6 +226,7 @@ public class EquipmentScanResultActivity extends BaseActionBarActivity {
         } else {
             hud.dismiss();
             setData(list.get(0));
+            showResltLayoutView();
         }
 
     }
@@ -230,9 +258,12 @@ public class EquipmentScanResultActivity extends BaseActionBarActivity {
     }
 
 
-    @Click({R.id.useStatus, R.id.date, R.id.saveBtn, R.id.updateBtn})
+    @Click({R.id.testResult, R.id.useStatus, R.id.date, R.id.saveBtn, R.id.updateBtn})
     void click(View v) {
         switch (v.getId()) {
+            case R.id.testResult://使用状态
+                findScanResult(testScanID);
+                break;
             case R.id.useStatus://使用状态
                 useStatus();
                 break;
@@ -271,7 +302,8 @@ public class EquipmentScanResultActivity extends BaseActionBarActivity {
                     dialog.setOnBtnClickL(new OnBtnClickL() {
                         @Override
                         public void onBtnClick(View v, Dialog dialog) {
-                            ToastUtils.show(mContext, "middle");
+                            findBean = new EquipmentBean();
+                            showScanView();
                             dialog.dismiss();
                         }
                     });

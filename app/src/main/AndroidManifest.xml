@@ -111,7 +111,7 @@
             android:name=".equipment.ui.activity.PropertyDetailsActivity_"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".equipment.ui.activity.EquipmentScanActivity"
+            android:name=".main.ui.activity.TestScanActivity"
             android:screenOrientation="portrait"/>
 
 
