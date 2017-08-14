@@ -17,6 +17,8 @@ import com.tlf.basic.utils.ToastUtils;
 import com.ytd.common.ui.activity.actionbar.BaseActionBarActivity;
 import com.ytd.framework.R;
 import com.ytd.framework.equipment.bean.PropertyBean;
+import com.ytd.framework.equipment.presenter.IProperyPresenter;
+import com.ytd.framework.equipment.presenter.impl.ProperyPresenterImpl;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -51,13 +53,14 @@ public class PropertySearchActivity extends BaseActionBarActivity {
 
     AbsCommonAdapter adapter;
     List<PropertyBean> listData;
-
+    IProperyPresenter presenter;
 
     @AfterViews
     void init() {
         initActionBar();
         listData = new ArrayList<>();
         flEmptyView.setVisibility(View.GONE);
+        presenter = new ProperyPresenterImpl();
         adapter = new AbsCommonAdapter<PropertyBean>(mContext, R.layout.property_refresh_list_item, (List<PropertyBean>) listData) {
             @Override
             protected void convert(AbsViewHolder holder, final PropertyBean bean, int position) {
@@ -88,30 +91,21 @@ public class PropertySearchActivity extends BaseActionBarActivity {
             ToastUtils.show(mContext, "搜索内容不能为空");
             return;
         }
-        searchResult();
-
+        searchResult(searchContent.getText().toString());
     }
 
 
-    public void searchResult() {
-        PropertyBean bean = new PropertyBean();
-        bean.setName("汪总");
-        bean.setStart_property("1002323.123");
-        bean.setEnd_property("983673.343");
-        bean.setTitle("汪科长的盘点");
-        bean.setPrice("一万以下");
-        bean.setAddress("中心实现室");
-        bean.setEnd_data("2017年05月12日");
-        bean.setStart_data("2017年05月10日");
-        bean.setPhone("13823297564");
-        bean.setArea("中心仓库");
-        bean.setFinshNum("200");
-        bean.setTotalNum("300");
-        listData.add(bean);
+    public void searchResult(String search) {
+        listData.clear();
+        List<PropertyBean> list = presenter.findBySearch(mContext, search);
+        if(ListUtils.isEmpty(list)){
+            ToastUtils.show(mContext,"暂时没有搜索您要找的数据!");
+        }
+        listData.addAll(list);
         adapter.notifyDataSetChanged();
-        if(ListUtils.isEmpty(listData)){
+        if (ListUtils.isEmpty(listData)) {
             flEmptyView.setVisibility(View.GONE);
-        }else{
+        } else {
             flEmptyView.setVisibility(View.GONE);
         }
     }

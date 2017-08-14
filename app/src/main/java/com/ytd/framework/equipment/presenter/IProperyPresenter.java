@@ -15,4 +15,6 @@ public interface IProperyPresenter {
     void save(Context mContext, List<PropertyBean> list);//保存数据
 
     List<PropertyBean> findAll(Context mContext);
+
+    List<PropertyBean> findBySearch(Context mContext,String search);//搜索盘点单
 }

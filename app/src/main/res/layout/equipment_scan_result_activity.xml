@@ -13,6 +13,7 @@
         android:layout_height="@dimen/common_actionbar_standard_height"
         android:layout_alignParentTop="true"
         abv:abv_back_text="设备详情"
+        abv:abv_opt_left_text="测试扫描"
         />
 
     <LinearLayout
@@ -22,7 +23,7 @@
         android:layout_alignParentBottom="true">
 
         <com.tlf.basic.uikit.roundview.RoundTextView
-            android:id="@+id/updateLoadBtn"
+            android:id="@+id/updateBtn"
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -36,7 +37,7 @@
 
 
         <com.tlf.basic.uikit.roundview.RoundTextView
-            android:id="@+id/lookeEqBtn"
+            android:id="@+id/saveBtn"
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -517,11 +518,12 @@
                         abv:rv_backgroundColor="@color/whisper"
                         abv:rv_cornerRadius="15px">
 
-                        <EditText
-                            android:id="@+id/name"
+                        <TextView
+                            android:id="@+id/useStatus"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginRight="10px"
+                            android:gravity="center_vertical"
                             android:background="@null"
                             android:ellipsize="end"
                             android:maxLines="1"
@@ -559,20 +561,25 @@
                         android:layout_width="450px"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="20px"
+                        android:layout_centerVertical="true"
                         android:layout_toRightOf="@id/name_titile"
                         abv:rv_backgroundColor="@color/whisper"
                         abv:rv_cornerRadius="15px">
 
-                        <EditText
+                        <TextView
                             android:id="@+id/date"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginRight="10px"
                             android:background="@null"
+                            android:gravity="center_vertical"
                             android:ellipsize="end"
                             android:maxLines="1"
                             android:paddingLeft="15px"
+                            android:layout_centerVertical="true"
                             android:textSize="35px"
+                            android:text=""
+                            android:focusableInTouchMode="true"
                             android:textColor="@color/txt_color"
                             />
 
@@ -607,7 +614,7 @@
                         abv:rv_cornerRadius="15px">
 
                         <EditText
-                            android:id="@+id/star_date_name"
+                            android:id="@+id/remark"
                             android:layout_width="match_parent"
                             android:layout_height="200px"
                             android:layout_marginRight="10px"

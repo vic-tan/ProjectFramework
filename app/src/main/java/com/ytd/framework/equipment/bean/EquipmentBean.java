@@ -21,13 +21,19 @@ public class EquipmentBean extends DataSupport implements Parcelable {
     private String useAddress;//使用科室
     private String start_data;//盘点开始时间
     private String propertyStatus;//资产状态
-    private String lookStatus;//盘点状态
     private String unitName;//单位
     private String eqStandard;//规格
     private String saveAddress;//存放地点
     private String start_property;//原值
     private String end_property;//净值
     private String old_property;//折旧
+    private String useStatus;//资产状态
+    private String lookDate;//盘点时间
+    private String lookStatus;//盘点状态
+
+
+    private String remark;//备注
+
 
     private String loginName;
     private String propertyId;
@@ -35,6 +41,32 @@ public class EquipmentBean extends DataSupport implements Parcelable {
 
     public String getBarCode() {
         return barCode;
+    }
+
+
+
+    public String getUseStatus() {
+        return useStatus;
+    }
+
+    public void setUseStatus(String useStatus) {
+        this.useStatus = useStatus;
+    }
+
+    public String getLookDate() {
+        return lookDate;
+    }
+
+    public void setLookDate(String lookDate) {
+        this.lookDate = lookDate;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
     public void setBarCode(String barCode) {
@@ -196,13 +228,16 @@ public class EquipmentBean extends DataSupport implements Parcelable {
         dest.writeString(this.useAddress);
         dest.writeString(this.start_data);
         dest.writeString(this.propertyStatus);
-        dest.writeString(this.lookStatus);
         dest.writeString(this.unitName);
         dest.writeString(this.eqStandard);
         dest.writeString(this.saveAddress);
         dest.writeString(this.start_property);
         dest.writeString(this.end_property);
         dest.writeString(this.old_property);
+        dest.writeString(this.useStatus);
+        dest.writeString(this.lookDate);
+        dest.writeString(this.lookStatus);
+        dest.writeString(this.remark);
         dest.writeString(this.loginName);
         dest.writeString(this.propertyId);
     }
@@ -217,13 +252,16 @@ public class EquipmentBean extends DataSupport implements Parcelable {
         this.useAddress = in.readString();
         this.start_data = in.readString();
         this.propertyStatus = in.readString();
-        this.lookStatus = in.readString();
         this.unitName = in.readString();
         this.eqStandard = in.readString();
         this.saveAddress = in.readString();
         this.start_property = in.readString();
         this.end_property = in.readString();
         this.old_property = in.readString();
+        this.useStatus = in.readString();
+        this.lookDate = in.readString();
+        this.lookStatus = in.readString();
+        this.remark = in.readString();
         this.loginName = in.readString();
         this.propertyId = in.readString();
     }

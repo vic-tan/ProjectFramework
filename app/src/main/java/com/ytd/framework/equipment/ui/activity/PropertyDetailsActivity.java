@@ -1,12 +1,14 @@
 package com.ytd.framework.equipment.ui.activity;
 
 import android.os.Build;
+import android.os.Handler;
 import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.tlf.basic.uikit.kprogresshud.KProgressHUD;
 import com.tlf.basic.uikit.roundview.RoundTextView;
 import com.tlf.basic.utils.StartActUtils;
 import com.tlf.basic.utils.StringUtils;
@@ -14,7 +16,6 @@ import com.ytd.common.ui.activity.actionbar.BaseActionBarActivity;
 import com.ytd.framework.R;
 import com.ytd.framework.equipment.bean.PropertyBean;
 import com.ytd.support.utils.ResUtils;
-import com.ytd.support.utils.UnFinshUtils;
 import com.ytd.uikit.actionbar.ActionBarOptViewTagLevel;
 import com.ytd.uikit.actionbar.OnOptClickListener;
 
@@ -68,6 +69,7 @@ public class PropertyDetailsActivity extends BaseActionBarActivity {
 
     private PropertyBean bean;
 
+    private KProgressHUD hud;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @AfterViews
@@ -82,6 +84,8 @@ public class PropertyDetailsActivity extends BaseActionBarActivity {
             }
         });
         setData();
+
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
@@ -117,14 +121,38 @@ public class PropertyDetailsActivity extends BaseActionBarActivity {
     void click(View v) {
         switch (v.getId()) {
             case R.id.updateLoadBtn://上传
-                UnFinshUtils.unFinshToast(mContext);
+                hud = KProgressHUD.create(mContext)
+                        .setStyle(KProgressHUD.Style.BAR_DETERMINATE)
+                        .setDimAmount(0.5f)
+                        .setCancellable(false)
+                        .setLabel("正在上传....");
+                simulateProgressUpdate();
+                hud.show();
                 break;
             case R.id.lookQe://查看
             case R.id.lookeEqBtn://查看
-                StartActUtils.start(mContext, EquipmentActivity_.class,"bean",bean);
+                StartActUtils.start(mContext, EquipmentActivity_.class, "bean", bean);
                 break;
         }
     }
 
+
+    private void simulateProgressUpdate() {
+        hud.setMaxProgress(100);
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            int currentProgress;
+
+            @Override
+            public void run() {
+                currentProgress += 1;
+                hud.setProgress(currentProgress);
+                hud.setLabel("已上传" + currentProgress + "%");
+                if (currentProgress < 100) {
+                    handler.postDelayed(this, 50);
+                }
+            }
+        }, 100);
+    }
 
 }

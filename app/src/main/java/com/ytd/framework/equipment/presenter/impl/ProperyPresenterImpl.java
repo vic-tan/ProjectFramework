@@ -44,5 +44,10 @@ public class ProperyPresenterImpl implements IProperyPresenter {
         return DataSupport.where("loginName = ? ", getLoginName(mContext)).find(PropertyBean.class);
     }
 
+    @Override
+    public List<PropertyBean> findBySearch(Context mContext, String search) {
+        return DataSupport.where("loginName = ? and  (title like ? or area like ?  or address like ?)", getLoginName(mContext),"%"+search+"%","%"+search+"%","%"+search+"%").find(PropertyBean.class);
+    }
+
 
 }

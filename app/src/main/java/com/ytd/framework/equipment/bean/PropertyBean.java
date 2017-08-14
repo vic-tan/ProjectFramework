@@ -219,8 +219,8 @@ public class PropertyBean extends DataSupport implements Parcelable {
                 "        \"updateload\": \"1\",\n" +
                 "        \"eqList\": [\n" +
                 "            {\n" +
-                "                \"id\": \"8a9a975b5dbcbe9c015WDdbd05f898w\",\n" +
-                "                \"title\": \"血管仿真模型\",\n" +
+                "                \"id\": \"324EWa975b5dbcbefdd9c015WDdbd05f898w\",\n" +
+                "                \"title\": \"血管仿真模型1\",\n" +
                 "                \"count\": \"1\",\n" +
                 "                \"eqType\": \"HT-EW-DAFALFSDS\",\n" +
                 "                \"eqId\": \"983673q23489341\",\n" +
@@ -237,7 +237,7 @@ public class PropertyBean extends DataSupport implements Parcelable {
                 "                \"lookStatus\": \"0\"\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"id\": \"8a9a975b5dbcbe9c015Ddbd05f898w\",\n" +
+                "                \"id\": \"DFSAFa975b5dewebrewtcbe9c015Ddbd05f898w\",\n" +
                 "                \"title\": \"血管仿真模型2\",\n" +
                 "                \"count\": \"1\",\n" +
                 "                \"eqType\": \"HT-EW-DAFALFS\",\n" +
@@ -257,7 +257,7 @@ public class PropertyBean extends DataSupport implements Parcelable {
                 "        ]\n" +
                 "    },\n" +
                 "    {\n" +
-                "        \"id\": \"8a9a975b5dbcbe9c015dbd0FSS0085\",\n" +
+                "        \"id\": \"DFADF75b5dbcbe9DSDFSc015dbd0FSS0085\",\n" +
                 "        \"title\": \"互联网百强企业收入破万亿元\",\n" +
                 "        \"name\": \"李科长盘点\",\n" +
                 "        \"phone\": \"13823297572\",\n" +
@@ -274,7 +274,7 @@ public class PropertyBean extends DataSupport implements Parcelable {
                 "        \"updateload\": \"0\",\n" +
                 "        \"eqList\": [\n" +
                 "            {\n" +
-                "                \"id\": \"8a9a975b5dbcbe9c015WDdbd05f898w\",\n" +
+                "                \"id\": \"23a975b5dbcfdDFAFASDFfbe9c015WDdbdFASD\",\n" +
                 "                \"title\": \"血管仿真模型3\",\n" +
                 "                \"count\": \"1\",\n" +
                 "                \"eqType\": \"HT-EW-DAFALFSDS\",\n" +
@@ -292,7 +292,7 @@ public class PropertyBean extends DataSupport implements Parcelable {
                 "                \"lookStatus\": \"0\"\n" +
                 "            },\n" +
                 "            {\n" +
-                "                \"id\": \"8a9a975b5dbcbe9c015Ddbd05f898w\",\n" +
+                "                \"id\": \"124a975b5dbcbe9DAFASDFc0ds15DdDFASFD\",\n" +
                 "                \"title\": \"血管仿真模型4\",\n" +
                 "                \"count\": \"1\",\n" +
                 "                \"eqType\": \"HT-EW-DAFALFS\",\n" +
