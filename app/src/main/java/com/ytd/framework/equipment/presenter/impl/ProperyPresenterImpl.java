@@ -13,6 +13,8 @@ import org.litepal.crud.DataSupport;
 
 import java.util.List;
 
+import static org.litepal.crud.DataSupport.where;
+
 /**
  * Created by tanlifei on 2017/8/13.
  */
@@ -41,12 +43,22 @@ public class ProperyPresenterImpl implements IProperyPresenter {
 
     @Override
     public List<PropertyBean> findAll(Context mContext) {
-        return DataSupport.where("loginName = ? ", getLoginName(mContext)).find(PropertyBean.class);
+        return DataSupport.findAll(PropertyBean.class);
+    }
+
+    @Override
+    public List<PropertyBean> findLimit(Context mContext,int offset,int limit) {
+        return where("loginName = ?  ", getLoginName(mContext)).offset(offset).limit(limit).find(PropertyBean.class);
     }
 
     @Override
     public List<PropertyBean> findBySearch(Context mContext, String search) {
-        return DataSupport.where("loginName = ? and  (title like ? or area like ?  or address like ?)", getLoginName(mContext),"%"+search+"%","%"+search+"%","%"+search+"%").find(PropertyBean.class);
+        return where("loginName = ? and  (title like ? or area like ?  or address like ?)", getLoginName(mContext),"%"+search+"%","%"+search+"%","%"+search+"%").find(PropertyBean.class);
+    }
+
+    @Override
+    public int deleteAll(Context mContext) {
+        return DataSupport.deleteAll(PropertyBean.class,"loginName = ?  ", getLoginName(mContext));
     }
 
 

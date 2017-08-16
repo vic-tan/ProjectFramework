@@ -4,13 +4,15 @@ import android.content.Context;
 
 import com.tlf.basic.utils.AppCacheUtils;
 import com.tlf.basic.utils.ListUtils;
+import com.tlf.basic.utils.StringUtils;
 import com.ytd.framework.equipment.bean.EquipmentBean;
+import com.ytd.framework.equipment.bean.PropertyBean;
 import com.ytd.framework.equipment.presenter.IEquipmentPresenter;
 import com.ytd.support.constants.fixed.GlobalConstants;
 
-import org.litepal.crud.DataSupport;
-
 import java.util.List;
+
+import static org.litepal.crud.DataSupport.where;
 
 /**
  * Created by tanlifei on 2017/8/13.
@@ -35,22 +37,33 @@ public class EquipmentPresenterImpl implements IEquipmentPresenter {
         }
     }
 
+    @Override
+    public List<EquipmentBean> findLimit(Context mContext,String propertyId,String state, int offset, int limit) {
+        if(StringUtils.isEmpty(state)){
+            return where("loginName = ?  and propertyId = ? ", getLoginName(mContext), propertyId).offset(offset).limit(limit).find(EquipmentBean.class);
+        }else{
+            return where("loginName = ?  and propertyId = ? and lookStatus = ?", getLoginName(mContext), propertyId, state).offset(offset).limit(limit).find(EquipmentBean.class);
+        }
+
+    }
+
+
     //TODO  字段名修改
     @Override
     public List<EquipmentBean> findAll(Context mContext, String propertyId) {
-        return DataSupport.where("loginName = ? and propertyId = ?", getLoginName(mContext), propertyId).find(EquipmentBean.class);
+        return where("loginName = ? and propertyId = ?", getLoginName(mContext), propertyId).find(EquipmentBean.class);
     }
 
     //TODO  字段名修改
     @Override
     public List<EquipmentBean> findByState(Context mContext, String propertyId, String state) {
-        return DataSupport.where("loginName = ? and propertyId = ? and lookStatus = ?", getLoginName(mContext), propertyId, state).find(EquipmentBean.class);
+        return where("loginName = ? and propertyId = ? and lookStatus = ?", getLoginName(mContext), propertyId, state).find(EquipmentBean.class);
 
     }
 
     @Override
     public List<EquipmentBean> findScanCode(Context mContext, String eqId) {
-        return DataSupport.where("loginName = ?  and my_id = ?", getLoginName(mContext), eqId).find(EquipmentBean.class);
+        return where("loginName = ?  and my_id = ?", getLoginName(mContext), eqId).find(EquipmentBean.class);
     }
 
     //TODO  字段名修改

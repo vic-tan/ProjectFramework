@@ -15,9 +15,12 @@ public interface IEquipmentPresenter {
 
     List<EquipmentBean> findAll(Context mContext,String propertyId);//查询资产下面所有的设备
 
+    List<EquipmentBean> findLimit(Context mContext,String propertyId,String state, int offset, int limit);//分布查询
+
     List<EquipmentBean> findByState(Context mContext,String propertyId,String state);//盘点状态查询
 
     List<EquipmentBean> findScanCode(Context mContext,String eqId);//扫码查询
+
 
     boolean update(Context mContext, EquipmentBean equipmentBean);
 }

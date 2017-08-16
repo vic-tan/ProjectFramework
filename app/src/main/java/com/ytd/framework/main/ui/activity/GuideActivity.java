@@ -3,6 +3,9 @@ package com.ytd.framework.main.ui.activity;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
+import com.tlf.basic.uikit.viewpager.CircleIndicator;
+import com.tlf.basic.utils.AppCacheUtils;
+import com.tlf.basic.utils.StartActUtils;
 import com.ytd.common.ui.activity.BaseActivity;
 import com.ytd.framework.R;
 import com.ytd.framework.main.adapter.GuideAdapter;
@@ -10,9 +13,6 @@ import com.ytd.framework.main.presenter.IGuidePresenter;
 import com.ytd.framework.main.presenter.impl.GuidePresenterImpl;
 import com.ytd.framework.main.presenter.impl.SplashPresenterImpl;
 import com.ytd.framework.main.ui.view.GuideView;
-import com.tlf.basic.uikit.viewpager.CircleIndicator;
-import com.tlf.basic.utils.AppCacheUtils;
-import com.tlf.basic.utils.StartActUtils;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
@@ -42,12 +42,14 @@ public class GuideActivity extends BaseActivity implements GuideView,
         indicator.setViewPager(guidePager,presenter.addGuideViews(this).size());
     }
 
+
     @Override
     public void onClick(View v) {
         AppCacheUtils.getInstance(mContext).put(SplashPresenterImpl.FIRST_LAUNCHER_APP_TAG, false);//设置为已打开过该应用了
         StartActUtils.start(mContext, LoginActivity_.class);
         StartActUtils.finish(mContext);
     }
+
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

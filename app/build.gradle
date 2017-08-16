@@ -40,7 +40,7 @@ dependencies {
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.vic-tan:basic-library-http:1.0.4'
     compile 'com.vic-tan:basic-library-photoview:1.0.2'
-    compile 'com.vic-tan:basic-library-refreshview:1.0.0'
+    compile 'com.vic-tan:basic-library-refreshview:1.0.1'
     compile 'com.vic-tan:basic-library-uikit:1.0.7'
     compile 'com.vic-tan:basic-library-utils:1.0.7'
     compile 'org.litepal.android:core:1.5.1'

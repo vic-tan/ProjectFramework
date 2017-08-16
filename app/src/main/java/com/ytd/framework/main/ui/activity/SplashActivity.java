@@ -1,11 +1,11 @@
 package com.ytd.framework.main.ui.activity;
 
+import com.tlf.basic.utils.StartActUtils;
 import com.ytd.common.ui.activity.BaseActivity;
 import com.ytd.framework.R;
 import com.ytd.framework.main.presenter.ISplashPresenter;
 import com.ytd.framework.main.presenter.impl.SplashPresenterImpl;
 import com.ytd.framework.main.ui.view.SplashView;
-import com.tlf.basic.utils.StartActUtils;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
@@ -31,7 +31,6 @@ public class SplashActivity extends BaseActivity implements SplashView {
         presenter = new SplashPresenterImpl(this, this);
         presenter.delayedStart(DELAYED, IS_HAS_LOADING_DATA);
     }
-
 
     private void startAct(Class clazz) {
         StartActUtils.start(mContext, clazz);

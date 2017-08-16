@@ -46,6 +46,7 @@ public class LoginActivity extends BaseActivity {
     }
 
 
+
     @Click(R.id.login)
     void click(View v) {
         switch (v.getId()) {
@@ -66,12 +67,13 @@ public class LoginActivity extends BaseActivity {
                     ToastUtils.show(this, "密码不正确，请输入测试账号或工号密码为" + ResUtils.getStr(R.string.login_pwd));
                     break;
                 }
-                AppCacheUtils.getInstance(this).put(APP_LOGIN_NAME,user_account_edit.getText().toString());
+                AppCacheUtils.getInstance(this).put(APP_LOGIN_NAME, user_account_edit.getText().toString());
                 StartActUtils.start(this, HomeActivity_.class);
                 StartActUtils.finish(this);
                 break;
         }
     }
+
 
     /**
      * 退出App

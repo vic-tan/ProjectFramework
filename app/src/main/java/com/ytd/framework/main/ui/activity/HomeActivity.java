@@ -9,6 +9,9 @@ import com.tlf.basic.photoview.galleryfinal.permission.AfterPermissionGranted;
 import com.tlf.basic.photoview.galleryfinal.permission.EasyPermissions;
 import com.ytd.common.ui.activity.actionbar.BaseActionBarActivity;
 import com.ytd.framework.R;
+import com.ytd.framework.equipment.bean.PropertyBean;
+import com.ytd.framework.equipment.presenter.IProperyPresenter;
+import com.ytd.framework.equipment.presenter.impl.ProperyPresenterImpl;
 import com.ytd.framework.main.adapter.HomeNavigatorFragmentAdapter;
 import com.ytd.framework.main.ui.navigator.FragmentNavigator;
 import com.ytd.framework.main.ui.view.HomeNavigatorView;
@@ -61,9 +64,20 @@ public class HomeActivity extends BaseActionBarActivity implements HomeNavigator
             bottomNavigatorView.setOnBottomNavigatorViewItemClickListener(this);
         }
         setCurrentTab(mNavigator.getCurrentPosition());
-
+        //TODO
+        addTestData();
     }
 
+
+
+
+    //TODO
+    IProperyPresenter properyPresenter;
+    public void addTestData() {
+        properyPresenter = new ProperyPresenterImpl();
+        properyPresenter.deleteAll(mContext);
+        properyPresenter.save(mContext, PropertyBean.addTestListBean());
+    }
 
     private void start() {
         /*Intent intent = new Intent(mContext,EquipmentScanActivity.class);

@@ -8,15 +8,10 @@ import android.widget.RelativeLayout;
 import com.tlf.basic.refreshview.more.ListViewFinal;
 import com.tlf.basic.refreshview.more.OnLoadMoreListener;
 import com.ytd.framework.R;
-import com.ytd.framework.equipment.bean.PropertyBean;
-import com.ytd.support.constants.fixed.UrlConstants;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
-
-import java.util.HashMap;
-import java.util.Map;
 
 
 /**
@@ -36,7 +31,6 @@ public class EqFinishFragment extends EqBaseFragment {
     @AfterViews
     void init() {
         super.init();
-        mRefreshList.addAll(equipmentPresenter.findByState(getActivity(), getPropertyBean().getMy_id(),"1"));
         mLvGames.setAdapter(getmRefreshAdapter());
         mLvGames.setEmptyView(mFlEmptyView);
         mLvGames.setOnLoadMoreListener(new OnLoadMoreListener() {
@@ -49,38 +43,19 @@ public class EqFinishFragment extends EqBaseFragment {
     }
 
     @Override
-    public View getDataView() {
-        return mLvGames;
+    public String getState() {
+        return "1";
     }
 
     @Override
-    public Class<?> parseClassName() {
-        return PropertyBean.class;
+    public View getDataView() {
+        return mLvGames;
     }
 
     @Override
     public View setPtrRootLayout() {
         return ptrRootLayout;
     }
-
-    @Override
-    public String requestUrl() {
-        return UrlConstants.LIST_URL;
-    }
-
-    @Override
-    public Map<String, String> requestParams() {
-        Map<String, String> map = new HashMap<>();
-        map.put("json", "{\n" +
-                "    \"sid\": \"ipeiban2016\",\n" +
-                "    \"pageNumber\": " + 1 + ",\n" +
-                "    \"pageSize\": 10\n" +
-                "}");
-        return map;
-    }
-
-
-
 
 
     @Override

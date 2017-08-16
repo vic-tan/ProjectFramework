@@ -16,5 +16,9 @@ public interface IProperyPresenter {
 
     List<PropertyBean> findAll(Context mContext);
 
-    List<PropertyBean> findBySearch(Context mContext,String search);//搜索盘点单
+    List<PropertyBean> findLimit(Context mContext, int offset, int limit);//分布查询
+
+    List<PropertyBean> findBySearch(Context mContext, String search);//搜索盘点单
+
+    int deleteAll(Context mContext);
 }

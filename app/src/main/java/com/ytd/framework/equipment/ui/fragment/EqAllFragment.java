@@ -8,15 +8,10 @@ import android.widget.RelativeLayout;
 import com.tlf.basic.refreshview.more.ListViewFinal;
 import com.tlf.basic.refreshview.more.OnLoadMoreListener;
 import com.ytd.framework.R;
-import com.ytd.framework.equipment.bean.PropertyBean;
-import com.ytd.support.constants.fixed.UrlConstants;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
-
-import java.util.HashMap;
-import java.util.Map;
 
 
 /**
@@ -36,7 +31,6 @@ public class EqAllFragment extends EqBaseFragment {
     @AfterViews
     void init() {
         super.init();
-        mRefreshList.addAll(equipmentPresenter.findAll(getActivity(), getPropertyBean().getMy_id()));
         mLvGames.setAdapter(getmRefreshAdapter());
         mLvGames.setEmptyView(mFlEmptyView);
         mLvGames.setOnLoadMoreListener(new OnLoadMoreListener() {
@@ -49,35 +43,21 @@ public class EqAllFragment extends EqBaseFragment {
     }
 
     @Override
+    public String getState() {
+        return "";
+    }
+
+    @Override
     public View getDataView() {
         return mLvGames;
     }
 
-    @Override
-    public Class<?> parseClassName() {
-        return PropertyBean.class;
-    }
 
     @Override
     public View setPtrRootLayout() {
         return ptrRootLayout;
     }
 
-    @Override
-    public String requestUrl() {
-        return UrlConstants.LIST_URL;
-    }
-
-    @Override
-    public Map<String, String> requestParams() {
-        Map<String, String> map = new HashMap<>();
-        map.put("json", "{\n" +
-                "    \"sid\": \"ipeiban2016\",\n" +
-                "    \"pageNumber\": " + 1 + ",\n" +
-                "    \"pageSize\": 10\n" +
-                "}");
-        return map;
-    }
 
 
     @Override

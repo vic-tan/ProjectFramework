@@ -13,33 +13,30 @@ import com.tlf.basic.base.adapter.abslistview.AbsCommonAdapter;
 import com.tlf.basic.base.adapter.abslistview.AbsViewHolder;
 import com.tlf.basic.refreshview.more.ListViewFinal;
 import com.tlf.basic.refreshview.more.OnLoadMoreListener;
-import com.tlf.basic.utils.ListUtils;
 import com.tlf.basic.utils.StartActUtils;
 import com.tlf.basic.utils.StringUtils;
-import com.ytd.common.ui.fragment.refreshview.BaseAbsRefreshFragment;
+import com.ytd.common.ui.fragment.refreshview.BaseLocalAbsRefreshFragment;
 import com.ytd.framework.R;
 import com.ytd.framework.equipment.bean.PropertyBean;
 import com.ytd.framework.equipment.presenter.IProperyPresenter;
 import com.ytd.framework.equipment.presenter.impl.ProperyPresenterImpl;
 import com.ytd.framework.equipment.ui.activity.PropertyActivity;
 import com.ytd.framework.equipment.ui.activity.PropertyDetailsActivity_;
-import com.ytd.support.constants.fixed.UrlConstants;
+import com.ytd.support.constants.fixed.JsonConstants;
 import com.ytd.support.utils.ResUtils;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
 @EFragment(R.layout.list_equipment_fragment)
-public class ListPropertyFragment extends BaseAbsRefreshFragment {
+public class ListPropertyFragment extends BaseLocalAbsRefreshFragment {
 
     public static final String TAG = ListPropertyFragment.class.getSimpleName();
 
@@ -64,8 +61,6 @@ public class ListPropertyFragment extends BaseAbsRefreshFragment {
             }
         });
 
-        mRefreshList.addAll(properyPresenter.findAll(getActivity()));
-
     }
 
     @Override
@@ -73,30 +68,10 @@ public class ListPropertyFragment extends BaseAbsRefreshFragment {
         return mLvGames;
     }
 
-    @Override
-    public Class<?> parseClassName() {
-        return PropertyBean.class;
-    }
 
     @Override
     public View setPtrRootLayout() {
         return ptrRootLayout;
-    }
-
-    @Override
-    public String requestUrl() {
-        return UrlConstants.LIST_URL;
-    }
-
-    @Override
-    public Map<String, String> requestParams() {
-        Map<String, String> map = new HashMap<>();
-        map.put("json", "{\n" +
-                "    \"sid\": \"ipeiban2016\",\n" +
-                "    \"pageNumber\": " + 1 + ",\n" +
-                "    \"pageSize\": 10\n" +
-                "}");
-        return map;
     }
 
 
@@ -135,14 +110,16 @@ public class ListPropertyFragment extends BaseAbsRefreshFragment {
         };
     }
 
+
+    @Override
+    public List localSQLFindLimit(boolean isPage, int currPagetemp) {
+        int currPage = currPagetemp -1;
+        return properyPresenter.findLimit(getActivity(), currPage * JsonConstants.PAGE_SIZE,  JsonConstants.PAGE_SIZE);
+    }
+
     @Override
     public void after() {
-        //TODO
-        if (ListUtils.isEmpty(mRefreshList)) {
-            mRefreshList.addAll(PropertyBean.addTestListBean());
-            properyPresenter.save(getActivity(), mRefreshList);
-        }
-        ((TextView) (((PropertyActivity) getActivity()).getmTabs().getTabsContainer().getChildAt(0))).setText(ResUtils.getStr(R.string.sliding_tab_strip_pager_has_heaer) + "  ("+mRefreshList.size()+")");
+        ((TextView) (((PropertyActivity) getActivity()).getmTabs().getTabsContainer().getChildAt(0))).setText(ResUtils.getStr(R.string.sliding_tab_strip_pager_has_heaer) + "  (" + mRefreshList.size() + ")");
         mRefreshAdapter.notifyDataSetChanged();
     }
 

@@ -2,10 +2,10 @@ package com.ytd.framework.main.presenter.impl;
 
 import android.content.Context;
 
-import com.ytd.framework.main.presenter.ISplashPresenter;
-import com.ytd.framework.main.ui.view.SplashView;
 import com.tlf.basic.utils.AppCacheUtils;
 import com.tlf.basic.utils.CountDownTimer;
+import com.ytd.framework.main.presenter.ISplashPresenter;
+import com.ytd.framework.main.ui.view.SplashView;
 
 
 /**
@@ -44,4 +44,6 @@ public class SplashPresenterImpl implements ISplashPresenter {
             }
         }.start();
     }
+
+
 }
