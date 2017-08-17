@@ -41,6 +41,11 @@ public class EqUnFinishFragment extends EqBaseFragment {
         });
         setTabsTitleText(2,R.string.sliding_tab_strip_pager_unfinish);
     }
+    @Override
+    public void after() {
+        setTabsTitleText(2,R.string.sliding_tab_strip_pager_unfinish);
+        super.after();
+    }
 
     @Override
     public String getState() {

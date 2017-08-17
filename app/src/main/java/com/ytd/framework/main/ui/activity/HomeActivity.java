@@ -84,7 +84,7 @@ public class HomeActivity extends BaseActionBarActivity implements HomeNavigator
         /*Intent intent = new Intent(mContext,EquipmentScanActivity.class);
                     StartActUtils.forResult(mContext,
                             intent,RESULT_OK);*/
-        Intent intent = new Intent(mContext, TestScanActivity.class);
+        Intent intent = new Intent(mContext, CameraScanActivity.class);
         startActivityForResult(intent, RESULT_OK);
     }
 

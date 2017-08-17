@@ -51,7 +51,7 @@ public class EquipmentActivity extends BaseSlidingTabStripActivity {
                     StartActUtils.start(mContext, PropertySearchActivity_.class);
                 } else if (viewTag == ActionBarOptViewTagLevel.RIGHT_ICON_DRAWABLE) {
                     StartActUtils.start(mContext,
-                            EquipmentScanResultActivity_.class);
+                            EquipmentReactionScanActivity_.class);
                 }
             }
         });

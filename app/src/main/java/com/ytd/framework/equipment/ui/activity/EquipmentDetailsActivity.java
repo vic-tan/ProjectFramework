@@ -58,7 +58,7 @@ public class EquipmentDetailsActivity extends BaseActionBarActivity {
             @Override
             public void onClick(View v, ActionBarOptViewTagLevel viewTag) {
                 StartActUtils.start(mContext,
-                        EquipmentScanResultActivity_.class);
+                        EquipmentReactionScanActivity_.class);
             }
         });
         setData();

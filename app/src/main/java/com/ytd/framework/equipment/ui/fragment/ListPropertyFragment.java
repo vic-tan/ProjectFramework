@@ -124,4 +124,9 @@ public class ListPropertyFragment extends BaseLocalAbsRefreshFragment {
     }
 
 
+    @Override
+    public void after() {
+        setTabTotalcount();
+        super.after();
+    }
 }
