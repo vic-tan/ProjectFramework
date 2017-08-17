@@ -91,6 +91,8 @@ public abstract class EqBaseFragment extends BaseLocalAbsRefreshFragment {
     }
 
 
+
+
     @Override
     public List localSQLFindLimit(boolean isPage, int currPagetemp) {
         int currPage = currPagetemp - 1;
@@ -105,6 +107,7 @@ public abstract class EqBaseFragment extends BaseLocalAbsRefreshFragment {
     }
 
     protected void setTabsTitleText(int indexTabs, int tabsTitileTxt) {
-        ((TextView) (((EquipmentActivity) getActivity()).getmTabs().getTabsContainer().getChildAt(indexTabs))).setText(ResUtils.getStr(tabsTitileTxt) + "  (" + mRefreshList.size() + ")");
+        String tab = ResUtils.getStr(tabsTitileTxt) + "  (" + equipmentPresenter.findTotalcount(getActivity(),getPropertyBean().getMy_id(),getState()) + ")";
+        ((TextView) (((EquipmentActivity) getActivity()).getmTabs().getTabsContainer().getChildAt(indexTabs))).setText(tab);
     }
 }

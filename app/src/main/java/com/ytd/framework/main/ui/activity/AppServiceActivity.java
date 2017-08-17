@@ -66,33 +66,6 @@ public class AppServiceActivity extends AutoLayoutActivity {
      */
     private void appUpdate(final AppUpdateBean appUpdateBean) {
         if (null != appUpdateBean && appUpdateBean.getVersion_code() > AppUtils.getVersionCode(mContext)) {
-           /* NormalScrollViewDialog dialog = new NormalScrollViewDialog(this) {
-                @Override
-                public void setUiBeforShow() {
-                    getmTvOk().setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent intent = new Intent(getBaseContext(), AppDownloadService.class);
-                            Bundle bundle = new Bundle();
-                            bundle.putParcelable("bean", appUpdateBean);
-                            intent.putExtras(bundle);
-                            startService(intent);
-                            dismiss();
-                        }
-                    });
-                    getmTvExit().setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            dismiss();
-                        }
-                    });
-                }
-            };
-            dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-            dialog.show();
-            dialog.getmTvContent().setText(Html.fromHtml(appUpdateBean.getDesc()).toString());
-            dialog.setCanceledOnTouchOutside(false);*/
-
             View contetView = InflaterUtils.inflate(this,R.layout.main_version_content_view);
             TextView contetent = (TextView) contetView.findViewById(R.id.mTvContent);
             contetent.setText(Html.fromHtml(appUpdateBean.getDesc()).toString());

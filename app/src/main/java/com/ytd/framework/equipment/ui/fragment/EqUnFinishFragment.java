@@ -39,7 +39,7 @@ public class EqUnFinishFragment extends EqBaseFragment {
                 requestLoadMore();
             }
         });
-
+        setTabsTitleText(2,R.string.sliding_tab_strip_pager_unfinish);
     }
 
     @Override
@@ -60,10 +60,4 @@ public class EqUnFinishFragment extends EqBaseFragment {
     }
 
 
-
-    @Override
-    public void after() {
-        setTabsTitleText(2,R.string.sliding_tab_strip_pager_unfinish);
-        mRefreshAdapter.notifyDataSetChanged();
-    }
 }

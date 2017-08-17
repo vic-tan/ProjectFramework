@@ -2,28 +2,23 @@ package com.ytd.framework.equipment.presenter.impl;
 
 import android.content.Context;
 
-import com.tlf.basic.utils.AppCacheUtils;
 import com.tlf.basic.utils.ListUtils;
 import com.tlf.basic.utils.StringUtils;
 import com.ytd.framework.equipment.bean.EquipmentBean;
-import com.ytd.framework.equipment.bean.PropertyBean;
 import com.ytd.framework.equipment.presenter.IEquipmentPresenter;
-import com.ytd.support.constants.fixed.GlobalConstants;
 
 import java.util.List;
 
+import static com.ytd.framework.equipment.bean.PropertyBean.DB_LOGIN_NAME;
 import static org.litepal.crud.DataSupport.where;
 
 /**
  * Created by tanlifei on 2017/8/13.
  */
 
-public class EquipmentPresenterImpl implements IEquipmentPresenter {
+public class EquipmentPresenterImpl extends  BasePresenterImpl  implements IEquipmentPresenter {
 
 
-    public static String getLoginName(Context mContext) {
-        return AppCacheUtils.getInstance(mContext).getString(GlobalConstants.APP_LOGIN_NAME);
-    }
 
     @Override
     public void save(Context mContext, List<EquipmentBean> list, String propertyId) {
@@ -31,7 +26,7 @@ public class EquipmentPresenterImpl implements IEquipmentPresenter {
             return;
         }
         for (EquipmentBean forBean : list) {
-            forBean.setLoginName(getLoginName(mContext));
+            forBean.setLoginName(getLoginName());
             forBean.setPropertyId(propertyId);
             forBean.save();
         }
@@ -40,9 +35,9 @@ public class EquipmentPresenterImpl implements IEquipmentPresenter {
     @Override
     public List<EquipmentBean> findLimit(Context mContext,String propertyId,String state, int offset, int limit) {
         if(StringUtils.isEmpty(state)){
-            return where("loginName = ?  and propertyId = ? ", getLoginName(mContext), propertyId).offset(offset).limit(limit).find(EquipmentBean.class);
+            return where(DB_LOGIN_NAME+ "  = ?  and propertyId = ? ", getLoginName(), propertyId).offset(offset).limit(limit).find(EquipmentBean.class);
         }else{
-            return where("loginName = ?  and propertyId = ? and lookStatus = ?", getLoginName(mContext), propertyId, state).offset(offset).limit(limit).find(EquipmentBean.class);
+            return where(DB_LOGIN_NAME+ "  = ?  and propertyId = ? and lookStatus = ?", getLoginName(), propertyId, state).offset(offset).limit(limit).find(EquipmentBean.class);
         }
 
     }
@@ -51,19 +46,19 @@ public class EquipmentPresenterImpl implements IEquipmentPresenter {
     //TODO  字段名修改
     @Override
     public List<EquipmentBean> findAll(Context mContext, String propertyId) {
-        return where("loginName = ? and propertyId = ?", getLoginName(mContext), propertyId).find(EquipmentBean.class);
+        return where("loginName = ? and propertyId = ?", getLoginName(), propertyId).find(EquipmentBean.class);
     }
 
     //TODO  字段名修改
     @Override
     public List<EquipmentBean> findByState(Context mContext, String propertyId, String state) {
-        return where("loginName = ? and propertyId = ? and lookStatus = ?", getLoginName(mContext), propertyId, state).find(EquipmentBean.class);
+        return where(DB_LOGIN_NAME+ "  = ? and propertyId = ? and lookStatus = ?", getLoginName(), propertyId, state).find(EquipmentBean.class);
 
     }
 
     @Override
     public List<EquipmentBean> findScanCode(Context mContext, String eqId) {
-        return where("loginName = ?  and my_id = ?", getLoginName(mContext), eqId).find(EquipmentBean.class);
+        return where(DB_LOGIN_NAME+ "  = ?  and my_id = ?", getLoginName(), eqId).find(EquipmentBean.class);
     }
 
     //TODO  字段名修改
@@ -82,5 +77,13 @@ public class EquipmentPresenterImpl implements IEquipmentPresenter {
         }else{
             return false;
         }
+    }
+
+    @Override
+    public int findTotalcount(Context mContext,String propertyId,String state) {
+        if(StringUtils.isEmpty(state)){
+            return where(DB_LOGIN_NAME+ "  = ?  and propertyId = ? ", getLoginName(), propertyId).find(EquipmentBean.class).size();
+        }
+        return where(DB_LOGIN_NAME+ " = ?  and propertyId = ? and lookStatus = ?", getLoginName(), propertyId, state).find(EquipmentBean.class).size();
     }
 }

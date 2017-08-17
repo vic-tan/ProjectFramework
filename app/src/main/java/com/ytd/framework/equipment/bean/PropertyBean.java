@@ -19,6 +19,8 @@ import static com.tlf.basic.http.okhttp.callback.Callback.replaceId;
 public class PropertyBean extends DataSupport implements Parcelable {
 
 
+    public static final String  DB_LOGIN_NAME = "loginName";
+
     private String my_id;//资产ID;
     private String title;//名称单名称
     private String name;//盘点人
@@ -277,6 +279,96 @@ public class PropertyBean extends DataSupport implements Parcelable {
                 "            {\n" +
                 "                \"id\": \"DFSAFa975b5dewebrewtcbe9c015Ddbd05f898w\",\n" +
                 "                \"title\": \"血管仿真模型2\",\n" +
+                "                \"count\": \"1\",\n" +
+                "                \"eqType\": \"HT-EW-DAFALFS\",\n" +
+                "                \"eqId\": \"983673q23489341\",\n" +
+                "                \"useAddress\": \"中心实现室\",\n" +
+                "                \"start_data\": \"2017年06月10日\",\n" +
+                "                \"propertyStatus\": \"在用\",\n" +
+                "                \"unitName\": \"台\",\n" +
+                "                \"eqStandard\": \"GD/DEFD\",\n" +
+                "                \"saveAddress\": \"深圳市\",\n" +
+                "                \"start_property\": \"1002323.123\",\n" +
+                "                \"end_property\": \"983673.343\",\n" +
+                "                \"old_property\": \"83673.343\",\n" +
+                "                \"barCode\": \"da12321se321\",\n" +
+                "                \"lookStatus\": \"1\"\n" +
+                "            },\n" +
+                "            {\n" +
+                "                \"id\": \"DFSAFa975b5dewebrewdsafdsatcbe9c015Ddbd05f898w\",\n" +
+                "                \"title\": \"血管仿真模型123\",\n" +
+                "                \"count\": \"1\",\n" +
+                "                \"eqType\": \"HT-EW-DAFALFS\",\n" +
+                "                \"eqId\": \"983673q23489341\",\n" +
+                "                \"useAddress\": \"中心实现室\",\n" +
+                "                \"start_data\": \"2017年06月10日\",\n" +
+                "                \"propertyStatus\": \"在用\",\n" +
+                "                \"unitName\": \"台\",\n" +
+                "                \"eqStandard\": \"GD/DEFD\",\n" +
+                "                \"saveAddress\": \"深圳市\",\n" +
+                "                \"start_property\": \"1002323.123\",\n" +
+                "                \"end_property\": \"983673.343\",\n" +
+                "                \"old_property\": \"83673.343\",\n" +
+                "                \"barCode\": \"da12321se321\",\n" +
+                "                \"lookStatus\": \"1\"\n" +
+                "            },\n" +
+                "            {\n" +
+                "                \"id\": \"DFdfsafsaSAFa975b5dewebrewdsafdsatcbe9c015Ddbd05f898w\",\n" +
+                "                \"title\": \"血管仿真模型1234\",\n" +
+                "                \"count\": \"1\",\n" +
+                "                \"eqType\": \"HT-EW-DAFALFS\",\n" +
+                "                \"eqId\": \"983673q23489341\",\n" +
+                "                \"useAddress\": \"中心实现室\",\n" +
+                "                \"start_data\": \"2017年06月10日\",\n" +
+                "                \"propertyStatus\": \"在用\",\n" +
+                "                \"unitName\": \"台\",\n" +
+                "                \"eqStandard\": \"GD/DEFD\",\n" +
+                "                \"saveAddress\": \"深圳市\",\n" +
+                "                \"start_property\": \"1002323.123\",\n" +
+                "                \"end_property\": \"983673.343\",\n" +
+                "                \"old_property\": \"83673.343\",\n" +
+                "                \"barCode\": \"da12321se321\",\n" +
+                "                \"lookStatus\": \"1\"\n" +
+                "            },\n" +
+                "            {\n" +
+                "                \"id\": \"DFSAFa975b5dewebdsafrewdsafdsatcbe9c015Ddbd05f898w\",\n" +
+                "                \"title\": \"血管仿真模型1235678\",\n" +
+                "                \"count\": \"1\",\n" +
+                "                \"eqType\": \"HT-EW-DAFALFS\",\n" +
+                "                \"eqId\": \"983673q23489341\",\n" +
+                "                \"useAddress\": \"中心实现室\",\n" +
+                "                \"start_data\": \"2017年06月10日\",\n" +
+                "                \"propertyStatus\": \"在用\",\n" +
+                "                \"unitName\": \"台\",\n" +
+                "                \"eqStandard\": \"GD/DEFD\",\n" +
+                "                \"saveAddress\": \"深圳市\",\n" +
+                "                \"start_property\": \"1002323.123\",\n" +
+                "                \"end_property\": \"983673.343\",\n" +
+                "                \"old_property\": \"83673.343\",\n" +
+                "                \"barCode\": \"da12321se321\",\n" +
+                "                \"lookStatus\": \"1\"\n" +
+                "            },\n" +
+                "            {\n" +
+                "                \"id\": \"DFSAFa975b5dewebrewdsdsfafafdsatcbe9c015Ddbd05f898w\",\n" +
+                "                \"title\": \"血管仿真模型1www23\",\n" +
+                "                \"count\": \"1\",\n" +
+                "                \"eqType\": \"HT-EW-DAFALFS\",\n" +
+                "                \"eqId\": \"983673q23489341\",\n" +
+                "                \"useAddress\": \"中心实现室\",\n" +
+                "                \"start_data\": \"2017年06月10日\",\n" +
+                "                \"propertyStatus\": \"在用\",\n" +
+                "                \"unitName\": \"台\",\n" +
+                "                \"eqStandard\": \"GD/DEFD\",\n" +
+                "                \"saveAddress\": \"深圳市\",\n" +
+                "                \"start_property\": \"1002323.123\",\n" +
+                "                \"end_property\": \"983673.343\",\n" +
+                "                \"old_property\": \"83673.343\",\n" +
+                "                \"barCode\": \"da12321se321\",\n" +
+                "                \"lookStatus\": \"1\"\n" +
+                "            },\n" +
+                "            {\n" +
+                "                \"id\": \"DFSAFa975b5dsafadewebrewdsafdsatcbe9c015Ddbd05f898w\",\n" +
+                "                \"title\": \"血管仿真模型123\",\n" +
                 "                \"count\": \"1\",\n" +
                 "                \"eqType\": \"HT-EW-DAFALFS\",\n" +
                 "                \"eqId\": \"983673q23489341\",\n" +

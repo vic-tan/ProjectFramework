@@ -60,7 +60,13 @@ public class ListPropertyFragment extends BaseLocalAbsRefreshFragment {
                 requestLoadMore();
             }
         });
+        setTabTotalcount();
+    }
 
+
+    public void setTabTotalcount() {
+        String tab = ResUtils.getStr(R.string.sliding_tab_strip_pager_has_heaer) + "  (" + properyPresenter.findTotalcount(getActivity()) + ")";
+        ((TextView) (((PropertyActivity) getActivity()).getmTabs().getTabsContainer().getChildAt(0))).setText(tab);
     }
 
     @Override
@@ -113,14 +119,8 @@ public class ListPropertyFragment extends BaseLocalAbsRefreshFragment {
 
     @Override
     public List localSQLFindLimit(boolean isPage, int currPagetemp) {
-        int currPage = currPagetemp -1;
-        return properyPresenter.findLimit(getActivity(), currPage * JsonConstants.PAGE_SIZE,  JsonConstants.PAGE_SIZE);
-    }
-
-    @Override
-    public void after() {
-        ((TextView) (((PropertyActivity) getActivity()).getmTabs().getTabsContainer().getChildAt(0))).setText(ResUtils.getStr(R.string.sliding_tab_strip_pager_has_heaer) + "  (" + mRefreshList.size() + ")");
-        mRefreshAdapter.notifyDataSetChanged();
+        int currPage = currPagetemp - 1;
+        return properyPresenter.findLimit(getActivity(), currPage * JsonConstants.PAGE_SIZE, JsonConstants.PAGE_SIZE);
     }
 
 

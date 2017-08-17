@@ -45,6 +45,7 @@ public class HomeActivity extends BaseActionBarActivity implements HomeNavigator
         mNavigator.setDefaultPosition(DEFAULT_POSITION);
         mNavigator.onCreate(savedInstanceState);
         super.onCreate(savedInstanceState);
+        verifyStoragePermissions();
     }
 
     @AfterViews

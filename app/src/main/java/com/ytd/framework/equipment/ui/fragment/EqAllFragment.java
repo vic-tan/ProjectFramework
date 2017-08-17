@@ -4,10 +4,13 @@ package com.ytd.framework.equipment.ui.fragment;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.tlf.basic.refreshview.more.ListViewFinal;
 import com.tlf.basic.refreshview.more.OnLoadMoreListener;
 import com.ytd.framework.R;
+import com.ytd.framework.equipment.ui.activity.PropertyActivity;
+import com.ytd.support.utils.ResUtils;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
@@ -39,8 +42,9 @@ public class EqAllFragment extends EqBaseFragment {
                 requestLoadMore();
             }
         });
-
+        setTabsTitleText(0,R.string.sliding_tab_strip_pager_all);
     }
+
 
     @Override
     public String getState() {
@@ -59,11 +63,5 @@ public class EqAllFragment extends EqBaseFragment {
     }
 
 
-
-    @Override
-    public void after() {
-        setTabsTitleText(0,R.string.sliding_tab_strip_pager_all);
-        mRefreshAdapter.notifyDataSetChanged();
-    }
 
 }

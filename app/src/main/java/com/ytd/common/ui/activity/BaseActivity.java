@@ -5,20 +5,22 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.ytd.framework.R;
-import com.ytd.framework.main.ui.service.AppDownloadService;
-import com.ytd.framework.main.ui.service.CheckAppUpdateService;
-import com.ytd.support.utils.ResUtils;
 import com.tlf.basic.base.autolayout.AutoLayoutActivity;
 import com.tlf.basic.base.systembartint.SystemBarTintManager;
 import com.tlf.basic.utils.ActivityManager;
 import com.tlf.basic.utils.StartActUtils;
 import com.tlf.basic.utils.ToastUtils;
+import com.ytd.framework.R;
+import com.ytd.framework.main.ui.service.AppDownloadService;
+import com.ytd.framework.main.ui.service.CheckAppUpdateService;
+import com.ytd.support.utils.ResUtils;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -135,5 +137,25 @@ public abstract class BaseActivity extends AutoLayoutActivity {
         }
     }
 
+
+    private static final int REQUEST_EXTERNAL_STORAGE = 1;
+    private static String[] PERMISSIONS_STORAGE = {
+            "android.permission.READ_EXTERNAL_STORAGE",
+            "android.permission.WRITE_EXTERNAL_STORAGE"};
+
+
+    protected void verifyStoragePermissions() {
+        try {
+            //检测是否有写的权限
+            int permission = ActivityCompat.checkSelfPermission(mContext,
+                    "android.permission.WRITE_EXTERNAL_STORAGE");
+            if (permission != PackageManager.PERMISSION_GRANTED) {
+                // 没有写的权限，去申请写的权限，会弹出对话框
+                ActivityCompat.requestPermissions(this, PERMISSIONS_STORAGE, REQUEST_EXTERNAL_STORAGE);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }

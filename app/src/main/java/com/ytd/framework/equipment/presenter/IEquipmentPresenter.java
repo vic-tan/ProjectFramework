@@ -23,4 +23,6 @@ public interface IEquipmentPresenter {
 
 
     boolean update(Context mContext, EquipmentBean equipmentBean);
+
+    int findTotalcount(Context mContext,String propertyId,String state);
 }

@@ -1,14 +1,23 @@
 package com.ytd.framework.main.ui.activity;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 
+import com.tlf.basic.http.okhttp.OkHttpUtils;
 import com.tlf.basic.uikit.roundview.RoundTextView;
-import com.tlf.basic.utils.AppCacheUtils;
 import com.tlf.basic.utils.StartActUtils;
 import com.tlf.basic.utils.StringUtils;
 import com.tlf.basic.utils.ToastUtils;
+import com.ytd.common.bean.BaseJson;
 import com.ytd.common.ui.activity.BaseActivity;
 import com.ytd.framework.R;
+import com.ytd.framework.main.bean.UserBean;
+import com.ytd.framework.main.presenter.IUserPresenter;
+import com.ytd.framework.main.presenter.impl.UserPresenterImpl;
+import com.ytd.framework.main.ui.service.CheckAppUpdateService;
+import com.ytd.support.constants.fixed.UrlConstants;
+import com.ytd.support.http.DialogCallback;
 import com.ytd.support.utils.ResUtils;
 import com.ytd.uikit.edittext.MClearEditText;
 
@@ -18,7 +27,8 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Fullscreen;
 import org.androidannotations.annotations.ViewById;
 
-import static com.ytd.support.constants.fixed.GlobalConstants.APP_LOGIN_NAME;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 登录
@@ -39,12 +49,20 @@ public class LoginActivity extends BaseActivity {
     @ViewById
     RoundTextView login;
 
+    IUserPresenter userPresenter;
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        verifyStoragePermissions();
+    }
 
     @AfterViews
     void init() {
-
+        userPresenter = new UserPresenterImpl();
+        startService(new Intent(this, CheckAppUpdateService.class));
     }
-
 
 
     @Click(R.id.login)
@@ -67,12 +85,38 @@ public class LoginActivity extends BaseActivity {
                     ToastUtils.show(this, "密码不正确，请输入测试账号或工号密码为" + ResUtils.getStr(R.string.login_pwd));
                     break;
                 }
-                AppCacheUtils.getInstance(this).put(APP_LOGIN_NAME, user_account_edit.getText().toString());
-                StartActUtils.start(this, HomeActivity_.class);
-                StartActUtils.finish(this);
+
+                OkHttpUtils.post().url(UrlConstants.APP_VERSION_UPDATE).paramsForJson(loginParams()).build().execute(new DialogCallback(mContext) {
+                    @Override
+                    public void onCusResponse(BaseJson response) {
+
+                    }
+                });
+                saveUserInfo();
+                StartActUtils.start(mContext, HomeActivity_.class);
+                StartActUtils.finish(mContext);
                 break;
         }
     }
+
+    public Map<String, Object> loginParams() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("sid", "ipeiban2016");
+        return map;
+    }
+
+
+    public void saveUserInfo() {
+        UserBean bean = new UserBean();
+        bean.setLoginName(user_account_edit.getText().toString());
+        bean.setPwd(user_pwd_edit.getText().toString());
+        bean.setLoginState(1);
+        userPresenter.save(bean);
+    }
+
+
+
+
 
 
     /**

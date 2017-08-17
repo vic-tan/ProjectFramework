@@ -55,8 +55,13 @@ public class HomeFragment extends Fragment {
         baen.setImage(R.mipmap.banner);
         BannerBaen baen2 = new BannerBaen();
         baen2.setImage(R.mipmap.banner_tow);
+        BannerBaen baen3 = new BannerBaen();
+        baen3.setImage(R.mipmap.banner_three);
         mBannerBaenList.add(baen);
         mBannerBaenList.add(baen2);
+        mBannerBaenList.add(baen3);
+
+
     }
 
     @Click({R.id.equipment, R.id.more})

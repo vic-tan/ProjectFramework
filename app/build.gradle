@@ -43,7 +43,7 @@ dependencies {
     compile 'com.vic-tan:basic-library-refreshview:1.0.1'
     compile 'com.vic-tan:basic-library-uikit:1.0.7'
     compile 'com.vic-tan:basic-library-utils:1.0.7'
-    compile 'org.litepal.android:core:1.5.1'
+    compile 'org.litepal.android:core:1.6.0'
     compile 'com.contrarywind:Android-PickerView:3.2.6'
     compile 'cn.bingoogolapple:bga-qrcodecore:1.1.7@aar'
     compile 'cn.bingoogolapple:bga-zbar:1.1.7@aar'

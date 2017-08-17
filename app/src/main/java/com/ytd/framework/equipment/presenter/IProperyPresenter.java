@@ -21,4 +21,6 @@ public interface IProperyPresenter {
     List<PropertyBean> findBySearch(Context mContext, String search);//搜索盘点单
 
     int deleteAll(Context mContext);
+
+    int findTotalcount(Context mContext);
 }
