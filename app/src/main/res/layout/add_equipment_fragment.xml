@@ -1,30 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.tlf.basic.base.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                  xmlns:rv="http://schemas.android.com/apk/res-auto"
-                                                  android:id="@+id/root_view"
-                                                  android:layout_width="match_parent"
-                                                  android:layout_height="match_parent"
-                                                  android:background="@color/floral_white"
-                                                  android:orientation="vertical">
+<com.tlf.basic.base.autolayout.AutoFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                               xmlns:rv="http://schemas.android.com/apk/res-auto"
+                                               android:id="@+id/root_view"
+                                               android:layout_width="match_parent"
+                                               android:layout_height="match_parent"
+                                               android:background="@color/floral_white"
+                                               android:orientation="vertical">
 
-    <com.tlf.basic.uikit.roundview.RoundTextView
-        android:id="@+id/save"
-        android:layout_width="match_parent"
-        android:layout_height="150px"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:text="保存"
-        android:textColor="@color/white"
-        android:textSize="50px"
-
-        rv:rv_backgroundColor="@color/base_button_bg_normal"
-        rv:rv_backgroundPressColor="@color/base_button_bg_pressed"/>
 
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/save">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20px">
 
 
         <LinearLayout
@@ -66,9 +54,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginRight="100px"
-                        android:maxLines="1"
-                        android:ellipsize="end"
                         android:background="@null"
+                        android:ellipsize="end"
+                        android:maxLines="1"
                         android:paddingLeft="15px"
                         android:textColor="@color/txt_color"
                         />
@@ -122,8 +110,8 @@
                         android:layout_height="match_parent"
                         android:layout_marginRight="100px"
                         android:background="@null"
-                        android:maxLines="1"
                         android:ellipsize="end"
+                        android:maxLines="1"
                         android:paddingLeft="15px"
                         android:textColor="@color/txt_color"
                         />
@@ -154,9 +142,9 @@
                         android:layout_height="match_parent"
                         android:layout_marginRight="100px"
                         android:background="@null"
-                        android:paddingLeft="15px"
-                        android:maxLines="1"
                         android:ellipsize="end"
+                        android:maxLines="1"
+                        android:paddingLeft="15px"
                         android:textColor="@color/txt_color"
                         />
 
@@ -208,8 +196,8 @@
                         android:layout_height="match_parent"
                         android:layout_marginRight="100px"
                         android:background="@null"
-                        android:maxLines="1"
                         android:ellipsize="end"
+                        android:maxLines="1"
                         android:paddingLeft="15px"
                         android:textColor="@color/txt_color"
                         />
@@ -264,19 +252,19 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginRight="100px"
-                        android:gravity="center_vertical"
                         android:background="@null"
-                        android:paddingLeft="15px"
-                        android:maxLines="1"
                         android:ellipsize="end"
                         android:focusable="true"
                         android:focusableInTouchMode="true"
+                        android:gravity="center_vertical"
+                        android:maxLines="1"
+                        android:paddingLeft="15px"
                         android:textColor="@color/txt_color"
                         />
 
 
-
                     <TextView
+                        android:id="@+id/star_date_name_tag"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_alignParentRight="true"
@@ -315,16 +303,17 @@
                         android:layout_height="match_parent"
                         android:layout_marginRight="100px"
                         android:background="@null"
-                        android:paddingLeft="15px"
-                        android:gravity="center_vertical"
-                        android:maxLines="1"
                         android:ellipsize="end"
                         android:focusable="true"
                         android:focusableInTouchMode="true"
+                        android:gravity="center_vertical"
+                        android:maxLines="1"
+                        android:paddingLeft="15px"
                         android:textColor="@color/txt_color"
                         />
 
                     <TextView
+                        android:id="@+id/end_date_name_tag"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_alignParentRight="true"
@@ -350,9 +339,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10px"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10px"
                     android:gravity="center_vertical"
                     android:maxLines="1"
                     android:text="价格区间:"
@@ -364,8 +353,8 @@
                     android:layout_width="0px"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
                     android:layout_marginLeft="20px"
+                    android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -391,8 +380,8 @@
                     android:layout_width="0px"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
                     android:layout_marginLeft="30px"
+                    android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -437,10 +426,10 @@
                         android:layout_height="match_parent"
                         android:layout_marginRight="100px"
                         android:background="@null"
-                        android:paddingLeft="15px"
-                        android:maxLines="1"
                         android:ellipsize="end"
                         android:inputType="number|numberDecimal"
+                        android:maxLines="1"
+                        android:paddingLeft="15px"
                         android:textColor="@color/txt_color"
                         />
 
@@ -483,10 +472,10 @@
                         android:layout_height="match_parent"
                         android:layout_marginRight="100px"
                         android:background="@null"
-                        android:paddingLeft="15px"
-                        android:maxLines="1"
-                        android:inputType="number|numberDecimal"
                         android:ellipsize="end"
+                        android:inputType="number|numberDecimal"
+                        android:maxLines="1"
+                        android:paddingLeft="15px"
                         android:textColor="@color/txt_color"
                         />
 
@@ -507,4 +496,17 @@
     </ScrollView>
 
 
-</com.tlf.basic.base.autolayout.AutoRelativeLayout>
+    <com.tlf.basic.uikit.roundview.RoundTextView
+        android:id="@+id/save"
+        android:layout_width="match_parent"
+        android:layout_height="150px"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="bottom"
+        android:gravity="center"
+        android:text="保存"
+        android:textColor="@color/white"
+        android:textSize="50px"
+        rv:rv_backgroundColor="@color/base_button_bg_normal"
+        rv:rv_backgroundPressColor="@color/base_button_bg_pressed"/>
+</com.tlf.basic.base.autolayout.AutoFrameLayout>

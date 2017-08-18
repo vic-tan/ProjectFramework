@@ -1,5 +1,6 @@
 package com.ytd.framework.equipment.ui.activity;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -32,8 +33,18 @@ public class PropertyActivity extends BaseSlidingTabStripActivity {
     IndicatorWrapPagerSlider mTabs;
     @ViewById(R.id.pager)
     ViewPager mPager;
+
     private ListPropertyFragment listFragment;
     private AddPropertyFragment addFragment;
+
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+
     @AfterViews
     void init() {
         initActionBar();

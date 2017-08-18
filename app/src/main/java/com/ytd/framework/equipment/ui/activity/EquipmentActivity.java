@@ -48,7 +48,7 @@ public class EquipmentActivity extends BaseSlidingTabStripActivity {
             @Override
             public void onClick(View v, ActionBarOptViewTagLevel viewTag) {
                 if (viewTag == ActionBarOptViewTagLevel.LEFT_ICON_DRAWABLE) {
-                    StartActUtils.start(mContext, PropertySearchActivity_.class);
+                    StartActUtils.start(mContext, EquipmentSearchActivity_.class);
                 } else if (viewTag == ActionBarOptViewTagLevel.RIGHT_ICON_DRAWABLE) {
                     StartActUtils.start(mContext,
                             EquipmentReactionScanActivity_.class);

@@ -1,47 +1,71 @@
-package com.ytd.framework.equipment.ui.fragment;
-
+package com.ytd.framework.equipment.ui.activity;
 
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.tlf.basic.base.adapter.abslistview.AbsCommonAdapter;
 import com.tlf.basic.base.adapter.abslistview.AbsViewHolder;
 import com.tlf.basic.uikit.roundview.RoundTextView;
+import com.tlf.basic.utils.ListUtils;
 import com.tlf.basic.utils.StartActUtils;
 import com.tlf.basic.utils.StringUtils;
-import com.ytd.common.ui.fragment.refreshview.BaseLocalAbsRefreshFragment;
+import com.tlf.basic.utils.ToastUtils;
+import com.ytd.common.ui.activity.actionbar.BaseActionBarActivity;
 import com.ytd.framework.R;
 import com.ytd.framework.equipment.bean.EquipmentBean;
-import com.ytd.framework.equipment.bean.PropertyBean;
 import com.ytd.framework.equipment.presenter.IEquipmentPresenter;
 import com.ytd.framework.equipment.presenter.impl.EquipmentPresenterImpl;
-import com.ytd.framework.equipment.ui.activity.EquipmentActivity;
-import com.ytd.framework.equipment.ui.activity.EquipmentDetailsActivity_;
-import com.ytd.support.constants.fixed.JsonConstants;
 import com.ytd.support.utils.ResUtils;
 
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
+import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.ViewById;
+
+import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 首页界面
+ * Created by ytd on 16/1/19.
+ */
+@EActivity(R.layout.equipment_search_activity)
+public class EquipmentSearchActivity extends BaseActionBarActivity {
 
-public abstract class EqBaseFragment extends BaseLocalAbsRefreshFragment {
+    public static final String TAG = EquipmentSearchActivity.class.getSimpleName();
+    @ViewById
+    TextView searchBtn;
+    @ViewById
+    ImageView searchIcon;
+    @ViewById
+    EditText searchContent;
+    @ViewById
+    ListView list;
+    @ViewById
+    ProgressBar pbLoading;
+    @ViewById
+    TextView tvEmptyMessage;
+    @ViewById
+    FrameLayout flEmptyView;
 
+    AbsCommonAdapter adapter;
+    List<EquipmentBean> listData;
+    IEquipmentPresenter presenter;
 
-    protected IEquipmentPresenter equipmentPresenter;
-
-
+    @AfterViews
     void init() {
-        super.supperInit(getActivity());
-        equipmentPresenter = new EquipmentPresenterImpl();
-
-    }
-
-
-    @Override
-    public AbsCommonAdapter setRefreshAdapter() {
-        return new AbsCommonAdapter<EquipmentBean>(getActivity(), R.layout.eq_all_refresh_list_item, (List<EquipmentBean>) mRefreshList) {
+        initActionBar();
+        listData = new ArrayList<>();
+        flEmptyView.setVisibility(View.GONE);
+        presenter = new EquipmentPresenterImpl();
+        adapter = new AbsCommonAdapter<EquipmentBean>(mContext, R.layout.eq_all_refresh_list_item, listData) {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             protected void convert(AbsViewHolder holder, final EquipmentBean bean, int position) {
@@ -83,30 +107,35 @@ public abstract class EqBaseFragment extends BaseLocalAbsRefreshFragment {
                                 EquipmentDetailsActivity_.class, "bean", bean);
                     }
                 });
-
             }
 
         };
+        list.setAdapter(adapter);
+    }
+
+    @Click(R.id.searchBtn)
+    void click(View v) {
+        if (StringUtils.isEmpty(searchContent.getText().toString())) {
+            ToastUtils.show(mContext, "搜索内容不能为空");
+            return;
+        }
+        searchResult(searchContent.getText().toString());
     }
 
 
-
-
-    @Override
-    public List localSQLFindLimit(boolean isPage, int currPagetemp) {
-        int currPage = currPagetemp - 1;
-        return equipmentPresenter.findLimit(getActivity(), getPropertyBean().getMy_id(), getState(), currPage * JsonConstants.PAGE_SIZE, JsonConstants.PAGE_SIZE);
-//        return equipmentPresenter.findAll(getActivity(),getPropertyBean().getMy_id());
+    public void searchResult(String search) {
+        listData.clear();
+        List<EquipmentBean> list = presenter.findBySearch(mContext, search);
+        if (ListUtils.isEmpty(list)) {
+            ToastUtils.show(mContext, "暂时没有搜索您要找的数据!");
+        }
+        listData.addAll(list);
+        adapter.notifyDataSetChanged();
+        if (ListUtils.isEmpty(listData)) {
+            flEmptyView.setVisibility(View.GONE);
+        } else {
+            flEmptyView.setVisibility(View.GONE);
+        }
     }
 
-    public abstract String getState();
-
-    protected PropertyBean getPropertyBean() {
-        return ((EquipmentActivity) getActivity()).getPropertyBean();
-    }
-
-    protected void setTabsTitleText(int indexTabs, int tabsTitileTxt) {
-        String tab = ResUtils.getStr(tabsTitileTxt) + "  (" + equipmentPresenter.findTotalcount(getActivity(),getPropertyBean().getMy_id(),getState()) + ")";
-        ((TextView) (((EquipmentActivity) getActivity()).getmTabs().getTabsContainer().getChildAt(indexTabs))).setText(tab);
-    }
 }

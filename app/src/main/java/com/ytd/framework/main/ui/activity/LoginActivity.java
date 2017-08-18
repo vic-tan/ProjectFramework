@@ -4,20 +4,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.tlf.basic.http.okhttp.OkHttpUtils;
 import com.tlf.basic.uikit.roundview.RoundTextView;
 import com.tlf.basic.utils.StartActUtils;
 import com.tlf.basic.utils.StringUtils;
 import com.tlf.basic.utils.ToastUtils;
-import com.ytd.common.bean.BaseJson;
 import com.ytd.common.ui.activity.BaseActivity;
 import com.ytd.framework.R;
 import com.ytd.framework.main.bean.UserBean;
 import com.ytd.framework.main.presenter.IUserPresenter;
 import com.ytd.framework.main.presenter.impl.UserPresenterImpl;
 import com.ytd.framework.main.ui.service.CheckAppUpdateService;
-import com.ytd.support.constants.fixed.UrlConstants;
-import com.ytd.support.http.DialogCallback;
 import com.ytd.support.utils.ResUtils;
 import com.ytd.uikit.edittext.MClearEditText;
 
@@ -86,12 +82,12 @@ public class LoginActivity extends BaseActivity {
                     break;
                 }
 
-                OkHttpUtils.post().url(UrlConstants.APP_VERSION_UPDATE).paramsForJson(loginParams()).build().execute(new DialogCallback(mContext) {
+               /* OkHttpUtils.post().url(UrlConstants.APP_VERSION_UPDATE).paramsForJson(loginParams()).build().execute(new DialogCallback(mContext) {
                     @Override
                     public void onCusResponse(BaseJson response) {
 
                     }
-                });
+                });*/
                 saveUserInfo();
                 StartActUtils.start(mContext, HomeActivity_.class);
                 StartActUtils.finish(mContext);

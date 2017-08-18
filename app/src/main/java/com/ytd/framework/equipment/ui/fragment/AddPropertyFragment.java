@@ -3,6 +3,8 @@ package com.ytd.framework.equipment.ui.fragment;
 
 import android.graphics.Color;
 import android.os.Build;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -10,11 +12,14 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bigkoo.pickerview.TimePickerView;
 import com.tlf.basic.http.okhttp.OkHttpUtils;
 import com.tlf.basic.uikit.roundview.RoundTextView;
+import com.tlf.basic.utils.CountDownTimer;
+import com.tlf.basic.utils.InputMethodManagerUtils;
 import com.tlf.basic.utils.Logger;
 import com.tlf.basic.utils.StringUtils;
 import com.tlf.basic.utils.ToastUtils;
@@ -23,6 +28,10 @@ import com.ytd.framework.R;
 import com.ytd.support.constants.fixed.UrlConstants;
 import com.ytd.support.http.DialogCallback;
 import com.ytd.support.utils.ResUtils;
+
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener;
+import net.yslibrary.android.keyboardvisibilityevent.Unregistrar;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -40,7 +49,7 @@ import java.util.Map;
  * A simple {@link Fragment} subclass.
  */
 @EFragment(R.layout.add_equipment_fragment)
-public class AddPropertyFragment extends Fragment {
+public class AddPropertyFragment extends Fragment  {
     public static final String TAG = AddPropertyFragment.class.getSimpleName();
 
 
@@ -62,11 +71,18 @@ public class AddPropertyFragment extends Fragment {
     EditText starPripceName;
     @ViewById
     EditText endPriceName;
-
+    @ViewById
+    ScrollView scrollView;
     @ViewById
     ImageView one;
     @ViewById
     ImageView two;
+    Unregistrar mUnregistrar;
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+
+        super.onCreate(savedInstanceState);
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public void clear() {
@@ -82,8 +98,11 @@ public class AddPropertyFragment extends Fragment {
         one.setBackground(ResUtils.getDrawable(R.mipmap.select_true));
     }
 
+
+
     @AfterViews
     void init() {
+
         starPripceName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -103,6 +122,7 @@ public class AddPropertyFragment extends Fragment {
             }
         });
 
+
         endPriceName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -121,7 +141,36 @@ public class AddPropertyFragment extends Fragment {
                 setPriceSelet();
             }
         });
+        mUnregistrar = KeyboardVisibilityEvent.registerEventListener(getActivity(), new KeyboardVisibilityEventListener() {
+            @Override
+            public void onVisibilityChanged(boolean isOpen) {
+                updateKeyboardStatusText(isOpen);
+            }
+        });
+        updateKeyboardStatusText(KeyboardVisibilityEvent.isKeyboardVisible(getActivity()));
     }
+    private void updateKeyboardStatusText(boolean isOpen) {
+        if (isOpen) {
+            save.setVisibility(View.GONE);
+        } else {
+            delayedStart(150);
+        }
+    }
+
+    public void delayedStart(long delayed) {
+        new CountDownTimer(delayed, delayed) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+            }
+
+            @Override
+            public void onFinish() {
+                save.setVisibility(View.VISIBLE);
+            }
+        }.start();
+    }
+
+
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     private void setPriceSelet() {
@@ -143,11 +192,12 @@ public class AddPropertyFragment extends Fragment {
     int priceTag;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-    @Click({R.id.star_date_name, R.id.end_date_name, R.id.one, R.id.two, R.id.one_txt, R.id.two_txt, R.id.save})
+    @Click({R.id.star_date_name, R.id.end_date_name,R.id.star_date_name_tag, R.id.end_date_name_tag, R.id.one, R.id.two, R.id.one_txt, R.id.two_txt, R.id.save})
     void click(View v) {
         switch (v.getId()) {
             case R.id.one_txt:
             case R.id.one:
+                InputMethodManagerUtils.hideSoftInput(getActivity(),v);
                 priceTag = 0;
                 one.setBackground(ResUtils.getDrawable(R.mipmap.select_true));
                 two.setBackground(ResUtils.getDrawable(R.mipmap.select_false));
@@ -156,16 +206,21 @@ public class AddPropertyFragment extends Fragment {
                 break;
             case R.id.two_txt:
             case R.id.two:
+                InputMethodManagerUtils.hideSoftInput(getActivity(),v);
                 priceTag = 1;
                 two.setBackground(ResUtils.getDrawable(R.mipmap.select_true));
                 one.setBackground(ResUtils.getDrawable(R.mipmap.select_false));
                 starPripceName.setText("");
                 endPriceName.setText("");
                 break;
-            case R.id.star_date_name://选择时间
+            case R.id.star_date_name:
+            case R.id.star_date_name_tag://选择时间
+                InputMethodManagerUtils.hideSoftInput(getActivity(),v);
                 selectDate(starDateName, 1);
                 break;
-            case R.id.end_date_name://选择时间
+            case R.id.end_date_name:
+            case R.id.end_date_name_tag://选择时间
+                InputMethodManagerUtils.hideSoftInput(getActivity(),v);
                 selectDate(endDateName, 2);
                 break;
             case R.id.save://

@@ -86,4 +86,9 @@ public class EquipmentPresenterImpl extends  BasePresenterImpl  implements IEqui
         }
         return where(DB_LOGIN_NAME+ " = ?  and propertyId = ? and lookStatus = ?", getLoginName(), propertyId, state).find(EquipmentBean.class).size();
     }
+
+    @Override
+    public List<EquipmentBean> findBySearch(Context mContext, String search) {
+        return where(DB_LOGIN_NAME+ " = ? and  (title like ? or eqType like ?  or useAddress like ?)", getLoginName(), "%" + search + "%", "%" + search + "%", "%" + search + "%").find(EquipmentBean.class);
+    }
 }

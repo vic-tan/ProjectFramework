@@ -25,4 +25,6 @@ public interface IEquipmentPresenter {
     boolean update(Context mContext, EquipmentBean equipmentBean);
 
     int findTotalcount(Context mContext,String propertyId,String state);
+
+    List<EquipmentBean> findBySearch(Context mContext, String search);//搜索盘点单
 }

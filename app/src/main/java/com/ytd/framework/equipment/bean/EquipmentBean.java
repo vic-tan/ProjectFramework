@@ -15,7 +15,7 @@ public class EquipmentBean extends DataSupport implements Parcelable {
 
     private String title;//名称单名称
     private String count;//数量
-    private String eqType;//资产分类
+    private String eqType;//设备型号
     private String barCode;//资产条码号
     private String eqId;//资产编号
     private String useAddress;//使用科室

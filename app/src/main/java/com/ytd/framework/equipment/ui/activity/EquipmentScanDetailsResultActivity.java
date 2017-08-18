@@ -2,10 +2,14 @@ package com.ytd.framework.equipment.ui.activity;
 
 import android.app.Dialog;
 import android.graphics.Color;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bigkoo.pickerview.OptionsPickerView;
@@ -15,6 +19,8 @@ import com.tlf.basic.uikit.dialog.widget.NormalDialog;
 import com.tlf.basic.uikit.kprogresshud.KProgressHUD;
 import com.tlf.basic.uikit.roundview.RoundRelativeLayout;
 import com.tlf.basic.uikit.roundview.RoundTextView;
+import com.tlf.basic.utils.CountDownTimer;
+import com.tlf.basic.utils.InputMethodManagerUtils;
 import com.tlf.basic.utils.StartActUtils;
 import com.tlf.basic.utils.StringUtils;
 import com.tlf.basic.utils.ToastUtils;
@@ -27,6 +33,10 @@ import com.ytd.framework.main.ui.activity.CameraScanActivity;
 import com.ytd.support.utils.ResUtils;
 import com.ytd.uikit.actionbar.ActionBarOptViewTagLevel;
 import com.ytd.uikit.actionbar.OnOptClickListener;
+
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener;
+import net.yslibrary.android.keyboardvisibilityevent.Unregistrar;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -83,12 +93,14 @@ public class EquipmentScanDetailsResultActivity extends BaseActionBarActivity {
     @ViewById
     TextView dateTitile;
     @ViewById
+    TextView changeText;
+    @ViewById
     EditText remark;
     @ViewById
     RoundRelativeLayout startDateLayout;
-    @ViewById
-    RelativeLayout resultLayout;
 
+    @ViewById
+    ScrollView scrollView;
 
     protected KProgressHUD hud;
     EquipmentBean bean;
@@ -99,9 +111,18 @@ public class EquipmentScanDetailsResultActivity extends BaseActionBarActivity {
     NormalDialog dialog;
 
 
+    Unregistrar mUnregistrar;
+
     @AfterViews
     void init() {
         initActionBar();
+        mUnregistrar = KeyboardVisibilityEvent.registerEventListener(this, new KeyboardVisibilityEventListener() {
+            @Override
+            public void onVisibilityChanged(boolean isOpen) {
+                updateKeyboardStatusText(isOpen);
+            }
+        });
+        updateKeyboardStatusText(KeyboardVisibilityEvent.isKeyboardVisible(this));
         bean = getIntent().getParcelableExtra("bean");
         scanTag = getIntent().getIntExtra("scanTag", 0);
         equipmentPresenter = new EquipmentPresenterImpl();
@@ -116,9 +137,50 @@ public class EquipmentScanDetailsResultActivity extends BaseActionBarActivity {
                 .setLabel(mContext.getResources().getString(R.string.common_dialog_loading))
                 .setCancellable(false);
         dialog = new NormalDialog(mContext);
-        resultLayout.setVisibility(View.VISIBLE);
         setData();
+
+        remark.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                //输入变化前执行
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                //输入文本发生变化执行
+                changeText.setText("还可以输入"+charSequence.length()+"/200个字");
+            }
+
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
+
+    private void updateKeyboardStatusText(boolean isOpen) {
+        if (isOpen) {
+            scrollView.fullScroll(ScrollView.FOCUS_DOWN);
+            saveBtn.setVisibility(View.GONE);
+        } else {
+            delayedStart(150);
+        }
+    }
+
+    public void delayedStart(long delayed) {
+        new CountDownTimer(delayed, delayed) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+            }
+
+            @Override
+            public void onFinish() {
+                saveBtn.setVisibility(View.VISIBLE);
+            }
+        }.start();
+    }
+
 
     private void setData() {
         title.setText("资产名称：" + bean.getTitle());
@@ -143,10 +205,12 @@ public class EquipmentScanDetailsResultActivity extends BaseActionBarActivity {
     void click(View v) {
         switch (v.getId()) {
             case R.id.useStatus://使用状态
+                InputMethodManagerUtils.hideSoftInput(mContext, v);
                 useStatus();
                 break;
             case R.id.date://选择时间
                 //时间选择器
+                InputMethodManagerUtils.hideSoftInput(mContext, v);
                 selectDate();
                 break;
             case R.id.saveBtn://
