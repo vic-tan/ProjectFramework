@@ -13,7 +13,9 @@ import com.tlf.basic.uikit.dialog.listener.OnOperItemClickL;
 import com.tlf.basic.uikit.dialog.widget.ActionSheetDialog;
 import com.tlf.basic.utils.ActivityManager;
 import com.tlf.basic.utils.AppCacheUtils;
+import com.tlf.basic.utils.StartActUtils;
 import com.ytd.framework.R;
+import com.ytd.framework.main.ui.activity.ConfigActivity_;
 import com.ytd.framework.main.ui.service.AppDownloadService;
 import com.ytd.framework.main.ui.service.CheckAppUpdateService;
 import com.ytd.support.utils.UnFinshUtils;
@@ -43,7 +45,7 @@ public class OwnFragment extends Fragment {
         name.setText(AppCacheUtils.getInstance(getActivity()).getString("user_name"));
     }
 
-    @Click({R.id.skin_layout, R.id.lianxi_layout, R.id.eixt})
+    @Click({R.id.skin_layout, R.id.lianxi_layout,R.id.config_layout, R.id.eixt})
     void click(View v) {
         switch (v.getId()) {
             case R.id.skin_layout:
@@ -51,6 +53,9 @@ public class OwnFragment extends Fragment {
                 break;
             case R.id.lianxi_layout:
                 UnFinshUtils.unFinshToast(getActivity());
+                break;
+            case R.id.config_layout:
+                StartActUtils.start(getActivity(), ConfigActivity_.class,"tag","1");
                 break;
             case R.id.eixt:
                 ActionSheetDialog();

@@ -17,13 +17,11 @@ import org.androidannotations.annotations.Fullscreen;
  */
 @Fullscreen //全屏
 @EActivity(R.layout.main_activity_splash)
-public class SplashActivity extends BaseActivity implements SplashView {
+public class SplashActivity extends BaseActivity implements SplashView{
 
     public static final long DELAYED = 3000;
     public static final boolean IS_HAS_LOADING_DATA = false;//是否有加载数据过度界面
     private ISplashPresenter presenter;
-
-
 
 
     @AfterViews
@@ -63,4 +61,8 @@ public class SplashActivity extends BaseActivity implements SplashView {
     @Override
     protected void setSystemBarTint(int systemBarTint) {
     }
+
+
+
+
 }

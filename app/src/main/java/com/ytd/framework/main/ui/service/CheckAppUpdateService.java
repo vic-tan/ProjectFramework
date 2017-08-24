@@ -15,6 +15,7 @@ import com.ytd.support.http.ResultCallback;
 import com.tlf.basic.http.okhttp.OkHttpUtils;
 import com.tlf.basic.utils.AppUtils;
 import com.tlf.basic.utils.NetUtils;
+import com.ytd.support.utils.DomainUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,10 +28,9 @@ import java.util.Map;
 public class CheckAppUpdateService extends IntentService {
 
 
-    public CheckAppUpdateService(){
+    public CheckAppUpdateService() {
         super("CheckAppUpdateService");
     }
-
 
 
     @Override
@@ -42,8 +42,8 @@ public class CheckAppUpdateService extends IntentService {
      * 查看可否升级
      */
     public void appUpdate() {
-        if(NetUtils.isConnected(CheckAppUpdateService.this)) {
-            OkHttpUtils.post().url(UrlConstants.APP_VERSION_UPDATE).paramsForJson(tagList()).build().execute(new ResultCallback(this) {
+        if (NetUtils.isConnected(CheckAppUpdateService.this)) {
+            OkHttpUtils.post().url(DomainUtils.getInstance().domain() + UrlConstants.APP_VERSION_UPDATE).paramsForJson(tagList()).build().execute(new ResultCallback(this) {
                 @Override
                 public void onCusResponse(BaseJson response) {
                     response = date();
@@ -85,63 +85,15 @@ public class CheckAppUpdateService extends IntentService {
 
     public BaseJson date() {
         String str = "{\n" +
-                "    \"code\": \"0000\",\n" +
-                "    \"msg\": \"操作成功\",\n" +
-                "    \"data\": {\n" +
-                "        \"version_code\": \"12\",\n" +
-                "        \"version_name\": \"1.0.1\",\n" +
-                "        \"name\": \"test\",\n" +
-                "        \"url\":\"http://apk.hiapk.com/appdown/cc.pacer.androidapp?webparams=sviptodoc291cmNlPTkz\",\n" +
-                "        \"desc\":\"灵犀Android<br>\n" +
-                "                3.1.2298版产品更新计划<br>\n" +
-                "                一、版本信息<br>\n" +
-                "                版本号：<br>\n" +
-                "                Android 3.1.2298版<br>\n" +
-                "                二、产品介绍<br>\n" +
-                "                实现智能操控的语音现智能操控的语现智能操控的语现智能操控的语现智能操控的语助手<br>\n" +
-                "                【重要机能档案】<br>\n" +
-                "                官方百度贴吧：灵犀语音助手吧<br>\n" +
-                "                官方微信：yidonglingxi<br>\n" +
-                "                官方微信：yidonglglingingxi<br>\n" +
-                "                官方微信：yidonglglingingxi<br>\n" +
-                "                官方微信：yidonglglingglingglingingxi<br>\n" +
-                "                官方微信：yidonglingxi<br>\n" +
-                "                官方微信：yidongliglingglingngxi<br>\n" +
-                "                官方微信：yidonglingxi<br>\n" +
-                "                官方微信：yidongliglingglingglingngxi<br>\n" +
-                "                官方微信：yidonglingxi<br>\n" +
-                "                官方微信：yidonglinglingglinggxi<br>\n" +
-                "                官方微信：yidonglingxi<br>\n" +
-                "                官方微信：yidongliglingglingglingngxi<br>\n" +
-                "                官方微信：yidonglingxi<br>\n" +
-                "                官方微信：yidonglingxi<br>\n" +
-                "                官方微信：yidonglinglingglinggxi<br>\n" +
-                "                官方微信：yidonglinglinggxi<br>\n" +
-                "                官方微信：yidonglinglinggxi<br>\n" +
-                "                官方微信：yidonglinglinggxi<br>\n" +
-                "                官方微信：yidonglingglingxi<br>\n" +
-                "                官方微信：yidonglinglinggxi<br>\n" +
-                "                官方微信：yidonglingxi<br>\n" +
-                "                官方微信：yidonglingxglingi<br>\n" +
-                "                官方微信：yidongliglingngxi<br>\n" +
-                "                官方微信：yidonglingxi<br>\n" +
-                "                官方微信：yidonglingxi<br>\n" +
-                "                官方微信：yidonglglingiglingngxi<br>\n" +
-                "                官方微信：yidonglingxi<br>\n" +
-                "                官方微信：yidonglinglingglinggxi<br>\n" +
-                "                官方微信：yidonglglinginglinggxi<br>\n" +
-                "                官方微信：yidonglingxi<br>\n" +
-                "                官方微信：yidonglglingingxi<br>\n" +
-                "                官方微信：yidonglingxi<br>\n" +
-                "                官方微信：yidonglglinginglinggxi<br>\n" +
-                "                官方微信：yidonglingxi<br>\n" +
-                "                官方微信：yidonglglingingxi<br>\n" +
-                "                官方微信：yidonglglingingxi<br>\n" +
-                "                官方微信：yidonglingxi<br>\n" +
-                "                官方微信：yidongglinglingxi<br>\n" +
-                "                官方微信：yidonglingxi<br>\n" +
-                "                官方微博：@灵犀官方微博\"\n" +
-
+                "    \"Code\": 100,\n" +
+                "    \"Msg\": \"请求成功！\",\n" +
+                "    \"IsSuccess\": true,\n" +
+                "    \"Data\": {\n" +
+                "        \"ID\": 1,\n" +
+                "        \"Url\": \"www.baidu.com/01\",\n" +
+                "        \"VersionID\": \"1.1.11\",\n" +
+                "        \"Memo\": \"测试版0101\",\n" +
+                "        \"AddDate\": \"2017-08-21T15:55:09\"\n" +
                 "    }\n" +
                 "}";
         BaseJson baseJson = new Gson().fromJson(str, BaseJson.class);

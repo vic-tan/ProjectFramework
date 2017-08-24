@@ -3,6 +3,7 @@
 
 
     <!-- 网络相关权限 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -123,6 +124,10 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".equipment.ui.activity.EquipmentSearchActivity_"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".main.ui.activity.ConfigActivity_"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
         <activity

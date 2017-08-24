@@ -25,6 +25,8 @@ import com.ytd.support.utils.ResUtils;
 
 import java.util.List;
 
+import static com.ytd.framework.equipment.bean.EquipmentBean.LOOKSTATUS_TAG_FALSE;
+
 
 public abstract class EqBaseFragment extends BaseLocalAbsRefreshFragment {
 
@@ -45,20 +47,20 @@ public abstract class EqBaseFragment extends BaseLocalAbsRefreshFragment {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             protected void convert(AbsViewHolder holder, final EquipmentBean bean, int position) {
-                holder.setText(R.id.title, bean.getTitle());
+                holder.setText(R.id.title, bean.getSBMC());
                 holder.setText(R.id.count, "x" + bean.getCount());
-                holder.setText(R.id.eqType, "设备型号：" + bean.getEqType());
-                holder.setText(R.id.propertyID, "资产编号：" + bean.getEqId());
-                holder.setText(R.id.useAddress, "使用科室：" + bean.getUseAddress());
+                holder.setText(R.id.eqType, "设备型号：" + bean.getQYRQ());
+                holder.setText(R.id.propertyID, "资产编号：" + bean.getSBBH());
+                holder.setText(R.id.useAddress, "使用科室：" + bean.getKSMC());
                 holder.setText(R.id.propertyStutas, "资产状态:" + bean.getPropertyStatus());
-                holder.setText(R.id.startDate, "启用日期：" + bean.getStart_data());
-                holder.setText(R.id.unitName, bean.getUnitName());
+                holder.setText(R.id.startDate, "启用日期：" + bean.getQYRQ());
+                holder.setText(R.id.unitName, bean.getDW());
                 ImageView selectTag = holder.getView(R.id.selectTag);
                 TextView selectText = holder.getView(R.id.selectText);
                 RoundTextView startWork = holder.getView(R.id.startWork);
                 RoundTextView lookDetails = holder.getView(R.id.lookDetails);
 
-                if (StringUtils.isEquals(bean.getLookStatus(), "0")) {//未盘点
+                if (StringUtils.isEquals(bean.getLookStatus(), LOOKSTATUS_TAG_FALSE)) {//未盘点
                     selectTag.setBackground(ResUtils.getDrawable(R.mipmap.unselect));
                     selectText.setText("未盘点");
                     startWork.setVisibility(View.VISIBLE);
@@ -95,7 +97,7 @@ public abstract class EqBaseFragment extends BaseLocalAbsRefreshFragment {
     @Override
     public List localSQLFindLimit(boolean isPage, int currPagetemp) {
         int currPage = currPagetemp - 1;
-        return equipmentPresenter.findLimit(getActivity(), getPropertyBean().getMy_id(), getState(), currPage * JsonConstants.PAGE_SIZE, JsonConstants.PAGE_SIZE);
+        return equipmentPresenter.findLimit(getActivity(), getPropertyBean().getPDDH(), getState(), currPage * JsonConstants.PAGE_SIZE, JsonConstants.PAGE_SIZE);
 //        return equipmentPresenter.findAll(getActivity(),getPropertyBean().getMy_id());
     }
 
@@ -106,7 +108,7 @@ public abstract class EqBaseFragment extends BaseLocalAbsRefreshFragment {
     }
 
     protected void setTabsTitleText(int indexTabs, int tabsTitileTxt) {
-        String tab = ResUtils.getStr(tabsTitileTxt) + "  (" + equipmentPresenter.findTotalcount(getActivity(),getPropertyBean().getMy_id(),getState()) + ")";
+        String tab = ResUtils.getStr(tabsTitileTxt) + "  (" + equipmentPresenter.findTotalcount(getActivity(),getPropertyBean().getPDDH(),getState()) + ")";
         ((TextView) (((EquipmentActivity) getActivity()).getmTabs().getTabsContainer().getChildAt(indexTabs))).setText(tab);
     }
 }

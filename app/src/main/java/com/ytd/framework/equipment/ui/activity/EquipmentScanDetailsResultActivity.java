@@ -27,6 +27,7 @@ import com.tlf.basic.utils.ToastUtils;
 import com.ytd.common.ui.activity.actionbar.BaseActionBarActivity;
 import com.ytd.framework.R;
 import com.ytd.framework.equipment.bean.EquipmentBean;
+import com.ytd.framework.equipment.bean.PropertyBean;
 import com.ytd.framework.equipment.presenter.IEquipmentPresenter;
 import com.ytd.framework.equipment.presenter.impl.EquipmentPresenterImpl;
 import com.ytd.framework.main.ui.activity.CameraScanActivity;
@@ -48,6 +49,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import static com.ytd.framework.equipment.bean.EquipmentBean.LOOKSTATUS_TAG_TRUE;
+import static com.ytd.framework.equipment.bean.PropertyBean.UPDATELOAD_TAG_TRUE;
 
 /**
  * Created by ytd on 16/1/19.
@@ -104,8 +108,10 @@ public class EquipmentScanDetailsResultActivity extends BaseActionBarActivity {
 
     protected KProgressHUD hud;
     EquipmentBean bean;
+    PropertyBean propertyBean;
     private int scanTag = 0;//0，表示感应扫描，1，表示相机扫描
     protected IEquipmentPresenter equipmentPresenter;
+
 
     public static final String TAG = EquipmentScanDetailsResultActivity.class.getSimpleName();
     NormalDialog dialog;
@@ -124,6 +130,7 @@ public class EquipmentScanDetailsResultActivity extends BaseActionBarActivity {
         });
         updateKeyboardStatusText(KeyboardVisibilityEvent.isKeyboardVisible(this));
         bean = getIntent().getParcelableExtra("bean");
+        propertyBean = getIntent().getParcelableExtra("propertyBean");
         scanTag = getIntent().getIntExtra("scanTag", 0);
         equipmentPresenter = new EquipmentPresenterImpl();
         actionBarView.setOnOptClickListener(new OnOptClickListener() {
@@ -148,7 +155,7 @@ public class EquipmentScanDetailsResultActivity extends BaseActionBarActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 //输入文本发生变化执行
-                changeText.setText("还可以输入"+charSequence.length()+"/200个字");
+                changeText.setText("还可以输入" + charSequence.length() + "/200个字");
             }
 
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
@@ -183,21 +190,22 @@ public class EquipmentScanDetailsResultActivity extends BaseActionBarActivity {
 
 
     private void setData() {
-        title.setText("资产名称：" + bean.getTitle());
-        address.setText("资产编号：" + bean.getEqId());
-        eqNumber.setText("资产条码号：" + bean.getBarCode());
+        title.setText("资产名称：" + bean.getSBMC());
+        address.setText("资产编号：" + bean.getSBBH());
+        eqNumber.setText("资产条码号：" + bean.getSBTMBH());
         useAddress.setText("使用科室：" + bean.getEqStandard());
-        eqStandard.setText("使用科室：" + bean.getUseAddress());
-        unitName.setText("单位：" + bean.getUnitName());
-        startDate.setText("启用日期：" + bean.getStart_data());
-        startProperty.setText("原值：" + bean.getStart_property());
-        endProperty.setText("净值：" + bean.getEnd_property());
-        oldProperty.setText("折旧：" + bean.getOld_property());
-        eqType.setText("资产分类：" + bean.getEqType());
+        eqStandard.setText("使用科室：" + bean.getKSMC());
+        unitName.setText("单位：" + bean.getDW());
+        startDate.setText("启用日期：" + bean.getQYRQ());
+        startProperty.setText("原值：" + bean.getYZ());
+        endProperty.setText("净值：" + bean.getJZ());
+        oldProperty.setText("折旧：" + bean.getZJ());
+        eqType.setText("资产分类：" + bean.getSBBH());
         saveAddress.setText("存放地点：" + bean.getSaveAddress());
         useStatus.setText(bean.getUseStatus());
         date.setText(bean.getLookDate());
         remark.setText(bean.getRemark());
+
     }
 
 
@@ -214,6 +222,8 @@ public class EquipmentScanDetailsResultActivity extends BaseActionBarActivity {
                 selectDate();
                 break;
             case R.id.saveBtn://
+
+
                 if (StringUtils.isEmpty(useStatus.getText().toString())) {
                     ToastUtils.show(mContext, "资产状态不能为空,请选择资产状态");
                     return;
@@ -226,33 +236,29 @@ public class EquipmentScanDetailsResultActivity extends BaseActionBarActivity {
                     ToastUtils.show(mContext, "备注不能为空,请填写备注");
                     return;
                 }
+
                 hud.show();
                 bean.setUseStatus(useStatus.getText().toString());
                 bean.setLookDate(date.getText().toString());
                 bean.setRemark(remark.getText().toString());
                 bean.setLookStatus("1");
+                if (null != propertyBean) {//不等于空
+                    if (StringUtils.isEquals(propertyBean.getUpdateload(), UPDATELOAD_TAG_TRUE)) {//已上传
+                        hud.dismiss();
+                        nextScan("\n" + "该盘点的设备信息已上传服务器不能修改,请继续扫描下一个设备" + "\n");
+                        return;
+                    } else {//未上传
+                        if (StringUtils.isEquals(bean.getLookStatus(), LOOKSTATUS_TAG_TRUE)) {//是否已经盘点过
+                            hud.dismiss();
+                            updateScan("\n" + "该盘点的设备信息已盘点过了，是否重新修改保存 ?" + "\n");
+                            return;
+                        }
+                    }
+                }
                 boolean saveTag = equipmentPresenter.update(mContext, bean);
                 if (saveTag) {
                     hud.dismiss();
-                    dialog.content("\n" + "操作成功,请继续扫描下一个设备" + "\n")//
-                            .btnNum(1)
-                            .isTitleShow(false).contentGravity(Gravity.CENTER_HORIZONTAL)
-                            .btnText("继续下一个")//
-                            .show();
-                    dialog.setCancelable(false);
-                    dialog.setCanceledOnTouchOutside(false);
-                    dialog.setOnBtnClickL(new OnBtnClickL() {
-                        @Override
-                        public void onBtnClick(View v, Dialog dialog) {
-                            dialog.dismiss();
-                            if (scanTag == 0) {//感应扫描
-                                StartActUtils.start(mContext, EquipmentReactionScanActivity_.class);
-                            } else {//相机扫描
-                                StartActUtils.start(mContext, CameraScanActivity.class);
-                            }
-                            StartActUtils.finish(mContext);
-                        }
-                    });
+                    nextScan("\n" + "操作成功,请继续扫描下一个设备" + "\n");
                 } else {
                     hud.dismiss();
                 }
@@ -260,6 +266,74 @@ public class EquipmentScanDetailsResultActivity extends BaseActionBarActivity {
 
         }
     }
+
+    //扫描下一个
+    public void updateScan(String title) {
+        dialog.content(title)//
+                .btnNum(3)
+                .isTitleShow(false).contentGravity(Gravity.CENTER_HORIZONTAL)
+                .btnText("取消", "继续下一个", "修改")//
+                .show();
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setOnBtnClickL(
+                new OnBtnClickL() {//left btn click listener
+                    @Override
+                    public void onBtnClick(View v, Dialog dialog) {
+                        dialog.dismiss();
+                    }
+                },
+                new OnBtnClickL() {//right btn click listener
+                    @Override
+                    public void onBtnClick(View v, Dialog dialog) {//next
+                        dialog.dismiss();
+                        openScan();
+                    }
+                }
+                ,
+                new OnBtnClickL() {//middle btn click listener
+                    @Override
+                    public void onBtnClick(View v, Dialog dialog) {//update
+                        equipmentPresenter.update(mContext, bean);
+                        openScan();
+                        dialog.dismiss();
+                    }
+                }
+        );
+    }
+
+    public void openScan() {
+        if (scanTag == 0) {//感应扫描
+            StartActUtils.start(mContext, EquipmentReactionScanActivity_.class);
+        } else {//相机扫描
+            StartActUtils.start(mContext, CameraScanActivity.class);
+        }
+        StartActUtils.finish(mContext);
+    }
+
+    //扫描下一个
+    public void nextScan(String title) {
+        dialog.content(title)//
+                .btnNum(1)
+                .isTitleShow(false).contentGravity(Gravity.CENTER_HORIZONTAL)
+                .btnText("继续下一个")//
+                .show();
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setOnBtnClickL(new OnBtnClickL() {
+            @Override
+            public void onBtnClick(View v, Dialog dialog) {
+                dialog.dismiss();
+                if (scanTag == 0) {//感应扫描
+                    StartActUtils.start(mContext, EquipmentReactionScanActivity_.class);
+                } else {//相机扫描
+                    StartActUtils.start(mContext, CameraScanActivity.class);
+                }
+                StartActUtils.finish(mContext);
+            }
+        });
+    }
+
 
     public void useStatus() {
         final List<String> optionsItems = new ArrayList<>();

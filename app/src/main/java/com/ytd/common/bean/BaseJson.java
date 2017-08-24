@@ -8,40 +8,50 @@ package com.ytd.common.bean;
  */
 public class BaseJson<T> {
 
-    private String code;
-    private String msg;
-    private T data;
+    private String Code;
+    private String Msg;
+    private T Data;
+    private String IsSuccess;
 
     public String getCode() {
-        return code;
+        return Code;
     }
 
     public void setCode(String code) {
-        this.code = code;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    public void setData(T data) {
-        this.data = data;
+        Code = code;
     }
 
     public String getMsg() {
-        return msg;
+        return Msg;
     }
 
     public void setMsg(String msg) {
-        this.msg = msg;
+        Msg = msg;
+    }
+
+    public T getData() {
+        return Data;
+    }
+
+    public void setData(T data) {
+        Data = data;
+    }
+
+    public String getIsSuccess() {
+        return IsSuccess;
+    }
+
+    public void setIsSuccess(String isSuccess) {
+        IsSuccess = isSuccess;
     }
 
     @Override
     public String toString() {
         return "BaseJson{" +
-                "code='" + code + '\'' +
-                ", msg='" + msg + '\'' +
-                ", data='" + data + '\'' +
+                "Code='" + Code + '\'' +
+                ", Msg='" + Msg + '\'' +
+                ", Data=" + Data +
+                ", IsSuccess='" + IsSuccess + '\'' +
                 '}';
     }
 }

@@ -18,7 +18,7 @@
         "eqList": [
             {
                 "id": "324EWa975b5dbcbefdd9c015WDdbd05f898w",
-                "title": "血管仿真模型1",
+                "SBMC": "血管仿真模型1",
                 "count": "1",
                 "eqType": "HT-EW-DAFALFSDS",
                 "eqId": "983673q23489341",
@@ -36,7 +36,7 @@
             },
             {
                 "id": "DFSAFa975b5dewebrewtcbe9c015Ddbd05f898w",
-                "title": "血管仿真模型2",
+                "SBMC": "血管仿真模型2",
                 "count": "1",
                 "eqType": "HT-EW-DAFALFS",
                 "eqId": "983673q23489341",
@@ -54,7 +54,7 @@
             },
             {
                 "id": "DFSAFa975b5dewebrewdsafdsatcbe9c015Ddbd05f898w",
-                "title": "血管仿真模型123",
+                "SBMC": "血管仿真模型123",
                 "count": "1",
                 "eqType": "HT-EW-DAFALFS",
                 "eqId": "983673q23489341",
@@ -72,7 +72,7 @@
             },
             {
                 "id": "DFdfsafsaSAFa975b5dewebrewdsafdsatcbe9c015Ddbd05f898w",
-                "title": "血管仿真模型1234",
+                "SBMC": "血管仿真模型1234",
                 "count": "1",
                 "eqType": "HT-EW-DAFALFS",
                 "eqId": "983673q23489341",

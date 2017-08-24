@@ -140,6 +140,47 @@
         android:layout_height="2px"
         android:background="@color/own_line"/>
 
+    <com.tlf.basic.uikit.roundview.RoundRelativeLayout
+        android:id="@+id/config_layout"
+        android:layout_width="match_parent"
+        android:layout_height="130px"
+        android:orientation="horizontal"
+        rv:rv_backgroundColor="@color/white"
+        rv:rv_backgroundPressColor="#72ffffff">
+
+        <ImageView
+            android:id="@+id/config_icon"
+            android:layout_width="80px"
+            android:layout_height="80px"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="40px"
+            android:background="@mipmap/own_lianxi"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="30px"
+            android:layout_toRightOf="@id/lianxi_icon"
+            android:text="修改配置"
+            android:textColor="#999999"
+            android:textSize="50px"/>
+
+        <ImageView
+            android:layout_width="50px"
+            android:layout_height="80px"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="30px"
+            android:background="@mipmap/own_fangxiang"/>
+    </com.tlf.basic.uikit.roundview.RoundRelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:background="@color/own_line"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

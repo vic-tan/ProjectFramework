@@ -75,10 +75,10 @@ public class PropertySearchActivity extends BaseActionBarActivity {
                 holder.setText(R.id.add, bean.getAddress());
                 holder.setText(R.id.start_num, bean.getFinshNum());
                 holder.setText(R.id.end_num, "/" + bean.getTotalNum());
-                holder.setText(R.id.data, bean.getStart_data() + "一" + bean.getEnd_data());
+                holder.setText(R.id.data, bean.getRQ() + "一" + bean.getEnd_data());
                 ImageView selectTag = holder.getView(R.id.selectTag);
                 TextView selectText = holder.getView(R.id.stutas);
-                if (StringUtils.isEquals(bean.getStatus(), "0")) {//未完成
+                if (StringUtils.isEquals(bean.getSTATUS(), "0")) {//未完成
                     selectTag.setBackground(ResUtils.getDrawable(R.mipmap.unselect));
                     selectText.setText("未完成");
                 } else {
@@ -87,7 +87,7 @@ public class PropertySearchActivity extends BaseActionBarActivity {
                 }
                 holder.setText(R.id.start_num, bean.getFinshNum());
                 holder.setText(R.id.end_num, "/" + bean.getTotalNum());
-                holder.setText(R.id.data, bean.getStart_data() + "一" + bean.getEnd_data());
+                holder.setText(R.id.data, bean.getRQ() + "一" + bean.getEnd_data());
 
                 holder.getConvertView().setOnClickListener(new View.OnClickListener() {
                     @Override

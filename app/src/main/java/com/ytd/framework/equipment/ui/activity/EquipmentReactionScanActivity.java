@@ -14,8 +14,11 @@ import com.tlf.basic.utils.ToastUtils;
 import com.ytd.common.ui.activity.actionbar.BaseActionBarActivity;
 import com.ytd.framework.R;
 import com.ytd.framework.equipment.bean.EquipmentBean;
+import com.ytd.framework.equipment.bean.PropertyBean;
 import com.ytd.framework.equipment.presenter.IEquipmentPresenter;
+import com.ytd.framework.equipment.presenter.IProperyPresenter;
 import com.ytd.framework.equipment.presenter.impl.EquipmentPresenterImpl;
+import com.ytd.framework.equipment.presenter.impl.ProperyPresenterImpl;
 import com.ytd.support.constants.fixed.ScannerInterface;
 import com.ytd.uikit.actionbar.ActionBarOptViewTagLevel;
 import com.ytd.uikit.actionbar.OnOptClickListener;
@@ -37,7 +40,7 @@ public class EquipmentReactionScanActivity extends BaseActionBarActivity {
 
     protected KProgressHUD hud;
     protected IEquipmentPresenter equipmentPresenter;
-
+    protected IProperyPresenter properyPresenter;
     public static final String TAG = EquipmentReactionScanActivity.class.getSimpleName();
 
     ScannerInterface scanner;
@@ -46,12 +49,13 @@ public class EquipmentReactionScanActivity extends BaseActionBarActivity {
     private static final String RES_ACTION = "android.intent.action.SCANRESULT";
     NormalDialog dialog;
 
-    private String testScanID = "324EWa975b5dbcbefdd9c015WDdbd05f898w";
+    private String testScanID = "124a975b5dbcbe9DAFASDFc0ds15DdDFASFD";
 
     @AfterViews
     void init() {
         initActionBar();
         equipmentPresenter = new EquipmentPresenterImpl();
+        properyPresenter = new ProperyPresenterImpl();
         actionBarView.setOnOptClickListener(new OnOptClickListener() {
             @Override
             public void onClick(View v, ActionBarOptViewTagLevel viewTag) {
@@ -133,10 +137,12 @@ public class EquipmentReactionScanActivity extends BaseActionBarActivity {
             hud.dismiss();
             ToastUtils.show(mContext, "没有找到您扫描的设备信息!");
         } else {
+            PropertyBean propertyBean = properyPresenter.findById(mContext,list.get(0).getPDDH());
             hud.dismiss();
             Map<String, Object> map = new HashMap<>();
             map.put("bean", list.get(0));
             map.put("scanTag", 0);
+            map.put("propertyBean",propertyBean);
             StartActUtils.start(mContext, EquipmentScanDetailsResultActivity_.class, map);
         }
 

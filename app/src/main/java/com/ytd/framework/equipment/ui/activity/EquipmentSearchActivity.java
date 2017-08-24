@@ -69,14 +69,14 @@ public class EquipmentSearchActivity extends BaseActionBarActivity {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             protected void convert(AbsViewHolder holder, final EquipmentBean bean, int position) {
-                holder.setText(R.id.title, bean.getTitle());
+                holder.setText(R.id.title, bean.getSBMC());
                 holder.setText(R.id.count, "x" + bean.getCount());
-                holder.setText(R.id.eqType, "设备型号：" + bean.getEqType());
+                holder.setText(R.id.eqType, "设备型号：" + bean.getSBBH());
                 holder.setText(R.id.propertyID, "资产编号：" + bean.getEqId());
-                holder.setText(R.id.useAddress, "使用科室：" + bean.getUseAddress());
+                holder.setText(R.id.useAddress, "使用科室：" + bean.getKSMC());
                 holder.setText(R.id.propertyStutas, "资产状态:" + bean.getPropertyStatus());
-                holder.setText(R.id.startDate, "启用日期：" + bean.getStart_data());
-                holder.setText(R.id.unitName, bean.getUnitName());
+                holder.setText(R.id.startDate, "启用日期：" + bean.getQYRQ());
+                holder.setText(R.id.unitName, bean.getDW());
                 ImageView selectTag = holder.getView(R.id.selectTag);
                 TextView selectText = holder.getView(R.id.selectText);
                 RoundTextView startWork = holder.getView(R.id.startWork);

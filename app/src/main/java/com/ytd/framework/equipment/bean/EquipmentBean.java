@@ -10,39 +10,52 @@ import org.litepal.crud.DataSupport;
  */
 
 public class EquipmentBean extends DataSupport implements Parcelable {
+    public static final String  LOOKSTATUS_TAG_TRUE = "1";//已盘点
+    public static final String  LOOKSTATUS_TAG_FALSE = "0";//未盘点
 
     private String my_id;
 
-    private String title;//名称单名称
+    private String SBMC;//名称单名称
     private String count;//数量
-    private String eqType;//设备型号
-    private String barCode;//资产条码号
+    private String SBBH;//设备型号
+    private String SBTMBH;//资产条码号
     private String eqId;//资产编号
-    private String useAddress;//使用科室
-    private String start_data;//盘点开始时间
+    private String KSMC;//使用科室
+    private String QYRQ;//盘点开始时间
     private String propertyStatus;//资产状态
-    private String unitName;//单位
+    private String DW;//单位
     private String eqStandard;//规格
     private String saveAddress;//存放地点
-    private String start_property;//原值
-    private String end_property;//净值
-    private String old_property;//折旧
+    private String YZ;//原值
+
+
+    private String JZ;//净值
+    private String ZJ;//折旧
     private String useStatus;//资产状态
     private String lookDate;//盘点时间
     private String lookStatus;//盘点状态
 
-
     private String remark;//备注
-
-
     private String loginName;
-    private String propertyId;
+    private String PDDH;
 
 
-    public String getBarCode() {
-        return barCode;
+
+    public String getSBBH() {
+        return SBBH;
     }
 
+    public void setSBBH(String SBBH) {
+        this.SBBH = SBBH;
+    }
+
+    public String getQYRQ() {
+        return QYRQ;
+    }
+
+    public void setQYRQ(String QYRQ) {
+        this.QYRQ = QYRQ;
+    }
 
 
     public String getUseStatus() {
@@ -69,17 +82,8 @@ public class EquipmentBean extends DataSupport implements Parcelable {
         this.remark = remark;
     }
 
-    public void setBarCode(String barCode) {
-        this.barCode = barCode;
-    }
 
-    public String getUnitName() {
-        return unitName;
-    }
 
-    public void setUnitName(String unitName) {
-        this.unitName = unitName;
-    }
 
     public String getEqStandard() {
         return eqStandard;
@@ -97,29 +101,7 @@ public class EquipmentBean extends DataSupport implements Parcelable {
         this.saveAddress = saveAddress;
     }
 
-    public String getStart_property() {
-        return start_property;
-    }
 
-    public void setStart_property(String start_property) {
-        this.start_property = start_property;
-    }
-
-    public String getEnd_property() {
-        return end_property;
-    }
-
-    public void setEnd_property(String end_property) {
-        this.end_property = end_property;
-    }
-
-    public String getOld_property() {
-        return old_property;
-    }
-
-    public void setOld_property(String old_property) {
-        this.old_property = old_property;
-    }
 
     public String getLoginName() {
         return loginName;
@@ -129,12 +111,12 @@ public class EquipmentBean extends DataSupport implements Parcelable {
         this.loginName = loginName;
     }
 
-    public String getPropertyId() {
-        return propertyId;
+    public String getPDDH() {
+        return PDDH;
     }
 
-    public void setPropertyId(String propertyId) {
-        this.propertyId = propertyId;
+    public void setPDDH(String PDDH) {
+        this.PDDH = PDDH;
     }
 
     public String getMy_id() {
@@ -145,12 +127,12 @@ public class EquipmentBean extends DataSupport implements Parcelable {
         this.my_id = my_id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getSBMC() {
+        return SBMC;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setSBMC(String SBMC) {
+        this.SBMC = SBMC;
     }
 
     public String getCount() {
@@ -161,13 +143,6 @@ public class EquipmentBean extends DataSupport implements Parcelable {
         this.count = count;
     }
 
-    public String getEqType() {
-        return eqType;
-    }
-
-    public void setEqType(String eqType) {
-        this.eqType = eqType;
-    }
 
     public String getEqId() {
         return eqId;
@@ -177,21 +152,8 @@ public class EquipmentBean extends DataSupport implements Parcelable {
         this.eqId = eqId;
     }
 
-    public String getUseAddress() {
-        return useAddress;
-    }
 
-    public void setUseAddress(String useAddress) {
-        this.useAddress = useAddress;
-    }
 
-    public String getStart_data() {
-        return start_data;
-    }
-
-    public void setStart_data(String start_data) {
-        this.start_data = start_data;
-    }
 
     public String getPropertyStatus() {
         return propertyStatus;
@@ -212,6 +174,56 @@ public class EquipmentBean extends DataSupport implements Parcelable {
     public EquipmentBean() {
     }
 
+
+    public String getKSMC() {
+        return KSMC;
+    }
+
+    public void setKSMC(String KSMC) {
+        this.KSMC = KSMC;
+    }
+
+    public String getDW() {
+        return DW;
+    }
+
+    public void setDW(String DW) {
+        this.DW = DW;
+    }
+
+    public String getSBTMBH() {
+        return SBTMBH;
+    }
+
+    public void setSBTMBH(String SBTMBH) {
+        this.SBTMBH = SBTMBH;
+    }
+
+    public String getYZ() {
+        return YZ;
+    }
+
+    public void setYZ(String YZ) {
+        this.YZ = YZ;
+    }
+
+    public String getJZ() {
+        return JZ;
+    }
+
+    public void setJZ(String JZ) {
+        this.JZ = JZ;
+    }
+
+    public String getZJ() {
+        return ZJ;
+    }
+
+    public void setZJ(String ZJ) {
+        this.ZJ = ZJ;
+    }
+
+
     @Override
     public int describeContents() {
         return 0;
@@ -220,50 +232,50 @@ public class EquipmentBean extends DataSupport implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.my_id);
-        dest.writeString(this.title);
+        dest.writeString(this.SBMC);
         dest.writeString(this.count);
-        dest.writeString(this.eqType);
-        dest.writeString(this.barCode);
+        dest.writeString(this.SBBH);
+        dest.writeString(this.SBTMBH);
         dest.writeString(this.eqId);
-        dest.writeString(this.useAddress);
-        dest.writeString(this.start_data);
+        dest.writeString(this.KSMC);
+        dest.writeString(this.QYRQ);
         dest.writeString(this.propertyStatus);
-        dest.writeString(this.unitName);
+        dest.writeString(this.DW);
         dest.writeString(this.eqStandard);
         dest.writeString(this.saveAddress);
-        dest.writeString(this.start_property);
-        dest.writeString(this.end_property);
-        dest.writeString(this.old_property);
+        dest.writeString(this.YZ);
+        dest.writeString(this.JZ);
+        dest.writeString(this.ZJ);
         dest.writeString(this.useStatus);
         dest.writeString(this.lookDate);
         dest.writeString(this.lookStatus);
         dest.writeString(this.remark);
         dest.writeString(this.loginName);
-        dest.writeString(this.propertyId);
+        dest.writeString(this.PDDH);
     }
 
     protected EquipmentBean(Parcel in) {
         this.my_id = in.readString();
-        this.title = in.readString();
+        this.SBMC = in.readString();
         this.count = in.readString();
-        this.eqType = in.readString();
-        this.barCode = in.readString();
+        this.SBBH = in.readString();
+        this.SBTMBH = in.readString();
         this.eqId = in.readString();
-        this.useAddress = in.readString();
-        this.start_data = in.readString();
+        this.KSMC = in.readString();
+        this.QYRQ = in.readString();
         this.propertyStatus = in.readString();
-        this.unitName = in.readString();
+        this.DW = in.readString();
         this.eqStandard = in.readString();
         this.saveAddress = in.readString();
-        this.start_property = in.readString();
-        this.end_property = in.readString();
-        this.old_property = in.readString();
+        this.YZ = in.readString();
+        this.JZ = in.readString();
+        this.ZJ = in.readString();
         this.useStatus = in.readString();
         this.lookDate = in.readString();
         this.lookStatus = in.readString();
         this.remark = in.readString();
         this.loginName = in.readString();
-        this.propertyId = in.readString();
+        this.PDDH = in.readString();
     }
 
     public static final Creator<EquipmentBean> CREATOR = new Creator<EquipmentBean>() {

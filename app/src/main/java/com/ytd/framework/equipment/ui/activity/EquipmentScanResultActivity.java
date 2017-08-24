@@ -239,17 +239,17 @@ public class EquipmentScanResultActivity extends BaseActionBarActivity {
 
     private void setData(EquipmentBean bean) {
         findBean = bean;
-        title.setText("资产名称：" + bean.getTitle());
+        title.setText("资产名称：" + bean.getSBMC());
         address.setText("资产编号：" + bean.getEqId());
-        eqNumber.setText("资产条码号：" + bean.getBarCode());
+        eqNumber.setText("资产条码号：" + bean.getSBTMBH());
         useAddress.setText("使用科室：" + bean.getEqStandard());
-        eqStandard.setText("使用科室：" + bean.getUseAddress());
-        unitName.setText("单位：" + bean.getUnitName());
-        startDate.setText("启用日期：" + bean.getStart_data());
-        startProperty.setText("原值：" + bean.getStart_property());
-        endProperty.setText("净值：" + bean.getEnd_property());
-        oldProperty.setText("折旧：" + bean.getOld_property());
-        eqType.setText("资产分类：" + bean.getEqType());
+        eqStandard.setText("使用科室：" + bean.getKSMC());
+        unitName.setText("单位：" + bean.getDW());
+        startDate.setText("启用日期：" + bean.getQYRQ());
+        startProperty.setText("原值：" + bean.getYZ());
+        endProperty.setText("净值：" + bean.getJZ());
+        oldProperty.setText("折旧：" + bean.getZJ());
+        eqType.setText("资产分类：" + bean.getSBBH());
         saveAddress.setText("存放地点：" + bean.getSaveAddress());
         useStatus.setText(bean.getUseStatus());
         date.setText(bean.getLookDate());

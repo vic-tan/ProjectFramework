@@ -15,11 +15,21 @@ public class AppUpdateBean implements Parcelable {
      * desc : 灵犀Android
      */
 
+    private  int my_ID;
     private int version_code;
-    private String version_name;
+    private String VersionID;
     private String name;
-    private String url;
-    private String desc;
+    private String Url;
+    private String Memo;
+    private String AddDate;
+
+    public int getMy_ID() {
+        return my_ID;
+    }
+
+    public void setMy_ID(int my_ID) {
+        this.my_ID = my_ID;
+    }
 
     public int getVersion_code() {
         return version_code;
@@ -29,12 +39,12 @@ public class AppUpdateBean implements Parcelable {
         this.version_code = version_code;
     }
 
-    public String getVersion_name() {
-        return version_name;
+    public String getVersionID() {
+        return VersionID;
     }
 
-    public void setVersion_name(String version_name) {
-        this.version_name = version_name;
+    public void setVersionID(String versionID) {
+        VersionID = versionID;
     }
 
     public String getName() {
@@ -46,21 +56,28 @@ public class AppUpdateBean implements Parcelable {
     }
 
     public String getUrl() {
-        return url;
+        return Url;
     }
 
     public void setUrl(String url) {
-        this.url = url;
+        Url = url;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getMemo() {
+        return Memo;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setMemo(String memo) {
+        Memo = memo;
     }
 
+    public String getAddDate() {
+        return AddDate;
+    }
+
+    public void setAddDate(String addDate) {
+        AddDate = addDate;
+    }
 
     @Override
     public int describeContents() {
@@ -69,25 +86,29 @@ public class AppUpdateBean implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.my_ID);
         dest.writeInt(this.version_code);
-        dest.writeString(this.version_name);
+        dest.writeString(this.VersionID);
         dest.writeString(this.name);
-        dest.writeString(this.url);
-        dest.writeString(this.desc);
+        dest.writeString(this.Url);
+        dest.writeString(this.Memo);
+        dest.writeString(this.AddDate);
     }
 
     public AppUpdateBean() {
     }
 
     protected AppUpdateBean(Parcel in) {
+        this.my_ID = in.readInt();
         this.version_code = in.readInt();
-        this.version_name = in.readString();
+        this.VersionID = in.readString();
         this.name = in.readString();
-        this.url = in.readString();
-        this.desc = in.readString();
+        this.Url = in.readString();
+        this.Memo = in.readString();
+        this.AddDate = in.readString();
     }
 
-    public static final Parcelable.Creator<AppUpdateBean> CREATOR = new Parcelable.Creator<AppUpdateBean>() {
+    public static final Creator<AppUpdateBean> CREATOR = new Creator<AppUpdateBean>() {
         @Override
         public AppUpdateBean createFromParcel(Parcel source) {
             return new AppUpdateBean(source);

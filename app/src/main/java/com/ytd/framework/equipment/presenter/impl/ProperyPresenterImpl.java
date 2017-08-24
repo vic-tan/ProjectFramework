@@ -33,7 +33,7 @@ public class ProperyPresenterImpl extends BasePresenterImpl implements IProperyP
         for (PropertyBean forBean : list) {
             forBean.setLoginName(getLoginName());
             forBean.save();
-            equipmentPresenter.save(mContext, forBean.getEqList(), forBean.getMy_id());
+            equipmentPresenter.save(mContext, forBean.getEqList(), forBean.getPDDH());
         }
     }
 
@@ -44,17 +44,27 @@ public class ProperyPresenterImpl extends BasePresenterImpl implements IProperyP
 
     @Override
     public List<PropertyBean> findLimit(Context mContext, int offset, int limit) {
-        return where(DB_LOGIN_NAME+ " = ?  ", getLoginName()).offset(offset).limit(limit).find(PropertyBean.class);
+        return where(DB_LOGIN_NAME + " = ?  ", getLoginName()).offset(offset).limit(limit).find(PropertyBean.class);
+    }
+
+    @Override
+    public PropertyBean findById(Context mContext, String id) {
+        List<PropertyBean> list = where(DB_LOGIN_NAME + " = ? and  PDDH = ?", getLoginName(), id).find(PropertyBean.class);
+        if (ListUtils.isEmpty(list)) {
+            return null;
+        }
+        return list.get(0);
+
     }
 
     @Override
     public List<PropertyBean> findBySearch(Context mContext, String search) {
-        return where(DB_LOGIN_NAME+ " = ? and  (title like ? or area like ?  or address like ?)", getLoginName(), "%" + search + "%", "%" + search + "%", "%" + search + "%").find(PropertyBean.class);
+        return where(DB_LOGIN_NAME + " = ? and  (title like ? or area like ?  or address like ?)", getLoginName(), "%" + search + "%", "%" + search + "%", "%" + search + "%").find(PropertyBean.class);
     }
 
     @Override
     public int deleteAll(Context mContext) {
-        return DataSupport.deleteAll(PropertyBean.class, DB_LOGIN_NAME+ "  = ?  ", getLoginName());
+        return DataSupport.deleteAll(PropertyBean.class, DB_LOGIN_NAME + "  = ?  ", getLoginName());
     }
 
     @Override

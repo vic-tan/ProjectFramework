@@ -1,19 +1,30 @@
 package com.ytd.framework.main.ui.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
 
+import com.tlf.basic.base.adapter.abslistview.AbsCommonAdapter;
+import com.tlf.basic.base.adapter.abslistview.AbsViewHolder;
+import com.tlf.basic.http.okhttp.OkHttpUtils;
+import com.tlf.basic.http.okhttp.builder.PostFormBuilder;
 import com.tlf.basic.uikit.roundview.RoundTextView;
 import com.tlf.basic.utils.StartActUtils;
 import com.tlf.basic.utils.StringUtils;
 import com.tlf.basic.utils.ToastUtils;
+import com.ytd.common.bean.BaseJson;
 import com.ytd.common.ui.activity.BaseActivity;
 import com.ytd.framework.R;
+import com.ytd.framework.main.bean.EntrepotBean;
 import com.ytd.framework.main.bean.UserBean;
 import com.ytd.framework.main.presenter.IUserPresenter;
 import com.ytd.framework.main.presenter.impl.UserPresenterImpl;
 import com.ytd.framework.main.ui.service.CheckAppUpdateService;
+import com.ytd.support.constants.fixed.UrlConstants;
+import com.ytd.support.http.ResultCallback;
+import com.ytd.support.utils.DomainUtils;
 import com.ytd.support.utils.ResUtils;
 import com.ytd.uikit.edittext.MClearEditText;
 
@@ -23,8 +34,12 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Fullscreen;
 import org.androidannotations.annotations.ViewById;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import okhttp3.Call;
 
 /**
  * 登录
@@ -46,18 +61,57 @@ public class LoginActivity extends BaseActivity {
     RoundTextView login;
 
     IUserPresenter userPresenter;
+    @ViewById
+    ImageView logo;
+    @ViewById
+    ImageView ckText;
+    @ViewById
+    ImageView ckDown;
+    @ViewById
+    TextView ckEdit;
+    @ViewById
+    ListView list;
 
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        verifyStoragePermissions();
-    }
+    List<EntrepotBean> listData;
+    AbsCommonAdapter adapter;
 
     @AfterViews
     void init() {
+        listData = new ArrayList<>();
         userPresenter = new UserPresenterImpl();
         startService(new Intent(this, CheckAppUpdateService.class));
+        adapter = new AbsCommonAdapter<EntrepotBean>(mContext, R.layout.list_entrepot, listData) {
+            @Override
+            protected void convert(AbsViewHolder holder, EntrepotBean entrepotBean, int position) {
+                holder.setText(R.id.name, entrepotBean.getName());
+            }
+        };
+        list.setAdapter(adapter);
+        postFormBuilder().build().execute(new ResultCallback(mContext) {
+            @Override
+            public void onCusResponse(BaseJson response) {
+                ToastUtils.show(mContext, response.getIsSuccess() + "");
+            }
+
+            @Override
+            public void onError(Call call, Exception e) {
+                super.onError(call, e);
+
+            }
+        });
+    }
+
+    public Map<String, String> headers() {
+        Map<String, String> map = new HashMap<>();
+        map.put("Content-Type", "application/x-www-form-urlencoded");
+        return map;
+    }
+
+    private PostFormBuilder postFormBuilder() {
+        PostFormBuilder postFormBuilder = OkHttpUtils.post().url(DomainUtils.getInstance().domain() + UrlConstants.GETSTORELIST).headers(headers());
+        postFormBuilder.addParams("PageIndex", "1");
+        postFormBuilder.addParams("PageSize", "1000");
+        return postFormBuilder;
     }
 
 
@@ -82,7 +136,7 @@ public class LoginActivity extends BaseActivity {
                     break;
                 }
 
-               /* OkHttpUtils.post().url(UrlConstants.APP_VERSION_UPDATE).paramsForJson(loginParams()).build().execute(new DialogCallback(mContext) {
+                /*OkHttpUtils.post().url(UrlConstants.APP_VERSION_UPDATE).paramsForJson(loginParams()).build().execute(new DialogCallback(mContext) {
                     @Override
                     public void onCusResponse(BaseJson response) {
 
@@ -101,6 +155,21 @@ public class LoginActivity extends BaseActivity {
         return map;
     }
 
+    public void version() {
+        String json = "{\n" +
+                "    \"Code\": 100,\n" +
+                "    \"Msg\": \"请求成功！\",\n" +
+                "    \"IsSuccess\": true,\n" +
+                "    \"Data\": {\n" +
+                "        \"ID\": 1,\n" +
+                "        \"Url\": \"www.baidu.com/01\",\n" +
+                "        \"VersionID\": \"1.1.11\",\n" +
+                "        \"Memo\": \"测试版0101\",\n" +
+                "        \"AddDate\": \"2017-08-21T15:55:09\"\n" +
+                "    }\n" +
+                "}";
+    }
+
 
     public void saveUserInfo() {
         UserBean bean = new UserBean();
@@ -109,10 +178,6 @@ public class LoginActivity extends BaseActivity {
         bean.setLoginState(1);
         userPresenter.save(bean);
     }
-
-
-
-
 
 
     /**

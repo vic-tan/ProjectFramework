@@ -68,8 +68,8 @@ public class AppServiceActivity extends AutoLayoutActivity {
         if (null != appUpdateBean && appUpdateBean.getVersion_code() > AppUtils.getVersionCode(mContext)) {
             View contetView = InflaterUtils.inflate(this,R.layout.main_version_content_view);
             TextView contetent = (TextView) contetView.findViewById(R.id.mTvContent);
-            contetent.setText(Html.fromHtml(appUpdateBean.getDesc()).toString());
-            DialogTools.getInstance(mContext).title(ResUtils.getStr(R.string.app_update_dialog_title)).content(Html.fromHtml(appUpdateBean.getDesc()).toString()).setOnBtnClickL(new OnBtnClickL() {
+            contetent.setText(Html.fromHtml(appUpdateBean.getMemo()).toString());
+            DialogTools.getInstance(mContext).title(ResUtils.getStr(R.string.app_update_dialog_title)).content(Html.fromHtml(appUpdateBean.getMemo()).toString()).setOnBtnClickL(new OnBtnClickL() {
                 @Override
                 public void onBtnClick(View v, Dialog dialog) {
                     dialog.dismiss();

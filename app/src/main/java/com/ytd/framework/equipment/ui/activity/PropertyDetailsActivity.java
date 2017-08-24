@@ -24,6 +24,8 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
+import static com.ytd.framework.equipment.bean.PropertyBean.UPDATELOAD_TAG_FALSE;
+
 /**
  * 首页界面
  * Created by ytd on 16/1/19.
@@ -93,18 +95,18 @@ public class PropertyDetailsActivity extends BaseActionBarActivity {
         finshNum.setText(bean.getFinshNum());
         totalNum.setText(bean.getTotalNum());
 
-        name.setText("盘点人:" + bean.getName());
+        name.setText("盘点人:" + bean.getXM());
         data.setText("盘点日期:" + bean.getEnd_data());
         title.setText("盘点单名称:" + bean.getTitle());
 
         area.setText("盘点区域：" + bean.getArea());
         address.setText("资产分类：" + bean.getAddress());
-        startDate.setText("启用日期:" + bean.getStart_data());
+        startDate.setText("启用日期:" + bean.getRQ());
         price.setText("价格区间:" + bean.getPrice());
         qeSumNum.setText("设  备:" + bean.getTotalNum());
         startProperty.setText("资产原值:" + bean.getStart_property());
         endProperty.setText("资产净值:" + bean.getEnd_property());
-        if (StringUtils.isEquals(bean.getUpdateload(), "0")) {//未上传
+        if (StringUtils.isEquals(bean.getUpdateload(), UPDATELOAD_TAG_FALSE)) {//未上传
             selectTag.setBackground(ResUtils.getDrawable(R.mipmap.unselect));
             updateload.setText("未上传");
             opt.setVisibility(View.VISIBLE);

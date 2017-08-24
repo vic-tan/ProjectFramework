@@ -12,8 +12,11 @@ import com.tlf.basic.utils.ToastUtils;
 import com.ytd.common.ui.activity.actionbar.BaseActionBarActivity;
 import com.ytd.framework.R;
 import com.ytd.framework.equipment.bean.EquipmentBean;
+import com.ytd.framework.equipment.bean.PropertyBean;
 import com.ytd.framework.equipment.presenter.IEquipmentPresenter;
+import com.ytd.framework.equipment.presenter.IProperyPresenter;
 import com.ytd.framework.equipment.presenter.impl.EquipmentPresenterImpl;
+import com.ytd.framework.equipment.presenter.impl.ProperyPresenterImpl;
 import com.ytd.framework.equipment.ui.activity.EquipmentScanDetailsResultActivity_;
 
 import java.util.HashMap;
@@ -32,6 +35,7 @@ public class CameraScanActivity extends BaseActionBarActivity implements QRCodeV
     private String testScanID = "324EWa975b5dbcbefdd9c015WDdbd05f898w";
     private QRCodeView mQRCodeView;
     protected IEquipmentPresenter equipmentPresenter;
+    protected IProperyPresenter properyPresenter;
     protected KProgressHUD hud;
 
     public void onCreate(Bundle savedInstanceState) {
@@ -41,6 +45,7 @@ public class CameraScanActivity extends BaseActionBarActivity implements QRCodeV
         mQRCodeView.setDelegate(this);
         mQRCodeView.startSpot();
         equipmentPresenter = new EquipmentPresenterImpl();
+        properyPresenter = new ProperyPresenterImpl();
         hud = KProgressHUD.create(mContext)
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                 .setDimAmount(0.5f)
@@ -90,11 +95,13 @@ public class CameraScanActivity extends BaseActionBarActivity implements QRCodeV
             ToastUtils.show(mContext, "没有找到您扫描的设备信息!"+scanResult);
             mQRCodeView.startSpot();
         } else {
+            PropertyBean propertyBean = properyPresenter.findById(mContext,list.get(0).getPDDH());
             ToastUtils.show(mContext, scanResult);
             hud.dismiss();
             Map<String, Object> map = new HashMap<>();
             map.put("bean", list.get(0));
             map.put("scanTag", 1);
+            map.put("propertyBean",propertyBean);
             StartActUtils.start(mContext, EquipmentScanDetailsResultActivity_.class, map);
         }
 

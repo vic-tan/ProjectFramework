@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.tlf.basic.base.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                  xmlns:rv="http://schemas.android.com/apk/res-auto"
+                                                  android:layout_width="match_parent"
+                                                  android:layout_height="match_parent"
+                                                  android:background="@mipmap/main_splash_bg">
+
+
+    <LinearLayout
+        android:layout_width="950px"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="550px"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="150px"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/user_account_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="40px"
+                android:text="API地址:"
+                android:textColor="@color/white"
+                android:textSize="40px"/>
+
+            <com.tlf.basic.uikit.roundview.RoundRelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                rv:rv_backgroundColor="#59ffffff"
+                rv:rv_cornerRadius="15px">
+
+
+                <com.ytd.uikit.edittext.MClearEditText
+                    android:id="@+id/user_account_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="30px"
+                    android:layout_marginRight="30px"
+                    android:layout_toRightOf="@id/user_account_text"
+                    android:background="@android:color/transparent"
+                    android:ellipsize="end"
+                    android:gravity="start"
+                    android:hint="请配置API服务地址"
+                    android:maxLines="1"
+                    android:text="http://1811o171v6.iask.in"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:textCursorDrawable="@null"
+                    android:textSize="48.0px"/>
+            </com.tlf.basic.uikit.roundview.RoundRelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="150px"
+            android:layout_marginTop="80px"
+            android:orientation="horizontal">
+
+            <TextView
+
+                android:id="@+id/user_pwd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="20px"
+                android:text="PDAKEY :"
+                android:textColor="@color/white"
+                android:textSize="40px"/>
+
+            <com.tlf.basic.uikit.roundview.RoundRelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="150px"
+                android:layout_below="@+id/por_img"
+                android:layout_centerHorizontal="true"
+                rv:rv_backgroundColor="#59ffffff"
+                rv:rv_cornerRadius="15px">
+
+
+                <com.ytd.uikit.edittext.MClearEditText
+                    android:id="@+id/user_pwd_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="30px"
+                    android:layout_marginRight="30px"
+                    android:layout_toRightOf="@id/user_pwd"
+                    android:background="@android:color/transparent"
+                    android:ellipsize="end"
+                    android:gravity="start"
+                    android:hint="请配置PDAKEY"
+                    android:maxLines="1"
+                    android:text="9AE122E1F3F88A1C"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:textCursorDrawable="@null"
+                    android:textSize="48.0px"/>
+            </com.tlf.basic.uikit.roundview.RoundRelativeLayout>
+        </LinearLayout>
+
+        <com.tlf.basic.uikit.roundview.RoundTextView
+            android:id="@+id/login"
+            android:layout_width="match_parent"
+            android:layout_height="140px"
+            android:layout_gravity="center"
+            android:layout_marginTop="80px"
+            android:gravity="center"
+            android:text="保存配置"
+            android:textColor="@color/white"
+            android:textSize="50px"
+            rv:rv_backgroundColor="@color/base_button_bg_normal"
+            rv:rv_backgroundPressColor="@color/base_button_bg_pressed"
+            rv:rv_cornerRadius="15px"/>
+
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="60px"
+        android:text="深圳市源泰达科技有限公司"
+        android:textColor="#6b7c24"
+        android:textSize="50px"/>
+
+
+</com.tlf.basic.base.autolayout.AutoRelativeLayout>

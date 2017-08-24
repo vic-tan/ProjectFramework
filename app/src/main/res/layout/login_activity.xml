@@ -6,26 +6,78 @@
                                                   android:background="@mipmap/main_splash_bg">
 
 
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="300px"
+        android:layout_height="300px"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="240px"
+        android:background="@mipmap/user_logo"/>
+
+    <com.tlf.basic.uikit.roundview.RoundRelativeLayout
+        android:id="@+id/ck_layout"
+        android:layout_width="850px"
+        android:layout_height="150px"
+        android:layout_below="@+id/logo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="120px"
+        rv:rv_backgroundColor="#59ffffff"
+        rv:rv_cornerRadius="15px">
+
+        <ImageView
+            android:id="@+id/ck_text"
+            android:layout_width="80px"
+            android:layout_height="80px"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="30px"
+            android:background="@mipmap/login_account_edit"/>
+
+        <ImageView
+            android:id="@+id/ck_down"
+            android:layout_width="50px"
+            android:layout_height="40px"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="30px"
+            android:layout_marginRight="20px"
+            android:background="@mipmap/down"/>
+
+
+        <TextView
+            android:id="@+id/ck_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="30px"
+            android:layout_marginRight="30px"
+            android:layout_toLeftOf="@id/ck_down"
+            android:layout_toRightOf="@id/ck_text"
+            android:background="@android:color/transparent"
+            android:ellipsize="end"
+            android:gravity="start"
+            android:hint="请选择仓库"
+            android:maxLines="1"
+            android:text="@string/login_name"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:textCursorDrawable="@null"
+            android:textSize="48.0px"/>
+    </com.tlf.basic.uikit.roundview.RoundRelativeLayout>
+
     <LinearLayout
         android:layout_width="850px"
         android:layout_height="wrap_content"
+        android:layout_below="@id/ck_layout"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="240px"
+        android:layout_marginTop="60px"
         android:orientation="vertical">
-
-        <ImageView
-            android:layout_width="300px"
-            android:layout_height="300px"
-            android:layout_gravity="center_horizontal"
-            android:background="@mipmap/user_logo"/>
-
 
         <com.tlf.basic.uikit.roundview.RoundRelativeLayout
             android:layout_width="match_parent"
             android:layout_height="150px"
             android:layout_below="@+id/por_img"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="120px"
             rv:rv_backgroundColor="#59ffffff"
             rv:rv_cornerRadius="15px">
 
@@ -64,7 +116,7 @@
             android:layout_height="150px"
             android:layout_below="@+id/por_img"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="80px"
+            android:layout_marginTop="60px"
             rv:rv_backgroundColor="#59ffffff"
             rv:rv_cornerRadius="15px">
 
@@ -89,9 +141,9 @@
                 android:ellipsize="end"
                 android:gravity="start"
                 android:hint="请输入密码"
+                android:inputType="textPassword"
                 android:maxLines="1"
                 android:text="@string/login_pwd"
-                android:inputType="textPassword"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
                 android:textCursorDrawable="@null"
@@ -124,6 +176,12 @@
         android:text="深圳市源泰达科技有限公司"
         android:textColor="#6b7c24"
         android:textSize="50px"/>
+
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="850px"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ck_layout"/>
 
 
 </com.tlf.basic.base.autolayout.AutoRelativeLayout>
