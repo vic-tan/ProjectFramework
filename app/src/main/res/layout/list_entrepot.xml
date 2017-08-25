@@ -8,9 +8,13 @@
 
     <TextView
         android:id="@+id/name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@android:color/black"
+        android:layout_width="match_parent"
+        android:layout_height="100px"
+        android:layout_centerVertical="true"
+        android:gravity="center_vertical"
+        android:paddingLeft="20px"
+        android:paddingRight="20px"
+        android:textColor="#666666"
         android:textSize="50px"/>
 
 

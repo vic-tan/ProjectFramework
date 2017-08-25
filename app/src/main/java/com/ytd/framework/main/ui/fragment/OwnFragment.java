@@ -15,7 +15,7 @@ import com.tlf.basic.utils.ActivityManager;
 import com.tlf.basic.utils.AppCacheUtils;
 import com.tlf.basic.utils.StartActUtils;
 import com.ytd.framework.R;
-import com.ytd.framework.main.ui.activity.ConfigActivity_;
+import com.ytd.framework.main.ui.activity.UpdateConfigActivity_;
 import com.ytd.framework.main.ui.service.AppDownloadService;
 import com.ytd.framework.main.ui.service.CheckAppUpdateService;
 import com.ytd.support.utils.UnFinshUtils;
@@ -55,7 +55,7 @@ public class OwnFragment extends Fragment {
                 UnFinshUtils.unFinshToast(getActivity());
                 break;
             case R.id.config_layout:
-                StartActUtils.start(getActivity(), ConfigActivity_.class,"tag","1");
+                StartActUtils.start(getActivity(), UpdateConfigActivity_.class);
                 break;
             case R.id.eixt:
                 ActionSheetDialog();

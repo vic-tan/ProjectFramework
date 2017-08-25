@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.bigkoo.pickerview.TimePickerView;
 import com.tlf.basic.http.okhttp.OkHttpUtils;
+import com.tlf.basic.http.okhttp.builder.PostFormBuilder;
 import com.tlf.basic.uikit.roundview.RoundTextView;
 import com.tlf.basic.utils.CountDownTimer;
 import com.tlf.basic.utils.InputMethodManagerUtils;
@@ -25,8 +26,11 @@ import com.tlf.basic.utils.StringUtils;
 import com.tlf.basic.utils.ToastUtils;
 import com.ytd.common.bean.BaseJson;
 import com.ytd.framework.R;
+import com.ytd.framework.main.presenter.IConfigPresenter;
+import com.ytd.framework.main.presenter.impl.ConfigPresenterImpl;
 import com.ytd.support.constants.fixed.UrlConstants;
 import com.ytd.support.http.DialogCallback;
+import com.ytd.support.utils.DomainUtils;
 import com.ytd.support.utils.ResUtils;
 
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
@@ -49,7 +53,7 @@ import java.util.Map;
  * A simple {@link Fragment} subclass.
  */
 @EFragment(R.layout.add_equipment_fragment)
-public class AddPropertyFragment extends Fragment  {
+public class AddPropertyFragment extends Fragment {
     public static final String TAG = AddPropertyFragment.class.getSimpleName();
 
 
@@ -78,6 +82,7 @@ public class AddPropertyFragment extends Fragment  {
     @ViewById
     ImageView two;
     Unregistrar mUnregistrar;
+    IConfigPresenter configPresenter;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
 
@@ -99,10 +104,9 @@ public class AddPropertyFragment extends Fragment  {
     }
 
 
-
     @AfterViews
     void init() {
-
+        configPresenter = new ConfigPresenterImpl();
         starPripceName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -149,6 +153,7 @@ public class AddPropertyFragment extends Fragment  {
         });
         updateKeyboardStatusText(KeyboardVisibilityEvent.isKeyboardVisible(getActivity()));
     }
+
     private void updateKeyboardStatusText(boolean isOpen) {
         if (isOpen) {
             save.setVisibility(View.GONE);
@@ -171,7 +176,6 @@ public class AddPropertyFragment extends Fragment  {
     }
 
 
-
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     private void setPriceSelet() {
         if (StringUtils.isEmpty(endPriceName.getText().toString()) && StringUtils.isEmpty(starPripceName.getText().toString())) {
@@ -192,12 +196,12 @@ public class AddPropertyFragment extends Fragment  {
     int priceTag;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-    @Click({R.id.star_date_name, R.id.end_date_name,R.id.star_date_name_tag, R.id.end_date_name_tag, R.id.one, R.id.two, R.id.one_txt, R.id.two_txt, R.id.save})
+    @Click({R.id.star_date_name, R.id.end_date_name, R.id.star_date_name_tag, R.id.end_date_name_tag, R.id.one, R.id.two, R.id.one_txt, R.id.two_txt, R.id.save})
     void click(View v) {
         switch (v.getId()) {
             case R.id.one_txt:
             case R.id.one:
-                InputMethodManagerUtils.hideSoftInput(getActivity(),v);
+                InputMethodManagerUtils.hideSoftInput(getActivity(), v);
                 priceTag = 0;
                 one.setBackground(ResUtils.getDrawable(R.mipmap.select_true));
                 two.setBackground(ResUtils.getDrawable(R.mipmap.select_false));
@@ -206,7 +210,7 @@ public class AddPropertyFragment extends Fragment  {
                 break;
             case R.id.two_txt:
             case R.id.two:
-                InputMethodManagerUtils.hideSoftInput(getActivity(),v);
+                InputMethodManagerUtils.hideSoftInput(getActivity(), v);
                 priceTag = 1;
                 two.setBackground(ResUtils.getDrawable(R.mipmap.select_true));
                 one.setBackground(ResUtils.getDrawable(R.mipmap.select_false));
@@ -215,31 +219,20 @@ public class AddPropertyFragment extends Fragment  {
                 break;
             case R.id.star_date_name:
             case R.id.star_date_name_tag://选择时间
-                InputMethodManagerUtils.hideSoftInput(getActivity(),v);
+                InputMethodManagerUtils.hideSoftInput(getActivity(), v);
                 selectDate(starDateName, 1);
                 break;
             case R.id.end_date_name:
             case R.id.end_date_name_tag://选择时间
-                InputMethodManagerUtils.hideSoftInput(getActivity(),v);
+                InputMethodManagerUtils.hideSoftInput(getActivity(), v);
                 selectDate(endDateName, 2);
                 break;
             case R.id.save://
                 if (StringUtils.isEmpty(name.getText().toString())) {
-                    ToastUtils.show(getActivity(), "盘点单名称不能为空,请填写盘点单名称");
+                    ToastUtils.show(getActivity(), "盘点单号不能为空,请填写盘点单号");
                     return;
                 }
 
-                //TODO 互折选择
-                if (!StringUtils.isEmpty(endPriceName.getText().toString()) || !StringUtils.isEmpty(starPripceName.getText().toString())) {
-                    if (StringUtils.isEmpty(starPripceName.getText().toString())) {
-                        ToastUtils.show(getActivity(), "开始价格不能为空,请填写开始价格");
-                        return;
-                    }
-                    if (StringUtils.isEmpty(endPriceName.getText().toString())) {
-                        ToastUtils.show(getActivity(), "结束价格不能为空,请填写结束价格");
-                        return;
-                    }
-                }
 
                 OkHttpUtils.post().url(UrlConstants.APP_VERSION_UPDATE).paramsForJson(requsetParams()).build().execute(new DialogCallback(getActivity()) {
                     @Override
@@ -252,6 +245,23 @@ public class AddPropertyFragment extends Fragment  {
                 break;
         }
     }
+
+
+    public Map<String, String> headers() {
+        String token = "Bearer " + configPresenter.find().getAccess_token();
+        Map<String, String> map = new HashMap<>();
+        map.put("Content-Type", "application/x-www-form-urlencoded");
+        map.put("Authorization", token);
+        return map;
+    }
+
+    private PostFormBuilder formBuilder() {
+        PostFormBuilder postFormBuilder = OkHttpUtils.post().url(DomainUtils.getInstance().domain() + UrlConstants.GETSTORELIST).headers(headers());
+        postFormBuilder.addParams("PageIndex", "1");
+        postFormBuilder.addParams("PageSize", "1000");
+        return postFormBuilder;
+    }
+
 
     public Map<String, Object> requsetParams() {
         Map<String, Object> map = new HashMap<>();

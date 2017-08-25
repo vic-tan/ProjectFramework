@@ -3,6 +3,8 @@ package com.ytd.framework.main.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.tlf.basic.utils.StringUtils;
+
 /**
  * Created by ytd on 16/8/19.
  */
@@ -15,7 +17,7 @@ public class AppUpdateBean implements Parcelable {
      * desc : 灵犀Android
      */
 
-    private  int my_ID;
+    private int my_ID;
     private int version_code;
     private String VersionID;
     private String name;
@@ -48,7 +50,7 @@ public class AppUpdateBean implements Parcelable {
     }
 
     public String getName() {
-        return name;
+        return StringUtils.isEmpty(name) ? System.currentTimeMillis() + "app" : name;
     }
 
     public void setName(String name) {

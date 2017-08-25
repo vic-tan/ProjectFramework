@@ -2,21 +2,21 @@ package com.ytd.framework.main.ui.activity;
 
 import android.view.View;
 
-import com.google.gson.Gson;
+import com.tlf.basic.http.okhttp.OkHttpUtils;
+import com.tlf.basic.http.okhttp.builder.PostFormBuilder;
 import com.tlf.basic.uikit.roundview.RoundTextView;
 import com.tlf.basic.utils.StartActUtils;
 import com.tlf.basic.utils.StringUtils;
 import com.tlf.basic.utils.ToastUtils;
-import com.ytd.common.ui.activity.BaseActivity;
+import com.tlf.basic.utils.coder.MD5Coder;
+import com.ytd.common.ui.activity.actionbar.BaseActionBarActivity;
 import com.ytd.framework.R;
 import com.ytd.framework.main.bean.ConfigBean;
 import com.ytd.framework.main.presenter.IConfigPresenter;
 import com.ytd.framework.main.presenter.impl.ConfigPresenterImpl;
 import com.ytd.support.constants.fixed.UrlConstants;
-import com.ytd.support.exception.ErrorBean;
 import com.ytd.support.http.TokenCallback;
-import com.ytd.support.utils.HttpParamsUtils;
-import com.ytd.support.utils.HttpRequestUtils;
+import com.ytd.support.utils.MacUtils;
 import com.ytd.support.utils.SPUtils;
 import com.ytd.uikit.edittext.MClearEditText;
 
@@ -25,6 +25,9 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Fullscreen;
 import org.androidannotations.annotations.ViewById;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import okhttp3.Call;
 
@@ -35,10 +38,10 @@ import static com.ytd.framework.main.presenter.impl.SplashPresenterImpl.FIRST_LA
  * * Created by ytd on 16/1/19.
  */
 @Fullscreen
-@EActivity(R.layout.config_activity)
-public class ConfigActivity extends BaseActivity {
+@EActivity(R.layout.update_config_activity)
+public class UpdateConfigActivity extends BaseActionBarActivity {
 
-    public static final String TAG = ConfigActivity.class.getSimpleName();
+    public static final String TAG = UpdateConfigActivity.class.getSimpleName();
 
     @ViewById
     MClearEditText user_account_edit;
@@ -47,11 +50,18 @@ public class ConfigActivity extends BaseActivity {
     @ViewById
     RoundTextView login;
     IConfigPresenter presenter;
-    int tag = 0;
+    private String tag = "0";
+    ConfigBean bean;
+
 
     @AfterViews
     void init() {
+        initActionBar();
         presenter = new ConfigPresenterImpl();
+        tag = getIntent().getParcelableExtra("tag");
+        bean = presenter.find();
+        user_account_edit.setText(bean.getUrl());
+        user_pwd_edit.setText(bean.getPDAKEY());
     }
 
 
@@ -68,8 +78,7 @@ public class ConfigActivity extends BaseActivity {
                     break;
                 }
 
-                HttpRequestUtils.getInstance().postTokenFormBuilder(user_account_edit.getText().toString() + UrlConstants.TOKEN, HttpParamsUtils.getTokenParams(mContext, user_pwd_edit.getText().toString()), 1)
-                        .build().execute(new TokenCallback(mContext) {
+                postFormBuilder().build().execute(new TokenCallback(mContext) {
                     @Override
                     public void onCusResponse(ConfigBean response) {
                         SPUtils.putBoolean(FIRST_LAUNCHER_APP_TAG, true);
@@ -84,20 +93,9 @@ public class ConfigActivity extends BaseActivity {
                             hud.dismiss();
                         try {////{"error":"invalid_grant","error_description":"PDA验证信息不正确！"}
 //                            String error =
-                            ErrorBean jsonBean = new Gson().fromJson(replaceId(new String(e.toString())), ErrorBean.class);
-                            if (null != jsonBean) {
-                                if (!StringUtils.isEmpty(jsonBean.getError())) {
-                                    if (tag == 0) {
-                                        tag = 1;
-                                        ToastUtils.show(mContext, "请再试一次");
-                                    } else {
-                                        ToastUtils.show(mContext, jsonBean.getError_description());
-                                    }
-                                }
-                            }
+                            ToastUtils.show(mContext, "请再试一次");
                         } catch (Exception e1) {
                             e1.printStackTrace();
-                            ToastUtils.show(mContext, "请再试一次");
                         }
                     }
 
@@ -106,8 +104,26 @@ public class ConfigActivity extends BaseActivity {
         }
     }
 
+    private PostFormBuilder postFormBuilder() {
+        String pwd = (MD5Coder.getMD5Code("PDA" + user_pwd_edit.getText().toString()) + "").toUpperCase();
+        String mac = MacUtils.getWlanMac(mContext);
+        String url = user_account_edit.getText().toString() + UrlConstants.TOKEN;
+        PostFormBuilder postFormBuilder = OkHttpUtils.post().url(url).headers(headers());
+        postFormBuilder.addParams("grant_type", "password");
+        postFormBuilder.addParams("userName", mac);
+        postFormBuilder.addParams("password", pwd);
+        return postFormBuilder;
+    }
+
+
+    public Map<String, String> headers() {
+        Map<String, String> map = new HashMap<>();
+        map.put("Content-Type", "application/x-www-form-urlencoded");
+        return map;
+    }
+
     public void saveUserInfo(ConfigBean bean) {
-        String pwd = user_pwd_edit.getText().toString();
+        String pwd = (MD5Coder.getMD5Code("PDA" + user_pwd_edit.getText().toString()) + "").toUpperCase();
         bean.setUrl(user_account_edit.getText().toString());
         bean.setPDAKEY(pwd);
         presenter.save(bean);

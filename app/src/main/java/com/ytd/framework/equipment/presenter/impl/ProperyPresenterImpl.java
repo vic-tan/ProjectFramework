@@ -69,7 +69,7 @@ public class ProperyPresenterImpl extends BasePresenterImpl implements IProperyP
 
     @Override
     public int findTotalcount(Context mContext) {
-        return where("loginName = ?  ", getLoginName()).find(PropertyBean.class).size();
+        return where(DB_LOGIN_NAME + "= ?  ", getLoginName()).find(PropertyBean.class).size();
     }
 
 

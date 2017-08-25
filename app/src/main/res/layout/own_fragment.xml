@@ -162,7 +162,7 @@
             android:layout_centerVertical="true"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="30px"
-            android:layout_toRightOf="@id/lianxi_icon"
+            android:layout_toRightOf="@id/config_icon"
             android:text="修改配置"
             android:textColor="#999999"
             android:textSize="50px"/>

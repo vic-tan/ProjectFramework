@@ -30,15 +30,18 @@ public class AppException extends Exception {
      * @param mContext
      * @param msgCode
      */
-    public AppException(Context mContext, String msgCode) {
-        super(msgCode);
-        if (StringUtils.isEquals(msgCode, ExceptionConstants.CODE_DATA_ERROR)) {
-            ToastUtils.show(mContext, "数据异常");
-        } else if (StringUtils.isEquals(msgCode, ExceptionConstants.CODE_VALUE_0014)) {
-            ToastUtils.show(mContext, "在另一台设备登录");
+    public AppException(Context mContext, String msgCode, String msg) {
+        super(msg);
+        Logger.i(TAG, "[msgCode=" + msgCode + "," + "msg=" + msg + "]");
+        if (StringUtils.isEmpty(msgCode)) {
+            if (StringUtils.isEquals(msgCode, ExceptionConstants.CODE_DATA_ERROR)) {
+                ToastUtils.show(mContext, "数据异常");
+            } else if (StringUtils.isEquals(msgCode, ExceptionConstants.CODE_VALUE_0014)) {
+                ToastUtils.show(mContext, "在另一台设备登录");
+            }
         } else {
-            ToastUtils.show(mContext, msgCode);
-            Logger.e(TAG, msgCode);
+            ToastUtils.show(mContext, msg);
+            Logger.e(TAG, msg);
         }
 
     }

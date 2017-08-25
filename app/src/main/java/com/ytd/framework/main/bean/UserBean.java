@@ -12,11 +12,15 @@ import org.litepal.crud.DataSupport;
 
 public class UserBean extends DataSupport implements Parcelable {
 
-    private String loginName;
+    private String loginName;//登录名
+    private String Name;//用户名称
     @Encrypt(algorithm = MD5)
     private String pwd;
-    private String token;
-    private int loginState;//1 ,登录，2，退出，3，过期
+    private String DepartmentId;//用户所属科室ID
+    private String DepartmentName;//用户所属科室名称
+    private String StoreId;//仓库ID
+    private String StoreName;//仓库名字
+
 
     public String getLoginName() {
         return loginName;
@@ -34,20 +38,48 @@ public class UserBean extends DataSupport implements Parcelable {
         this.pwd = pwd;
     }
 
-    public String getToken() {
-        return token;
+    public String getDepartmentId() {
+        return DepartmentId;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setDepartmentId(String departmentId) {
+        DepartmentId = departmentId;
     }
 
-    public int getLoginState() {
-        return loginState;
+    public String getDepartmentName() {
+        return DepartmentName;
     }
 
-    public void setLoginState(int loginState) {
-        this.loginState = loginState;
+    public void setDepartmentName(String departmentName) {
+        DepartmentName = departmentName;
+    }
+
+    public UserBean() {
+    }
+
+
+    public String getName() {
+        return Name;
+    }
+
+    public void setName(String name) {
+        Name = name;
+    }
+
+    public String getStoreId() {
+        return StoreId;
+    }
+
+    public void setStoreId(String storeId) {
+        StoreId = storeId;
+    }
+
+    public String getStoreName() {
+        return StoreName;
+    }
+
+    public void setStoreName(String storeName) {
+        StoreName = storeName;
     }
 
     @Override
@@ -58,22 +90,25 @@ public class UserBean extends DataSupport implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.loginName);
+        dest.writeString(this.Name);
         dest.writeString(this.pwd);
-        dest.writeString(this.token);
-        dest.writeInt(this.loginState);
-    }
-
-    public UserBean() {
+        dest.writeString(this.DepartmentId);
+        dest.writeString(this.DepartmentName);
+        dest.writeString(this.StoreId);
+        dest.writeString(this.StoreName);
     }
 
     protected UserBean(Parcel in) {
         this.loginName = in.readString();
+        this.Name = in.readString();
         this.pwd = in.readString();
-        this.token = in.readString();
-        this.loginState = in.readInt();
+        this.DepartmentId = in.readString();
+        this.DepartmentName = in.readString();
+        this.StoreId = in.readString();
+        this.StoreName = in.readString();
     }
 
-    public static final Parcelable.Creator<UserBean> CREATOR = new Parcelable.Creator<UserBean>() {
+    public static final Creator<UserBean> CREATOR = new Creator<UserBean>() {
         @Override
         public UserBean createFromParcel(Parcel source) {
             return new UserBean(source);

@@ -3,19 +3,20 @@ package com.ytd.support.http;
 import android.content.Context;
 
 import com.google.gson.Gson;
-import com.ytd.common.bean.BaseJson;
-import com.ytd.framework.R;
-import com.ytd.support.constants.fixed.ExceptionConstants;
-import com.ytd.support.exception.AppException;
-import com.ytd.support.utils.ConsoleUtils;
 import com.tlf.basic.http.okhttp.callback.Callback;
 import com.tlf.basic.uikit.kprogresshud.KProgressHUD;
 import com.tlf.basic.utils.Logger;
 import com.tlf.basic.utils.StringUtils;
+import com.ytd.common.bean.BaseJson;
+import com.ytd.framework.R;
+import com.ytd.support.exception.AppException;
+import com.ytd.support.utils.ConsoleUtils;
 
 import okhttp3.Call;
 import okhttp3.Request;
 import okhttp3.Response;
+
+import static com.ytd.support.constants.fixed.ExceptionConstants.CODE_DATA_ERROR;
 
 
 /**
@@ -85,13 +86,13 @@ public abstract class MultipleCallback extends Callback<BaseJson> {
     public void onResponse(BaseJson response) {
         try {
             if (null == response) {
-                throw new AppException(mContext, ExceptionConstants.CODE_DATA_ERROR);
+                throw new AppException(mContext,CODE_DATA_ERROR, CODE_DATA_ERROR);
             }
             if (StringUtils.isEquals(response.getCode(), ConsoleUtils.randomRequest())) {
                 onCusResponse(response, hud);
             } else {
                 last = true;
-                throw new AppException(mContext, response.getMsg());
+                throw new AppException(mContext,response.getCode(), response.getMsg());
             }
         } catch (AppException e) {
             e.printStackTrace();

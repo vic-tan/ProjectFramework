@@ -12,9 +12,7 @@ import com.tlf.basic.utils.StartActUtils;
 import com.ytd.common.ui.activity.BaseActivity;
 import com.ytd.framework.R;
 import com.ytd.framework.main.adapter.GuideAdapter;
-import com.ytd.framework.main.bean.ConfigBean;
 import com.ytd.framework.main.presenter.IGuidePresenter;
-import com.ytd.framework.main.presenter.impl.ConfigPresenterImpl;
 import com.ytd.framework.main.presenter.impl.GuidePresenterImpl;
 import com.ytd.framework.main.ui.view.GuideView;
 
@@ -58,17 +56,12 @@ public class GuideActivity extends BaseActivity implements GuideView,
     @Override
     public void onClick(View v) {
         //TODO
-//        StartActUtils.start(mContext, ConfigActivity_.class);
+        StartActUtils.start(mContext, ConfigActivity_.class);
 
-        StartActUtils.start(mContext, LoginActivity_.class);
+//        StartActUtils.start(mContext, LoginActivity_.class);
         StartActUtils.finish(mContext);
     }
 
-    private void text() {
-        ConfigBean bean = new ConfigBean();
-        bean.setUrl("http://1811o171v6.iask.in");
-        new ConfigPresenterImpl().save(bean);
-    }
 
 
     @Override

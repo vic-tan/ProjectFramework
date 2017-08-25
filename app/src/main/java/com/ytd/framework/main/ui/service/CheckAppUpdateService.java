@@ -1,24 +1,26 @@
 package com.ytd.framework.main.ui.service;
 
 import android.app.IntentService;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import com.tlf.basic.utils.NetUtils;
+import com.tlf.basic.utils.StringUtils;
 import com.ytd.common.bean.BaseJson;
 import com.ytd.framework.main.bean.AppUpdateBean;
+import com.ytd.framework.main.presenter.IConfigPresenter;
+import com.ytd.framework.main.presenter.impl.ConfigPresenterImpl;
 import com.ytd.framework.main.ui.activity.AppServiceActivity;
 import com.ytd.framework.main.ui.activity.AppServiceActivity_;
-import com.ytd.support.constants.fixed.UrlConstants;
 import com.ytd.support.http.ResultCallback;
-import com.tlf.basic.http.okhttp.OkHttpUtils;
-import com.tlf.basic.utils.AppUtils;
-import com.tlf.basic.utils.NetUtils;
-import com.ytd.support.utils.DomainUtils;
+import com.ytd.support.utils.HttpRequestUtils;
 
-import java.util.HashMap;
-import java.util.Map;
+import static com.ytd.support.constants.fixed.UrlConstants.APP_VERSION_UPDATE;
 
 
 /**
@@ -32,9 +34,11 @@ public class CheckAppUpdateService extends IntentService {
         super("CheckAppUpdateService");
     }
 
+    IConfigPresenter configPresenter;
 
     @Override
     protected void onHandleIntent(Intent intent) {
+        configPresenter = new ConfigPresenterImpl();
         appUpdate();
     }
 
@@ -43,15 +47,15 @@ public class CheckAppUpdateService extends IntentService {
      */
     public void appUpdate() {
         if (NetUtils.isConnected(CheckAppUpdateService.this)) {
-            OkHttpUtils.post().url(DomainUtils.getInstance().domain() + UrlConstants.APP_VERSION_UPDATE).paramsForJson(tagList()).build().execute(new ResultCallback(this) {
+           HttpRequestUtils.getInstance().postFormBuilder(APP_VERSION_UPDATE).build().execute(new ResultCallback(this) {
                 @Override
                 public void onCusResponse(BaseJson response) {
-                    response = date();
                     checkAppUpdate(response);
                 }
             });
         }
     }
+
 
     /**
      * 查检是否可以升级
@@ -61,14 +65,22 @@ public class CheckAppUpdateService extends IntentService {
     private void checkAppUpdate(BaseJson baseJson) {
         try {
             AppUpdateBean appUpdateBean = new Gson().fromJson(new Gson().toJson(baseJson.getData()), AppUpdateBean.class);
-            if (null != appUpdateBean && appUpdateBean.getVersion_code() > AppUtils.getVersionCode(this)) {//是否升级
-                Intent intent = new Intent(getBaseContext(), AppServiceActivity_.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                Bundle bundle = new Bundle();
-                bundle.putParcelable("bean", appUpdateBean);
-                bundle.putString(AppServiceActivity.INTENT_TAG, "appUpdate");
-                intent.putExtras(bundle);
-                getApplication().startActivity(intent);
+            if (!StringUtils.isEquals(getVersionName(this), appUpdateBean.getVersionID())) {//版本跟服务器配置不同
+                String versionName[] = getVersionName(this).split("\\.");
+                String updateVersion[] = appUpdateBean.getVersionID().split("\\.");
+                appUpdateBean.setName(System.currentTimeMillis()+"app");
+                for (int i = 0; i < versionName.length; i++) {
+                    if (Integer.parseInt(versionName[i]) < Integer.parseInt(updateVersion[i])) {
+                        Intent intent = new Intent(getBaseContext(), AppServiceActivity_.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        Bundle bundle = new Bundle();
+                        bundle.putParcelable("bean", appUpdateBean);
+                        bundle.putString(AppServiceActivity.INTENT_TAG, "appUpdate");
+                        intent.putExtras(bundle);
+                        getApplication().startActivity(intent);
+                        return;
+                    }
+                }
             }
         } catch (JsonSyntaxException e) {
             e.printStackTrace();
@@ -77,29 +89,21 @@ public class CheckAppUpdateService extends IntentService {
     }
 
 
-    public Map<String, Object> tagList() {
-        Map<String, Object> map = new HashMap<>();
-        map.put("sid", "ipeiban2016");
-        return map;
+    /**
+     * [获取应用程序版本名称信息]
+     *
+     * @param context
+     * @return 当前应用的升级号
+     */
+    public String getVersionName(Context context)//获取版本号(内部识别号)
+    {
+        try {
+            PackageInfo pi=context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+            return pi.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            return "1.0";
+        }
     }
-
-    public BaseJson date() {
-        String str = "{\n" +
-                "    \"Code\": 100,\n" +
-                "    \"Msg\": \"请求成功！\",\n" +
-                "    \"IsSuccess\": true,\n" +
-                "    \"Data\": {\n" +
-                "        \"ID\": 1,\n" +
-                "        \"Url\": \"www.baidu.com/01\",\n" +
-                "        \"VersionID\": \"1.1.11\",\n" +
-                "        \"Memo\": \"测试版0101\",\n" +
-                "        \"AddDate\": \"2017-08-21T15:55:09\"\n" +
-                "    }\n" +
-                "}";
-        BaseJson baseJson = new Gson().fromJson(str, BaseJson.class);
-        return baseJson;
-
-    }
-
 
 }

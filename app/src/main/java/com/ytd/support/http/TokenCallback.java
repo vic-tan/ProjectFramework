@@ -8,8 +8,6 @@ import com.tlf.basic.uikit.kprogresshud.KProgressHUD;
 import com.tlf.basic.utils.Logger;
 import com.ytd.framework.R;
 import com.ytd.framework.main.bean.ConfigBean;
-import com.ytd.support.constants.fixed.ExceptionConstants;
-import com.ytd.support.exception.AppException;
 
 import okhttp3.Call;
 import okhttp3.Request;
@@ -53,11 +51,8 @@ public abstract class TokenCallback extends Callback<ConfigBean> {
     @Override
     public void onResponse(ConfigBean response) {
         try {
-            if (null == response) {
-                throw new AppException(mContext, ExceptionConstants.CODE_DATA_ERROR);
-            }
             onCusResponse(response);
-        } catch (AppException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -74,11 +69,6 @@ public abstract class TokenCallback extends Callback<ConfigBean> {
         super.onError(call, e);
         if(null!=hud && hud.isShowing())
             hud.dismiss();
-        try {
-            throw new AppException(mContext, e);
-        } catch (AppException e1) {
-            e1.printStackTrace();
-        }
     }
 
     public abstract void onCusResponse(ConfigBean response);
