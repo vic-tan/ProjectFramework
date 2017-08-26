@@ -22,6 +22,7 @@ import com.ytd.framework.equipment.presenter.IProperyPresenter;
 import com.ytd.framework.equipment.presenter.impl.ProperyPresenterImpl;
 import com.ytd.framework.equipment.ui.activity.PropertyActivity;
 import com.ytd.framework.equipment.ui.activity.PropertyDetailsActivity_;
+import com.ytd.framework.main.ui.BaseApplication;
 import com.ytd.support.constants.fixed.JsonConstants;
 import com.ytd.support.utils.ResUtils;
 
@@ -90,7 +91,7 @@ public class ListPropertyFragment extends BaseLocalAbsRefreshFragment {
                 holder.setText(R.id.title, bean.getTitle());
                 holder.setText(R.id.phone, bean.getPhone());
                 holder.setText(R.id.price, bean.getPrice());
-                holder.setText(R.id.arce, bean.getArea());
+                holder.setText(R.id.arce, BaseApplication.userBean.getStoreName());
                 holder.setText(R.id.add, bean.getAddress());
                 ImageView selectTag = holder.getView(R.id.selectTag);
                 TextView selectText = holder.getView(R.id.stutas);

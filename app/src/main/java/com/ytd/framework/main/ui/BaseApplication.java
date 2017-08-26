@@ -4,6 +4,7 @@ package com.ytd.framework.main.ui;
 import android.app.Application;
 import android.content.Context;
 
+import com.ytd.framework.main.bean.UserBean;
 import com.ytd.support.utils.ConfigurationUtils;
 
 import org.litepal.LitePal;
@@ -17,6 +18,7 @@ import org.litepal.LitePal;
 public class BaseApplication extends Application {
 
     public static Context appContext;
+    public static UserBean userBean;
 
     @Override
     public void onCreate() {

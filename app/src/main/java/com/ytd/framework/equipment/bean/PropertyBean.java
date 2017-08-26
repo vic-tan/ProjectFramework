@@ -3,14 +3,9 @@ package com.ytd.framework.equipment.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.google.gson.Gson;
-import com.ytd.support.utils.GsonJsonUtils;
-
 import org.litepal.crud.DataSupport;
 
 import java.util.List;
-
-import static com.tlf.basic.http.okhttp.callback.Callback.replaceId;
 
 /**
  * Created by tanlifei on 2017/8/8.
@@ -19,12 +14,18 @@ import static com.tlf.basic.http.okhttp.callback.Callback.replaceId;
 public class PropertyBean extends DataSupport implements Parcelable {
 
 
-    public static final String  DB_LOGIN_NAME = "loginName";
-    public static final String  UPDATELOAD_TAG_TRUE = "1";//已上传
-    public static final String  UPDATELOAD_TAG_FALSE = "0";//未上传
+    public static final String UPDATELOAD_TAG_TRUE = "1";//已上传
+    public static final String UPDATELOAD_TAG_FALSE = "0";//未上传
 
     private String PDDH;//盘点单号;
     private String title;//名称单名称
+    private String PDR;//盘点人编号
+    private String ZDR;//经手人编号
+    private String SHRQ;//审核日期
+    private String PDLX;//盘点类型
+    private String BZ;//备注
+    private String STORE;//盘点仓库
+    private String XM1;//未知
     private String XM;//盘点人
     private String phone;//手机号
     private String price;//价格区间
@@ -39,6 +40,71 @@ public class PropertyBean extends DataSupport implements Parcelable {
     private String end_property;//资产净值；
     private String updateload;//盘点单是否上传//0,未上传，1,已上传
     private String loginName;
+    private String StoreId;//仓库ID
+
+    public String getStoreId() {
+        return StoreId;
+    }
+
+    public void setStoreId(String storeId) {
+        StoreId = storeId;
+    }
+
+    public String getPDR() {
+        return PDR;
+    }
+
+    public void setPDR(String PDR) {
+        this.PDR = PDR;
+    }
+
+    public String getZDR() {
+        return ZDR;
+    }
+
+    public void setZDR(String ZDR) {
+        this.ZDR = ZDR;
+    }
+
+    public String getSHRQ() {
+        return SHRQ;
+    }
+
+    public void setSHRQ(String SHRQ) {
+        this.SHRQ = SHRQ;
+    }
+
+    public String getPDLX() {
+        return PDLX;
+    }
+
+    public void setPDLX(String PDLX) {
+        this.PDLX = PDLX;
+    }
+
+    public String getBZ() {
+        return BZ;
+    }
+
+    public void setBZ(String BZ) {
+        this.BZ = BZ;
+    }
+
+    public String getSTORE() {
+        return STORE;
+    }
+
+    public void setSTORE(String STORE) {
+        this.STORE = STORE;
+    }
+
+    public String getXM1() {
+        return XM1;
+    }
+
+    public void setXM1(String XM1) {
+        this.XM1 = XM1;
+    }
 
     private List<EquipmentBean> eqList;
 
@@ -178,601 +244,9 @@ public class PropertyBean extends DataSupport implements Parcelable {
         this.eqList = eqList;
     }
 
-    public static PropertyBean addTestBean() {
-        String jsonStr ="{\n" +
-                "        \"PDDH\": \"8a9a975b5dbcbe9dfasfdsac015dbd05f8700085\",\n" +
-                "        \"title\": \"中国百强企业100\",\n" +
-                "        \"XM\": \"汪科长盘点\",\n" +
-                "        \"phone\": \"13823297564\",\n" +
-                "        \"price\": \"一万元以下\",\n" +
-                "        \"area\": \"中心仓库\",\n" +
-                "        \"address\": \"中心实现室\",\n" +
-                "        \"RQ\": \"2017年05月12日\",\n" +
-                "        \"end_data\": \"2017年05月10日\",\n" +
-                "        \"totalNum\": \"300\",\n" +
-                "        \"finshNum\": \"200\",\n" +
-                "        \"STATUS\": \"1\",\n" +
-                "        \"start_property\": \"1002323.123\",\n" +
-                "        \"end_property\": \"983673.343\",\n" +
-                "        \"updateload\": \"1\",\n" +
-                "        \"eqList\": [\n" +
-                "            {\n" +
-                "                \"id\": \"324EWa975b5dbcbefdd9c015WDdbd05f898w\",\n" +
-                "                \"SBMC\": \"血管仿真模型1\",\n" +
-                "                \"count\": \"1\",\n" +
-                "                \"eqType\": \"HT-EW-DAFALFSDS\",\n" +
-                "                \"SBBH\": \"983673q23489341\",\n" +
-                "                \"KSMC\": \"中心实现室\",\n" +
-                "                \"QYRQ\": \"2017年05月10日\",\n" +
-                "                \"propertyStatus\": \"在用\",\n" +
-                "                \"DW\": \"台\",\n" +
-                "                \"eqStandard\": \"GD/DEFD\",\n" +
-                "                \"saveAddress\": \"深圳市\",\n" +
-                "                \"YZ\": \"1002323.123\",\n" +
-                "                \"JZ\": \"983673.343\",\n" +
-                "                \"ZJ\": \"83673.343\",\n" +
-                "                \"SBTMBH\": \"da12321se321\",\n" +
-                "                \"lookStatus\": \"0\"\n" +
-                "            },\n" +
-                "            {\n" +
-                "                \"id\": \"DFSAFa975b5dewebrewtcbe9c015Ddbd05f898w\",\n" +
-                "                \"SBMC\": \"血管仿真模型2\",\n" +
-                "                \"count\": \"1\",\n" +
-                "                \"eqType\": \"HT-EW-DAFALFS\",\n" +
-                "                \"SBBH\": \"983673q23489341\",\n" +
-                "                \"KSMC\": \"中心实现室\",\n" +
-                "                \"QYRQ\": \"2017年06月10日\",\n" +
-                "                \"propertyStatus\": \"在用\",\n" +
-                "                \"DW\": \"台\",\n" +
-                "                \"eqStandard\": \"GD/DEFD\",\n" +
-                "                \"saveAddress\": \"深圳市\",\n" +
-                "                \"YZ\": \"1002323.123\",\n" +
-                "                \"JZ\": \"983673.343\",\n" +
-                "                \"ZJ\": \"83673.343\",\n" +
-                "                \"SBTMBH\": \"da12321se321\",\n" +
-                "                \"lookStatus\": \"1\"\n" +
-                "            }\n" +
-                "        ]\n" +
-                "    }";
-        return new Gson().fromJson(replaceId(jsonStr), PropertyBean.class);
-    }
 
-    public static List<PropertyBean> addTestListBean(){
-        String jsonStr ="[\n" +
-                "    {\n" +
-                "        \"PDDH\": \"8a9a975b5dbcbe9dfasfdsac015dbd05f8700085\",\n" +
-                "        \"title\": \"中国百强企业1\",\n" +
-                "        \"XM\": \"汪科长盘点\",\n" +
-                "        \"phone\": \"13823297564\",\n" +
-                "        \"price\": \"一万元以下\",\n" +
-                "        \"area\": \"中心仓库\",\n" +
-                "        \"address\": \"中心实现室\",\n" +
-                "        \"RQ\": \"2017年05月12日\",\n" +
-                "        \"end_data\": \"2017年05月10日\",\n" +
-                "        \"totalNum\": \"300\",\n" +
-                "        \"finshNum\": \"200\",\n" +
-                "        \"STATUS\": \"1\",\n" +
-                "        \"start_property\": \"1002323.123\",\n" +
-                "        \"end_property\": \"983673.343\",\n" +
-                "        \"updateload\": \"1\",\n" +
-                "        \"eqList\": [\n" +
-                "            {\n" +
-                "                \"id\": \"324EWa975b5dbcbefdd9c015WDdbd05f898w\",\n" +
-                "                \"SBMC\": \"血管仿真模型1\",\n" +
-                "                \"count\": \"1\",\n" +
-                "                \"eqType\": \"HT-EW-DAFALFSDS\",\n" +
-                "                \"SBBH\": \"983673q23489341\",\n" +
-                "                \"KSMC\": \"中心实现室\",\n" +
-                "                \"QYRQ\": \"2017年05月10日\",\n" +
-                "                \"propertyStatus\": \"在用\",\n" +
-                "                \"DW\": \"台\",\n" +
-                "                \"eqStandard\": \"GD/DEFD\",\n" +
-                "                \"saveAddress\": \"深圳市\",\n" +
-                "                \"YZ\": \"1002323.123\",\n" +
-                "                \"JZ\": \"983673.343\",\n" +
-                "                \"ZJ\": \"83673.343\",\n" +
-                "                \"SBTMBH\": \"da12321se321\",\n" +
-                "                \"lookStatus\": \"0\"\n" +
-                "            },\n" +
-                "            {\n" +
-                "                \"id\": \"DFSAFa975b5dewebrewtcbe9c015Ddbd05f898w\",\n" +
-                "                \"SBMC\": \"血管仿真模型2\",\n" +
-                "                \"count\": \"1\",\n" +
-                "                \"eqType\": \"HT-EW-DAFALFS\",\n" +
-                "                \"SBBH\": \"983673q23489341\",\n" +
-                "                \"KSMC\": \"中心实现室\",\n" +
-                "                \"QYRQ\": \"2017年06月10日\",\n" +
-                "                \"propertyStatus\": \"在用\",\n" +
-                "                \"DW\": \"台\",\n" +
-                "                \"eqStandard\": \"GD/DEFD\",\n" +
-                "                \"saveAddress\": \"深圳市\",\n" +
-                "                \"YZ\": \"1002323.123\",\n" +
-                "                \"JZ\": \"983673.343\",\n" +
-                "                \"ZJ\": \"83673.343\",\n" +
-                "                \"SBTMBH\": \"da12321se321\",\n" +
-                "                \"lookStatus\": \"1\"\n" +
-                "            },\n" +
-                "            {\n" +
-                "                \"id\": \"DFSAFa975b5dewebrewdsafdsatcbe9c015Ddbd05f898w\",\n" +
-                "                \"SBMC\": \"血管仿真模型123\",\n" +
-                "                \"count\": \"1\",\n" +
-                "                \"eqType\": \"HT-EW-DAFALFS\",\n" +
-                "                \"SBBH\": \"983673q23489341\",\n" +
-                "                \"KSMC\": \"中心实现室\",\n" +
-                "                \"QYRQ\": \"2017年06月10日\",\n" +
-                "                \"propertyStatus\": \"在用\",\n" +
-                "                \"DW\": \"台\",\n" +
-                "                \"eqStandard\": \"GD/DEFD\",\n" +
-                "                \"saveAddress\": \"深圳市\",\n" +
-                "                \"YZ\": \"1002323.123\",\n" +
-                "                \"JZ\": \"983673.343\",\n" +
-                "                \"JZ\": \"83673.343\",\n" +
-                "                \"SBTMBH\": \"da12321se321\",\n" +
-                "                \"lookStatus\": \"1\"\n" +
-                "            },\n" +
-                "            {\n" +
-                "                \"id\": \"DFdfsafsaSAFa975b5dewebrewdsafdsatcbe9c015Ddbd05f898w\",\n" +
-                "                \"SBMC\": \"血管仿真模型1234\",\n" +
-                "                \"count\": \"1\",\n" +
-                "                \"eqType\": \"HT-EW-DAFALFS\",\n" +
-                "                \"SBBH\": \"983673q23489341\",\n" +
-                "                \"KSMC\": \"中心实现室\",\n" +
-                "                \"QYRQ\": \"2017年06月10日\",\n" +
-                "                \"propertyStatus\": \"在用\",\n" +
-                "                \"DW\": \"台\",\n" +
-                "                \"eqStandard\": \"GD/DEFD\",\n" +
-                "                \"saveAddress\": \"深圳市\",\n" +
-                "                \"YZ\": \"1002323.123\",\n" +
-                "                \"JZ\": \"983673.343\",\n" +
-                "                \"ZJ\": \"83673.343\",\n" +
-                "                \"SBTMBH\": \"da12321se321\",\n" +
-                "                \"lookStatus\": \"1\"\n" +
-                "            },\n" +
-                "            {\n" +
-                "                \"id\": \"DFSAFa975b5dewebdsafrewdsafdsatcbe9c015Ddbd05f898w\",\n" +
-                "                \"SBMC\": \"血管仿真模型1235678\",\n" +
-                "                \"count\": \"1\",\n" +
-                "                \"eqType\": \"HT-EW-DAFALFS\",\n" +
-                "                \"SBBH\": \"983673q23489341\",\n" +
-                "                \"KSMC\": \"中心实现室\",\n" +
-                "                \"QYRQ\": \"2017年06月10日\",\n" +
-                "                \"propertyStatus\": \"在用\",\n" +
-                "                \"DW\": \"台\",\n" +
-                "                \"eqStandard\": \"GD/DEFD\",\n" +
-                "                \"saveAddress\": \"深圳市\",\n" +
-                "                \"YZ\": \"1002323.123\",\n" +
-                "                \"JZ\": \"983673.343\",\n" +
-                "                \"ZJ\": \"83673.343\",\n" +
-                "                \"SBTMBH\": \"da12321se321\",\n" +
-                "                \"lookStatus\": \"1\"\n" +
-                "            },\n" +
-                "            {\n" +
-                "                \"id\": \"DFSAFa975b5dewebrewdsdsfafafdsatcbe9c015Ddbd05f898w\",\n" +
-                "                \"SBMC\": \"血管仿真模型1www23\",\n" +
-                "                \"count\": \"1\",\n" +
-                "                \"eqType\": \"HT-EW-DAFALFS\",\n" +
-                "                \"SBBH\": \"983673q23489341\",\n" +
-                "                \"KSMC\": \"中心实现室\",\n" +
-                "                \"QYRQ\": \"2017年06月10日\",\n" +
-                "                \"propertyStatus\": \"在用\",\n" +
-                "                \"DW\": \"台\",\n" +
-                "                \"eqStandard\": \"GD/DEFD\",\n" +
-                "                \"saveAddress\": \"深圳市\",\n" +
-                "                \"YZ\": \"1002323.123\",\n" +
-                "                \"JZ\": \"983673.343\",\n" +
-                "                \"ZJ\": \"83673.343\",\n" +
-                "                \"SBTMBH\": \"da12321se321\",\n" +
-                "                \"lookStatus\": \"1\"\n" +
-                "            },\n" +
-                "            {\n" +
-                "                \"id\": \"DFSAFa975b5dsafadewebrewdsafdsatcbe9c015Ddbd05f898w\",\n" +
-                "                \"SBMC\": \"血管仿真模型123\",\n" +
-                "                \"count\": \"1\",\n" +
-                "                \"eqType\": \"HT-EW-DAFALFS\",\n" +
-                "                \"SBBH\": \"983673q23489341\",\n" +
-                "                \"KSMC\": \"中心实现室\",\n" +
-                "                \"QYRQ\": \"2017年06月10日\",\n" +
-                "                \"propertyStatus\": \"在用\",\n" +
-                "                \"DW\": \"台\",\n" +
-                "                \"eqStandard\": \"GD/DEFD\",\n" +
-                "                \"saveAddress\": \"深圳市\",\n" +
-                "                \"YZ\": \"1002323.123\",\n" +
-                "                \"JZ\": \"983673.343\",\n" +
-                "                \"ZJ\": \"83673.343\",\n" +
-                "                \"SBTMBH\": \"da12321se321\",\n" +
-                "                \"lookStatus\": \"1\"\n" +
-                "            }\n" +
-                "        ]\n" +
-                "    },\n" +
-                "    {\n" +
-                "        \"PDDH\": \"DFADF75b5dbcbe9DSDFSc015dbd0FSS0085\",\n" +
-                "        \"title\": \"中国百强企业2\",\n" +
-                "        \"XM\": \"李科长盘点\",\n" +
-                "        \"phone\": \"13823297572\",\n" +
-                "        \"price\": \"十万元以下\",\n" +
-                "        \"area\": \"中心仓库\",\n" +
-                "        \"address\": \"中心实现室\",\n" +
-                "        \"RQ\": \"2017年03月12日\",\n" +
-                "        \"end_data\": \"2017年05月10日\",\n" +
-                "        \"totalNum\": \"440\",\n" +
-                "        \"finshNum\": \"230\",\n" +
-                "        \"STATUS\": \"0\",\n" +
-                "        \"start_property\": \"1002323.123\",\n" +
-                "        \"end_property\": \"983673.343\",\n" +
-                "        \"updateload\": \"0\",\n" +
-                "        \"eqList\": [\n" +
-                "            {\n" +
-                "                \"id\": \"23a975b5dbcfdDFAFASDFfbe9c015WDdbdFASD\",\n" +
-                "                \"SBMC\": \"血管仿真模型3\",\n" +
-                "                \"count\": \"1\",\n" +
-                "                \"eqType\": \"HT-EW-DAFALFSDS\",\n" +
-                "                \"SBBH\": \"983673q23489341\",\n" +
-                "                \"KSMC\": \"中心实现室\",\n" +
-                "                \"QYRQ\": \"2017年05月10日\",\n" +
-                "                \"propertyStatus\": \"在用\",\n" +
-                "                \"DW\": \"台\",\n" +
-                "                \"eqStandard\": \"GD/DEFD\",\n" +
-                "                \"saveAddress\": \"深圳市\",\n" +
-                "                \"YZ\": \"1002323.123\",\n" +
-                "                \"JZ\": \"983673.343\",\n" +
-                "                \"ZJ\": \"83673.343\",\n" +
-                "                \"SBTMBH\": \"da12321se321\",\n" +
-                "                \"lookStatus\": \"0\"\n" +
-                "            },\n" +
-                "            {\n" +
-                "                \"id\": \"124a975b5dbcbe9DAFASDFc0ds15DdDFASFD\",\n" +
-                "                \"SBMC\": \"血管仿真模型4\",\n" +
-                "                \"count\": \"1\",\n" +
-                "                \"eqType\": \"HT-EW-DAFALFS\",\n" +
-                "                \"SBBH\": \"983673q23489341\",\n" +
-                "                \"KSMC\": \"中心实现室\",\n" +
-                "                \"QYRQ\": \"2017年06月10日\",\n" +
-                "                \"propertyStatus\": \"在用\",\n" +
-                "                \"DW\": \"台\",\n" +
-                "                \"eqStandard\": \"GD/DEFD\",\n" +
-                "                \"saveAddress\": \"深圳市\",\n" +
-                "                \"YZ\": \"1002323.123\",\n" +
-                "                \"JZ\": \"983673.343\",\n" +
-                "                \"ZJ\": \"83673.343\",\n" +
-                "                \"SBTMBH\": \"da12321se321\",\n" +
-                "                \"lookStatus\": \"1\"\n" +
-                "            }\n" +
-                "        ]\n" +
-                "    },\n" +
-                "    {\n" +
-                "        \"PDDH\": \"DFADF75b5dbdfsacbe9DSDFSc015dbd0FSS0085\",\n" +
-                "        \"title\": \"中国百强企业3\",\n" +
-                "        \"XM\": \"黄科长盘点\",\n" +
-                "        \"phone\": \"13823297572\",\n" +
-                "        \"price\": \"十万元以下\",\n" +
-                "        \"area\": \"中心仓库\",\n" +
-                "        \"address\": \"中心实现室\",\n" +
-                "        \"RQ\": \"2017年03月12日\",\n" +
-                "        \"end_data\": \"2017年05月10日\",\n" +
-                "        \"totalNum\": \"440\",\n" +
-                "        \"finshNum\": \"230\",\n" +
-                "        \"STATUS\": \"0\",\n" +
-                "        \"start_property\": \"1002323.123\",\n" +
-                "        \"end_property\": \"983673.343\",\n" +
-                "        \"updateload\": \"0\",\n" +
-                "        \"eqList\": [\n" +
-                "            {\n" +
-                "                \"id\": \"23a975b5dewdasdsbcfdDFAFASDFfbe9c015WDdbdFASD\",\n" +
-                "                \"SBMC\": \"血管仿真模型5\",\n" +
-                "                \"count\": \"1\",\n" +
-                "                \"eqType\": \"HT-EW-DAFALFSDS\",\n" +
-                "                \"SBBH\": \"983673q23489341\",\n" +
-                "                \"KSMC\": \"中心实现室\",\n" +
-                "                \"QYRQ\": \"2017年05月10日\",\n" +
-                "                \"propertyStatus\": \"在用\",\n" +
-                "                \"DW\": \"台\",\n" +
-                "                \"eqStandard\": \"GD/DEFD\",\n" +
-                "                \"saveAddress\": \"深圳市\",\n" +
-                "                \"YZ\": \"1002323.123\",\n" +
-                "                \"JZ\": \"983673.343\",\n" +
-                "                \"ZJ\": \"83673.343\",\n" +
-                "                \"SBTMBH\": \"da12321se321\",\n" +
-                "                \"lookStatus\": \"0\"\n" +
-                "            },\n" +
-                "            {\n" +
-                "                \"id\": \"124a975b5dbcbedasdf9DAFASDFc0ds15DdDFASFD\",\n" +
-                "                \"SBMC\": \"血管仿真模型6\",\n" +
-                "                \"count\": \"1\",\n" +
-                "                \"eqType\": \"HT-EW-DAFALFS\",\n" +
-                "                \"SBBH\": \"983673q23489341\",\n" +
-                "                \"KSMC\": \"中心实现室\",\n" +
-                "                \"QYRQ\": \"2017年06月10日\",\n" +
-                "                \"propertyStatus\": \"在用\",\n" +
-                "                \"DW\": \"台\",\n" +
-                "                \"eqStandard\": \"GD/DEFD\",\n" +
-                "                \"saveAddress\": \"深圳市\",\n" +
-                "                \"YZ\": \"1002323.123\",\n" +
-                "                \"JZ\": \"983673.343\",\n" +
-                "                \"ZJ\": \"83673.343\",\n" +
-                "                \"SBTMBH\": \"da12321se321\",\n" +
-                "                \"lookStatus\": \"1\"\n" +
-                "            }\n" +
-                "        ]\n" +
-                "    },\n" +
-                "    {\n" +
-                "        \"PDDH\": \"DFADFbcbe9DSDFSc015dbd0FSS0085\",\n" +
-                "        \"title\": \"中国百强企业4\",\n" +
-                "        \"XM\": \"李科长盘点\",\n" +
-                "        \"phone\": \"13823297572\",\n" +
-                "        \"price\": \"十万元以下\",\n" +
-                "        \"area\": \"中心仓库\",\n" +
-                "        \"address\": \"中心实现室\",\n" +
-                "        \"RQ\": \"2017年03月12日\",\n" +
-                "        \"end_data\": \"2017年05月10日\",\n" +
-                "        \"totalNum\": \"440\",\n" +
-                "        \"finshNum\": \"230\",\n" +
-                "        \"STATUS\": \"0\",\n" +
-                "        \"start_property\": \"1002323.123\",\n" +
-                "        \"end_property\": \"983673.343\",\n" +
-                "        \"updateload\": \"0\",\n" +
-                "        \"eqList\": [\n" +
-                "            {\n" +
-                "                \"id\": \"23a975b5dbcfdDFAFASDDdbdFASD\",\n" +
-                "                \"SBMC\": \"血管仿真模型7\",\n" +
-                "                \"count\": \"1\",\n" +
-                "                \"eqType\": \"HT-EW-DAFALFSDS\",\n" +
-                "                \"SBBH\": \"983673q23489341\",\n" +
-                "                \"KSMC\": \"中心实现室\",\n" +
-                "                \"QYRQ\": \"2017年05月10日\",\n" +
-                "                \"propertyStatus\": \"在用\",\n" +
-                "                \"DW\": \"台\",\n" +
-                "                \"eqStandard\": \"GD/DEFD\",\n" +
-                "                \"saveAddress\": \"深圳市\",\n" +
-                "                \"YZ\": \"1002323.123\",\n" +
-                "                \"JZ\": \"983673.343\",\n" +
-                "                \"ZJ\": \"83673.343\",\n" +
-                "                \"SBTMBH\": \"da12321se321\",\n" +
-                "                \"lookStatus\": \"0\"\n" +
-                "            },\n" +
-                "            {\n" +
-                "                \"id\": \"124a975b5dbcbec0ds15DdDFASFD\",\n" +
-                "                \"SBMC\": \"血管仿真模型8\",\n" +
-                "                \"count\": \"1\",\n" +
-                "                \"eqType\": \"HT-EW-DAFALFS\",\n" +
-                "                \"SBBH\": \"983673q23489341\",\n" +
-                "                \"KSMC\": \"中心实现室\",\n" +
-                "                \"QYRQ\": \"2017年06月10日\",\n" +
-                "                \"propertyStatus\": \"在用\",\n" +
-                "                \"DW\": \"台\",\n" +
-                "                \"eqStandard\": \"GD/DEFD\",\n" +
-                "                \"saveAddress\": \"深圳市\",\n" +
-                "                \"YZ\": \"1002323.123\",\n" +
-                "                \"JZ\": \"983673.343\",\n" +
-                "                \"ZJ\": \"83673.343\",\n" +
-                "                \"SBTMBH\": \"da12321se321\",\n" +
-                "                \"lookStatus\": \"1\"\n" +
-                "            }\n" +
-                "        ]\n" +
-                "    },\n" +
-                "    {\n" +
-                "        \"PDDH\": \"DFADF75b5dbcbe9DSDFSc015dbd0FSS0085\",\n" +
-                "        \"title\": \"中国百强企业5\",\n" +
-                "        \"XM\": \"李科长盘点\",\n" +
-                "        \"phone\": \"13823297572\",\n" +
-                "        \"price\": \"十万元以下\",\n" +
-                "        \"area\": \"中心仓库\",\n" +
-                "        \"address\": \"中心实现室\",\n" +
-                "        \"RQ\": \"2017年03月12日\",\n" +
-                "        \"end_data\": \"2017年05月10日\",\n" +
-                "        \"totalNum\": \"440\",\n" +
-                "        \"finshNum\": \"230\",\n" +
-                "        \"STATUS\": \"0\",\n" +
-                "        \"start_property\": \"1002323.123\",\n" +
-                "        \"end_property\": \"983673.343\",\n" +
-                "        \"updateload\": \"0\",\n" +
-                "        \"eqList\": [\n" +
-                "            {\n" +
-                "                \"id\": \"223432fdDdfsae9c015WDdbdFASD\",\n" +
-                "                \"SBMC\": \"血管仿真模型9\",\n" +
-                "                \"count\": \"1\",\n" +
-                "                \"eqType\": \"HT-EW-DAFALFSDS\",\n" +
-                "                \"SBBH\": \"983673q23489341\",\n" +
-                "                \"KSMC\": \"中心实现室\",\n" +
-                "                \"QYRQ\": \"2017年05月10日\",\n" +
-                "                \"propertyStatus\": \"在用\",\n" +
-                "                \"DW\": \"台\",\n" +
-                "                \"eqStandard\": \"GD/DEFD\",\n" +
-                "                \"saveAddress\": \"深圳市\",\n" +
-                "                \"YZ\": \"1002323.123\",\n" +
-                "                \"JZ\": \"983673.343\",\n" +
-                "                \"ZJ\": \"83673.343\",\n" +
-                "                \"SBTMBH\": \"da12321se321\",\n" +
-                "                \"lookStatus\": \"0\"\n" +
-                "            },\n" +
-                "            {\n" +
-                "                \"id\": \"124a975b5dbdsfafas0ds15DdDFASFD\",\n" +
-                "                \"SBMC\": \"血管仿真模型10\",\n" +
-                "                \"count\": \"1\",\n" +
-                "                \"eqType\": \"HT-EW-DAFALFS\",\n" +
-                "                \"SBBH\": \"983673q23489341\",\n" +
-                "                \"KSMC\": \"中心实现室\",\n" +
-                "                \"QYRQ\": \"2017年06月10日\",\n" +
-                "                \"propertyStatus\": \"在用\",\n" +
-                "                \"DW\": \"台\",\n" +
-                "                \"eqStandard\": \"GD/DEFD\",\n" +
-                "                \"saveAddress\": \"深圳市\",\n" +
-                "                \"YZ\": \"1002323.123\",\n" +
-                "                \"JZ\": \"983673.343\",\n" +
-                "                \"ZJ\": \"83673.343\",\n" +
-                "                \"SBTMBH\": \"da12321se321\",\n" +
-                "                \"lookStatus\": \"1\"\n" +
-                "            }\n" +
-                "        ]\n" +
-                "    },\n" +
-                "    {\n" +
-                "        \"PDDH\": \"DFADF75b5dbcbedfsasad9DSDFSc015dbd0FSS0085\",\n" +
-                "        \"title\": \"中国百强企业6\",\n" +
-                "        \"XM\": \"李科长盘点\",\n" +
-                "        \"phone\": \"13823297572\",\n" +
-                "        \"price\": \"十万元以下\",\n" +
-                "        \"area\": \"中心仓库\",\n" +
-                "        \"address\": \"中心实现室\",\n" +
-                "        \"RQ\": \"2017年03月12日\",\n" +
-                "        \"end_data\": \"2017年05月10日\",\n" +
-                "        \"totalNum\": \"440\",\n" +
-                "        \"finshNum\": \"230\",\n" +
-                "        \"STATUS\": \"0\",\n" +
-                "        \"start_property\": \"1002323.123\",\n" +
-                "        \"end_property\": \"983673.343\",\n" +
-                "        \"updateload\": \"0\",\n" +
-                "        \"eqList\": [\n" +
-                "            {\n" +
-                "                \"id\": \"223432fdDdsfadfsae9c0dfas15WDdbdFASD\",\n" +
-                "                \"SBMC\": \"血管仿真模型11\",\n" +
-                "                \"count\": \"1\",\n" +
-                "                \"eqType\": \"HT-EW-DAFALFSDS\",\n" +
-                "                \"SBBH\": \"983673q23489341\",\n" +
-                "                \"KSMC\": \"中心实现室\",\n" +
-                "                \"QYRQ\": \"2017年05月10日\",\n" +
-                "                \"propertyStatus\": \"在用\",\n" +
-                "                \"DW\": \"台\",\n" +
-                "                \"eqStandard\": \"GD/DEFD\",\n" +
-                "                \"saveAddress\": \"深圳市\",\n" +
-                "                \"YZ\": \"1002323.123\",\n" +
-                "                \"JZ\": \"983673.343\",\n" +
-                "                \"ZJ\": \"83673.343\",\n" +
-                "                \"SBTMBH\": \"da12321se321\",\n" +
-                "                \"lookStatus\": \"0\"\n" +
-                "            },\n" +
-                "            {\n" +
-                "                \"id\": \"124a975b5dbdsfafas0dsdsafs15DdDFASFD\",\n" +
-                "                \"SBMC\": \"血管仿真模型12\",\n" +
-                "                \"count\": \"1\",\n" +
-                "                \"eqType\": \"HT-EW-DAFALFS\",\n" +
-                "                \"SBBH\": \"983673q23489341\",\n" +
-                "                \"KSMC\": \"中心实现室\",\n" +
-                "                \"QYRQ\": \"2017年06月10日\",\n" +
-                "                \"propertyStatus\": \"在用\",\n" +
-                "                \"DW\": \"台\",\n" +
-                "                \"eqStandard\": \"GD/DEFD\",\n" +
-                "                \"saveAddress\": \"深圳市\",\n" +
-                "                \"YZ\": \"1002323.123\",\n" +
-                "                \"JZ\": \"983673.343\",\n" +
-                "                \"ZJ\": \"83673.343\",\n" +
-                "                \"SBTMBH\": \"da12321se321\",\n" +
-                "                \"lookStatus\": \"1\"\n" +
-                "            }\n" +
-                "        ]\n" +
-                "    },\n" +
-                "    {\n" +
-                "        \"PDDH\": \"DFAsdafDF75b5dbcbedfsasad9DSDFSc015dbd0FSS0085\",\n" +
-                "        \"title\": \"中国百强企业7\",\n" +
-                "        \"XM\": \"李科长盘点\",\n" +
-                "        \"phone\": \"13823297572\",\n" +
-                "        \"price\": \"十万元以下\",\n" +
-                "        \"area\": \"中心仓库\",\n" +
-                "        \"address\": \"中心实现室\",\n" +
-                "        \"RQ\": \"2017年03月12日\",\n" +
-                "        \"end_data\": \"2017年05月10日\",\n" +
-                "        \"totalNum\": \"440\",\n" +
-                "        \"finshNum\": \"230\",\n" +
-                "        \"STATUS\": \"0\",\n" +
-                "        \"start_property\": \"1002323.123\",\n" +
-                "        \"end_property\": \"983673.343\",\n" +
-                "        \"updateload\": \"0\",\n" +
-                "        \"eqList\": [\n" +
-                "            {\n" +
-                "                \"id\": \"223432fdDdsfaddsdsafafsae9c0dfas15WDdbdFASD\",\n" +
-                "                \"SBMC\": \"血管仿真模型dsaf13\",\n" +
-                "                \"count\": \"1\",\n" +
-                "                \"eqType\": \"HT-EW-DAFALFSDS\",\n" +
-                "                \"SBBH\": \"983673q23489341\",\n" +
-                "                \"KSMC\": \"中心实dsfa现室\",\n" +
-                "                \"QYRQ\": \"2017年05月10日\",\n" +
-                "                \"propertyStatus\": \"在用\",\n" +
-                "                \"DW\": \"台\",\n" +
-                "                \"eqStandard\": \"GD/DEFD\",\n" +
-                "                \"saveAddress\": \"深圳市\",\n" +
-                "                \"YZ\": \"1002323.123\",\n" +
-                "                \"JZ\": \"983673.343\",\n" +
-                "                \"ZJ\": \"83673.343\",\n" +
-                "                \"SBTMBH\": \"da12321se321\",\n" +
-                "                \"lookStatus\": \"0\"\n" +
-                "            },\n" +
-                "            {\n" +
-                "                \"id\": \"124a975b5dbdsfafdsafas0dsdsafs15DdDFASFD\",\n" +
-                "                \"SBMC\": \"血管仿真模型14\",\n" +
-                "                \"count\": \"1\",\n" +
-                "                \"eqType\": \"HT-EW-DAFALFS\",\n" +
-                "                \"SBBH\": \"983673q23489341\",\n" +
-                "                \"KSMC\": \"中心实fdas现室\",\n" +
-                "                \"QYRQ\": \"2017年06月10日\",\n" +
-                "                \"propertyStatus\": \"在用\",\n" +
-                "                \"DW\": \"台\",\n" +
-                "                \"eqStandard\": \"GD/DEFD\",\n" +
-                "                \"saveAddress\": \"深圳市\",\n" +
-                "                \"YZ\": \"1002323.123\",\n" +
-                "                \"JZ\": \"983673.343\",\n" +
-                "                \"JZ\": \"83673.343\",\n" +
-                "                \"SBTMBH\": \"da12321se321\",\n" +
-                "                \"lookStatus\": \"1\"\n" +
-                "            }\n" +
-                "        ]\n" +
-                "    },\n" +
-                "    {\n" +
-                "        \"PDDH\": \"DFADF75b5dbfdasfcbedfsasad9DSDFSc015dbd0FSS0085\",\n" +
-                "        \"title\": \"中国百强企业8\",\n" +
-                "        \"XM\": \"李科长盘点\",\n" +
-                "        \"phone\": \"13823297572\",\n" +
-                "        \"price\": \"十万元以下\",\n" +
-                "        \"area\": \"中心仓库\",\n" +
-                "        \"address\": \"中心实现室\",\n" +
-                "        \"RQ\": \"2017年03月12日\",\n" +
-                "        \"end_data\": \"2017年05月10日\",\n" +
-                "        \"totalNum\": \"440\",\n" +
-                "        \"finshNum\": \"230\",\n" +
-                "        \"STATUS\": \"0\",\n" +
-                "        \"start_property\": \"1002323.123\",\n" +
-                "        \"end_property\": \"983673.343\",\n" +
-                "        \"updateload\": \"0\",\n" +
-                "        \"eqList\": [\n" +
-                "            {\n" +
-                "                \"id\": \"223432fdDddsafdsafsfadfsae9c0dfas15WDdbdFASD\",\n" +
-                "                \"SBMC\": \"血管仿真模型15\",\n" +
-                "                \"count\": \"1\",\n" +
-                "                \"eqType\": \"HT-EW-DAFALFSDS\",\n" +
-                "                \"SBBH\": \"983673q23489341\",\n" +
-                "                \"KSMC\": \"中心实现室\",\n" +
-                "                \"QYRQ\": \"2017年05月10日\",\n" +
-                "                \"propertyStatus\": \"在用\",\n" +
-                "                \"DW\": \"台\",\n" +
-                "                \"eqStandard\": \"GD/DEFD\",\n" +
-                "                \"saveAddress\": \"深圳市\",\n" +
-                "                \"YZ\": \"1002323.123\",\n" +
-                "                \"JZ\": \"983673.343\",\n" +
-                "                \"ZJ\": \"83673.343\",\n" +
-                "                \"SBTMBH\": \"da12321se321\",\n" +
-                "                \"lookStatus\": \"0\"\n" +
-                "            },\n" +
-                "            {\n" +
-                "                \"id\": \"afdsdsafs\",\n" +
-                "                \"SBMC\": \"血管仿真模型16\",\n" +
-                "                \"count\": \"1\",\n" +
-                "                \"eqType\": \"HT-EW-DAFALFS\",\n" +
-                "                \"SBBH\": \"983673q23489341\",\n" +
-                "                \"KSMC\": \"中心实现室\",\n" +
-                "                \"QYRQ\": \"2017年06月10日\",\n" +
-                "                \"propertyStatus\": \"在用\",\n" +
-                "                \"DW\": \"台\",\n" +
-                "                \"eqStandard\": \"GD/DEFD\",\n" +
-                "                \"saveAddress\": \"深圳市\",\n" +
-                "                \"YZ\": \"1002323.123\",\n" +
-                "                \"JZ\": \"983673.343\",\n" +
-                "                \"ZJ\": \"83673.343\",\n" +
-                "                \"SBTMBH\": \"da12321se321\",\n" +
-                "                \"lookStatus\": \"1\"\n" +
-                "            }\n" +
-                "        ]\n" +
-                "    }\n" +
-                "]";
-        return GsonJsonUtils.fromJsonArray(replaceId(jsonStr), PropertyBean.class);
+    public PropertyBean() {
     }
-
 
     @Override
     public int describeContents() {
@@ -783,6 +257,13 @@ public class PropertyBean extends DataSupport implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.PDDH);
         dest.writeString(this.title);
+        dest.writeString(this.PDR);
+        dest.writeString(this.ZDR);
+        dest.writeString(this.SHRQ);
+        dest.writeString(this.PDLX);
+        dest.writeString(this.BZ);
+        dest.writeString(this.STORE);
+        dest.writeString(this.XM1);
         dest.writeString(this.XM);
         dest.writeString(this.phone);
         dest.writeString(this.price);
@@ -797,15 +278,20 @@ public class PropertyBean extends DataSupport implements Parcelable {
         dest.writeString(this.end_property);
         dest.writeString(this.updateload);
         dest.writeString(this.loginName);
+        dest.writeString(this.StoreId);
         dest.writeTypedList(this.eqList);
-    }
-
-    public PropertyBean() {
     }
 
     protected PropertyBean(Parcel in) {
         this.PDDH = in.readString();
         this.title = in.readString();
+        this.PDR = in.readString();
+        this.ZDR = in.readString();
+        this.SHRQ = in.readString();
+        this.PDLX = in.readString();
+        this.BZ = in.readString();
+        this.STORE = in.readString();
+        this.XM1 = in.readString();
         this.XM = in.readString();
         this.phone = in.readString();
         this.price = in.readString();
@@ -820,6 +306,7 @@ public class PropertyBean extends DataSupport implements Parcelable {
         this.end_property = in.readString();
         this.updateload = in.readString();
         this.loginName = in.readString();
+        this.StoreId = in.readString();
         this.eqList = in.createTypedArrayList(EquipmentBean.CREATOR);
     }
 

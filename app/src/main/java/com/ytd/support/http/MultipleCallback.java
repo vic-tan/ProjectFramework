@@ -50,13 +50,30 @@ public abstract class MultipleCallback extends Callback<BaseJson> {
     }
 
 
+    /**
+     * 第一个接口调用 这个方法
+     *
+     * @param mContext
+     */
+    public MultipleCallback(Context mContext, String label) {
+        this.mContext = mContext;
+        Logger.d(mContext.getClass().getName());
+        frist = true;
+        this.last = false;
+        this.hud = KProgressHUD.create(mContext)
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setDimAmount(0.5f)
+                .setLabel(label)
+                .setCancellable(false);
+
+    }
 
     /**
      * 除了了第一个外接口调用这个方法
      *
      * @param mContext
      * @param hud
-     * @param last 是不是最后一个接口，true 表示最后一个，则请求完隐藏提示框
+     * @param last     是不是最后一个接口，true 表示最后一个，则请求完隐藏提示框
      */
     public MultipleCallback(Context mContext, KProgressHUD hud, boolean last) {
         this.mContext = mContext;
@@ -86,13 +103,13 @@ public abstract class MultipleCallback extends Callback<BaseJson> {
     public void onResponse(BaseJson response) {
         try {
             if (null == response) {
-                throw new AppException(mContext,CODE_DATA_ERROR, CODE_DATA_ERROR);
+                throw new AppException(mContext, CODE_DATA_ERROR, CODE_DATA_ERROR);
             }
             if (StringUtils.isEquals(response.getCode(), ConsoleUtils.randomRequest())) {
                 onCusResponse(response, hud);
             } else {
                 last = true;
-                throw new AppException(mContext,response.getCode(), response.getMsg());
+                throw new AppException(mContext, response.getCode(), response.getMsg());
             }
         } catch (AppException e) {
             e.printStackTrace();

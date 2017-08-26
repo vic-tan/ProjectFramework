@@ -19,6 +19,12 @@ public class UrlConstants {
     public static final String LOGIN =  "/api/User/UserLogin";
     //app版本升级
     public static final String APP_VERSION_UPDATE =  "/api/AppVersion/GetLastVersion";
+    //获取盘点单列表
+    public static final String GETINVENTORYLIST =  "/api/Inventory/GetInventoryList";
+    //检查盘点单状态
+    public static final String GETPDSTATELIST =  "/api/PDABind/GetPDABind";
+    //获取盘点单明细
+    public static final String GETINVENTORYITEMLIST =  "/api/Inventory/GetInventoryItemList";
     //回传
     public static final String UPLOADINVENTORYITEMLIST =  "/api/Inventory/UploadInventoryItemList";
 

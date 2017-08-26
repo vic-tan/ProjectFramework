@@ -1,24 +1,42 @@
 package com.ytd.framework.main.presenter.impl;
 
+import com.tlf.basic.utils.ListUtils;
+import com.ytd.framework.equipment.presenter.impl.BasePresenterImpl;
 import com.ytd.framework.main.bean.UserBean;
 import com.ytd.framework.main.presenter.IUserPresenter;
 
-import org.litepal.crud.DataSupport;
+import java.util.List;
+
+import static com.ytd.framework.main.bean.UserBean.DB_LOGIN_NAME;
+import static com.ytd.framework.main.bean.UserBean.STORE_ID;
+import static org.litepal.crud.DataSupport.where;
 
 /**
  * Created by tanlifei on 2017/8/13.
  */
 
-public class UserPresenterImpl implements IUserPresenter {
+public class UserPresenterImpl extends BasePresenterImpl implements IUserPresenter {
 
 
     @Override
     public void save(UserBean bean) {
+        UserBean dbUser = findLoginUser(bean);
+        if (null != dbUser) {
+            dbUser.delete();
+        }
         bean.save();
+
     }
 
+
     @Override
-    public UserBean findLoginUser() {
-        return DataSupport.findLast(UserBean.class);
+    public UserBean findLoginUser(UserBean bean) {
+        List<UserBean> list = where(DB_LOGIN_NAME + " = ? and  pwd = ? and " + STORE_ID + " = ? ", bean.getLoginName(), bean.getPwd(), bean.getStoreId()).find(UserBean.class);
+        if (ListUtils.isEmpty(list)) {
+            return null;
+        }
+        return list.get(0);
     }
+
+
 }

@@ -26,5 +26,7 @@ public interface IEquipmentPresenter {
 
     int findTotalcount(Context mContext,String propertyId,String state);
 
+    int deleteById(String id);
+
     List<EquipmentBean> findBySearch(Context mContext, String search);//搜索盘点单
 }

@@ -1,6 +1,7 @@
 package com.ytd.framework.equipment.ui.fragment;
 
 
+import android.app.Dialog;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -16,21 +18,35 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bigkoo.pickerview.TimePickerView;
-import com.tlf.basic.http.okhttp.OkHttpUtils;
-import com.tlf.basic.http.okhttp.builder.PostFormBuilder;
+import com.google.gson.Gson;
+import com.tlf.basic.uikit.dialog.listener.OnBtnClickL;
+import com.tlf.basic.uikit.dialog.widget.NormalDialog;
+import com.tlf.basic.uikit.kprogresshud.KProgressHUD;
 import com.tlf.basic.uikit.roundview.RoundTextView;
 import com.tlf.basic.utils.CountDownTimer;
 import com.tlf.basic.utils.InputMethodManagerUtils;
+import com.tlf.basic.utils.ListUtils;
 import com.tlf.basic.utils.Logger;
 import com.tlf.basic.utils.StringUtils;
 import com.tlf.basic.utils.ToastUtils;
 import com.ytd.common.bean.BaseJson;
 import com.ytd.framework.R;
+import com.ytd.framework.equipment.bean.EquipmentBean;
+import com.ytd.framework.equipment.bean.EquipmentListBean;
+import com.ytd.framework.equipment.bean.PropertyBean;
+import com.ytd.framework.equipment.bean.PropertyListBean;
+import com.ytd.framework.equipment.presenter.IEquipmentPresenter;
+import com.ytd.framework.equipment.presenter.IProperyPresenter;
+import com.ytd.framework.equipment.presenter.impl.EquipmentPresenterImpl;
+import com.ytd.framework.equipment.presenter.impl.ProperyPresenterImpl;
 import com.ytd.framework.main.presenter.IConfigPresenter;
+import com.ytd.framework.main.presenter.IUserPresenter;
 import com.ytd.framework.main.presenter.impl.ConfigPresenterImpl;
-import com.ytd.support.constants.fixed.UrlConstants;
-import com.ytd.support.http.DialogCallback;
-import com.ytd.support.utils.DomainUtils;
+import com.ytd.framework.main.presenter.impl.UserPresenterImpl;
+import com.ytd.framework.main.ui.BaseApplication;
+import com.ytd.support.http.MultipleCallback;
+import com.ytd.support.utils.HttpParamsUtils;
+import com.ytd.support.utils.HttpRequestUtils;
 import com.ytd.support.utils.ResUtils;
 
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
@@ -43,10 +59,17 @@ import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import okhttp3.Call;
+
+import static com.ytd.support.constants.fixed.UrlConstants.GETINVENTORYITEMLIST;
+import static com.ytd.support.constants.fixed.UrlConstants.GETINVENTORYLIST;
+import static com.ytd.support.constants.fixed.UrlConstants.GETPDSTATELIST;
 
 
 /**
@@ -83,6 +106,16 @@ public class AddPropertyFragment extends Fragment {
     ImageView two;
     Unregistrar mUnregistrar;
     IConfigPresenter configPresenter;
+    IProperyPresenter properyPresenter;
+    IEquipmentPresenter equipmentPresenter;
+    IUserPresenter userPresenter;
+
+    List<PropertyBean> propertyList;
+    List<EquipmentBean> equipmentList;
+    int pageIndex = 1;
+    int downloadTag = 0;
+    NormalDialog dialog;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
 
@@ -106,7 +139,13 @@ public class AddPropertyFragment extends Fragment {
 
     @AfterViews
     void init() {
+        dialog = new NormalDialog(getActivity());
+        propertyList = new ArrayList<>();
+        equipmentList = new ArrayList<>();
         configPresenter = new ConfigPresenterImpl();
+        userPresenter = new UserPresenterImpl();
+        properyPresenter = new ProperyPresenterImpl();
+        equipmentPresenter = new EquipmentPresenterImpl();
         starPripceName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -234,12 +273,21 @@ public class AddPropertyFragment extends Fragment {
                 }
 
 
-                OkHttpUtils.post().url(UrlConstants.APP_VERSION_UPDATE).paramsForJson(requsetParams()).build().execute(new DialogCallback(getActivity()) {
+                HttpRequestUtils.getInstance().postFormBuilder(GETINVENTORYLIST, getInventoryListParams()).build().execute(new MultipleCallback(getActivity(), "加载中...") {
                     @Override
-                    public void onCusResponse(BaseJson response) {
-                        ToastUtils.show(mContext, response.getData() + "");
-                        clear();
+                    public void onCusResponse(BaseJson response, KProgressHUD hud) {
+
+                        PropertyListBean jsonBean = new Gson().fromJson(new Gson().toJson(response.getData()), PropertyListBean.class);
+                        if (null != jsonBean && !ListUtils.isEmpty(jsonBean.getItemList())) {
+                            clearList();
+                            propertyList.add(jsonBean.getItemList().get(0));
+                            getPDStateList(jsonBean.getItemList().get(0).getPDDH(), hud);
+                        } else {
+                            hud.dismiss();
+                            ToastUtils.show(getActivity(), "没有查到您要的资源！");
+                        }
                     }
+
                 });
 
                 break;
@@ -247,26 +295,164 @@ public class AddPropertyFragment extends Fragment {
     }
 
 
-    public Map<String, String> headers() {
-        String token = "Bearer " + configPresenter.find().getAccess_token();
-        Map<String, String> map = new HashMap<>();
-        map.put("Content-Type", "application/x-www-form-urlencoded");
-        map.put("Authorization", token);
-        return map;
+    public void getPDStateList(final String PDDH, KProgressHUD hud) {
+        HttpRequestUtils.getInstance().postFormBuilder(GETPDSTATELIST, getPDStateListParams(PDDH)).build().execute(new MultipleCallback(getActivity(), hud, true) {
+            @Override
+            public void onCusResponse(BaseJson response, KProgressHUD hud) {
+                String status = (String) response.getData();
+                /*1:已绑定 不是本设备
+                2:未绑定
+                3:已绑定 是本设备
+*/
+                downloadTag = 0;
+                if (StringUtils.isEquals(status, "1")) {
+                    downloadTag = 1;
+                    tishi(PDDH, "\n" + "该盘点单已被其它设备绑定，是否继续下载" + "\n");
+                } else if (StringUtils.isEquals(status, "2")) {
+                    dowload(PDDH);
+                } else if (StringUtils.isEquals(status, "3")) {
+                    PropertyBean dbBeen = properyPresenter.findById(getActivity(), PDDH);
+                    if (null == dbBeen) {
+                        dowload(PDDH);
+                    } else {
+                        downloadTag = 2;
+                        tishi(PDDH, "\n" + "您已绑定过了已下载过资源了，是否覆盖本地继续下载" + "\n");
+                    }
+                }
+            }
+        });
     }
 
-    private PostFormBuilder formBuilder() {
-        PostFormBuilder postFormBuilder = OkHttpUtils.post().url(DomainUtils.getInstance().domain() + UrlConstants.GETSTORELIST).headers(headers());
-        postFormBuilder.addParams("PageIndex", "1");
-        postFormBuilder.addParams("PageSize", "1000");
-        return postFormBuilder;
+
+    //扫描下一个
+    public void tishi(final String PDDH, String title) {
+        dialog.content(title)//
+                .btnNum(2)
+                .isTitleShow(false).contentGravity(Gravity.CENTER_HORIZONTAL)
+                .btnText("取消", "确定")//
+                .show();
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setOnBtnClickL(
+                new OnBtnClickL() {//left btn click listener
+                    @Override
+                    public void onBtnClick(View v, Dialog dialog) {
+                        dialog.dismiss();
+                    }
+                },
+                new OnBtnClickL() {//right btn click listener
+                    @Override
+                    public void onBtnClick(View v, Dialog dialog) {//next
+                        dialog.dismiss();
+                        dowload(PDDH);
+                    }
+                }
+        );
     }
 
 
-    public Map<String, Object> requsetParams() {
-        Map<String, Object> map = new HashMap<>();
-        map.put("sid", "ipeiban2016");
-        return map;
+    public void dowload(final String id) {
+        HttpRequestUtils.getInstance().postFormBuilder(GETINVENTORYITEMLIST, getInventoryItemListParams(pageIndex, id)).build().execute(new MultipleCallback(getActivity(), "正在下载资源") {
+            @Override
+            public void onCusResponse(BaseJson response, KProgressHUD hud) {
+                EquipmentListBean jsonBean = new Gson().fromJson(new Gson().toJson(response.getData()), EquipmentListBean.class);
+                if (null != jsonBean && !ListUtils.isEmpty(jsonBean.getItemList())) {
+                    if (!ListUtils.isEmpty(propertyList)) {
+                        equipmentList.addAll(jsonBean.getItemList());
+                        pageIndex = pageIndex + 1;
+                        if (totalPage(jsonBean.getTotal(), jsonBean.getPageSize()) >= pageIndex) {
+                            dowloadFor(id, hud);
+                        } else {
+                            propertyList.get(0).setEqList(equipmentList);
+                            hud.dismiss();
+                        }
+                    }
+
+                } else {
+                    pageIndex = 1;
+                    ToastUtils.show(getActivity(), "没有查到您要的资源！");
+                }
+            }
+
+            @Override
+            public void onError(Call call, Exception e) {
+                super.onError(call, e);
+                pageIndex = 1;
+                hud.dismiss();
+                ToastUtils.show(getActivity(), "下载资源失败！");
+            }
+        });
+    }
+
+    public int totalPage(int total, int pageSize) {
+        int pa = (int) Math.ceil(total / (pageSize * 1.0));
+        return pa;
+
+    }
+
+
+    public void dowloadFor(final String id, KProgressHUD hud) {
+        HttpRequestUtils.getInstance().postFormBuilder(GETINVENTORYITEMLIST, getInventoryItemListParams(pageIndex, id)).build().execute(new MultipleCallback(getActivity(), hud, false) {
+            @Override
+            public void onCusResponse(BaseJson response, KProgressHUD hud) {
+                EquipmentListBean jsonBean = new Gson().fromJson(new Gson().toJson(response.getData()), EquipmentListBean.class);
+                if (null != jsonBean && !ListUtils.isEmpty(jsonBean.getItemList())) {
+                    if (!ListUtils.isEmpty(propertyList)) {
+                        equipmentList.addAll(jsonBean.getItemList());
+                        pageIndex = pageIndex + 1;
+                        if (totalPage(jsonBean.getTotal(), jsonBean.getPageSize()) >= pageIndex) {
+                            dowloadFor(id, hud);
+                        } else {
+                            propertyList.get(0).setEqList(equipmentList);
+                            save(id);
+                            ToastUtils.show(getActivity(), "下载完成");
+                            hud.dismiss();
+                        }
+                    }
+                } else {
+                    pageIndex = 1;
+                    clearList();
+                    hud.dismiss();
+                    ToastUtils.show(getActivity(), "下载资源失败！请重试");
+                }
+            }
+
+            @Override
+            public void onError(Call call, Exception e) {
+                super.onError(call, e);
+                pageIndex = 1;
+                clearList();
+                hud.dismiss();
+                ToastUtils.show(getActivity(), "下载资源失败！");
+            }
+        });
+    }
+
+    private void clearList() {
+        propertyList.clear();
+        equipmentList.clear();
+    }
+
+    private void save(String PDDH) {
+        if (!ListUtils.isEmpty(propertyList)) {
+            if (downloadTag == 2) {
+                properyPresenter.deleteById(getActivity(), PDDH);
+            }
+            properyPresenter.save(getActivity(), propertyList);
+        }
+    }
+
+
+    private Map<String, String> getInventoryListParams() {
+        return HttpParamsUtils.getInventoryListParams(name.getText().toString(), BaseApplication.userBean.getStoreId());
+    }
+
+    private Map<String, String> getPDStateListParams(String PDDH) {
+        return HttpParamsUtils.getPDStateListParams(PDDH, BaseApplication.userBean.getEquId());
+    }
+
+    private Map<String, String> getInventoryItemListParams(int index, String id) {
+        return HttpParamsUtils.getInventoryItemListParams(index, id);
     }
 
 

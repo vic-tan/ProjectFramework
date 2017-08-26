@@ -1,35 +1,26 @@
 package com.ytd.framework.equipment.presenter.impl;
 
 import com.ytd.framework.main.bean.UserBean;
-import com.ytd.framework.main.presenter.IUserPresenter;
-import com.ytd.framework.main.presenter.impl.UserPresenterImpl;
+import com.ytd.framework.main.ui.BaseApplication;
 
 /**
  * Created by tanlifei on 2017/8/17.
  */
 
 public class BasePresenterImpl {
-    IUserPresenter userPresenter;
 
     public String getLoginName() {
-        if (null == userPresenter) {
-            userPresenter = new UserPresenterImpl();
-        }
-        UserBean user = userPresenter.findLoginUser();
-        if (null == user) {
+        if (null != BaseApplication.userBean) {
+            return BaseApplication.userBean.getLoginName();
+        } else {
             return "";
         }
-        return user.getLoginName();
     }
 
     public UserBean getUserBean() {
-        if (null == userPresenter) {
-            userPresenter = new UserPresenterImpl();
+        if (null != BaseApplication.userBean) {
+            return BaseApplication.userBean;
         }
-        UserBean user = userPresenter.findLoginUser();
-        if (null == user) {
-            return null;
-        }
-        return user;
+        return null;
     }
 }

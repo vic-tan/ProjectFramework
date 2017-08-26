@@ -2,8 +2,9 @@
 <litepal>
     <dbname value="ytd"/>
     <version value="1"/>
-    <!--<storage value="ytd/database"/>-->
+    <storage value="ytd/database"/>
     <list>
+        <mapping class="com.ytd.framework.main.bean.EntrepotBean"/>
         <mapping class="com.ytd.framework.main.bean.ConfigBean"/>
         <mapping class="com.ytd.framework.main.bean.UserBean"/>
         <mapping class="com.ytd.framework.equipment.bean.EquipmentBean"/>

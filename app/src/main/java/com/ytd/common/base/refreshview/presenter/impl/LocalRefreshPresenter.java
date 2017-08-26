@@ -53,7 +53,7 @@ public class LocalRefreshPresenter implements ILocalRefreshInPresenter {
      * @param isPage    是否分页，ture 分页， false 不分页
      * @param fromStart 上拉还是下拉， true 为下拉 false 为加载更多， 不分页时为true
      */
-    public final long DELAYED = 500;
+    public final long DELAYED = 100;
 
     public void startRequest(final boolean isPage, final boolean fromStart) {
         List newGameResponse = null;

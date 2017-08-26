@@ -60,6 +60,8 @@ public class AppException extends Exception {
             if (!NetUtils.isConnected(mContext)) {
                 ToastUtils.show(mContext, mContext.getResources().getString(R.string.common_net_error));
                 return;
+            }else if((""+e.toString()).contains("unexpected end of stream on okhttp3.Address")){
+                ToastUtils.show(mContext, "服务器忙碌.请稍候再试！！");
             }
             Logger.e(TAG, e.toString());
         }

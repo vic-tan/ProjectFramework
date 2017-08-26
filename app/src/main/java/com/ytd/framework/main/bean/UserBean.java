@@ -3,7 +3,6 @@ package com.ytd.framework.main.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import org.litepal.annotation.Encrypt;
 import org.litepal.crud.DataSupport;
 
 /**
@@ -12,15 +11,35 @@ import org.litepal.crud.DataSupport;
 
 public class UserBean extends DataSupport implements Parcelable {
 
+    public static final String DB_LOGIN_NAME = "loginName";//登录名
+    public static final String STORE_ID = "StoreId";//仓库ID
     private String loginName;//登录名
     private String Name;//用户名称
-    @Encrypt(algorithm = MD5)
     private String pwd;
     private String DepartmentId;//用户所属科室ID
     private String DepartmentName;//用户所属科室名称
     private String StoreId;//仓库ID
     private String StoreName;//仓库名字
+    private String EquId;//PDA设备ID
+    private long lastDate;//最后一次在线登录时间记录，离线登录7天有效，7天过后必要在线登录
 
+
+
+    public long getLastDate() {
+        return lastDate;
+    }
+
+    public void setLastDate(long lastDate) {
+        this.lastDate = lastDate;
+    }
+
+    public String getEquId() {
+        return EquId;
+    }
+
+    public void setEquId(String equId) {
+        EquId = equId;
+    }
 
     public String getLoginName() {
         return loginName;
@@ -96,6 +115,8 @@ public class UserBean extends DataSupport implements Parcelable {
         dest.writeString(this.DepartmentName);
         dest.writeString(this.StoreId);
         dest.writeString(this.StoreName);
+        dest.writeString(this.EquId);
+        dest.writeLong(this.lastDate);
     }
 
     protected UserBean(Parcel in) {
@@ -106,6 +127,8 @@ public class UserBean extends DataSupport implements Parcelable {
         this.DepartmentName = in.readString();
         this.StoreId = in.readString();
         this.StoreName = in.readString();
+        this.EquId = in.readString();
+        this.lastDate = in.readLong();
     }
 
     public static final Creator<UserBean> CREATOR = new Creator<UserBean>() {

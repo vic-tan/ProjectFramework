@@ -10,8 +10,8 @@ import org.litepal.crud.DataSupport;
  */
 
 public class EquipmentBean extends DataSupport implements Parcelable {
-    public static final String  LOOKSTATUS_TAG_TRUE = "1";//已盘点
-    public static final String  LOOKSTATUS_TAG_FALSE = "0";//未盘点
+    public static final String LOOKSTATUS_TAG_TRUE = "1";//已盘点
+    public static final String LOOKSTATUS_TAG_FALSE = "0";//未盘点
 
     private String my_id;
 
@@ -39,6 +39,15 @@ public class EquipmentBean extends DataSupport implements Parcelable {
     private String loginName;
     private String PDDH;
 
+    private String StoreId;//仓库ID
+
+    public String getStoreId() {
+        return StoreId;
+    }
+
+    public void setStoreId(String storeId) {
+        StoreId = storeId;
+    }
 
 
     public String getSBBH() {
@@ -83,8 +92,6 @@ public class EquipmentBean extends DataSupport implements Parcelable {
     }
 
 
-
-
     public String getEqStandard() {
         return eqStandard;
     }
@@ -100,7 +107,6 @@ public class EquipmentBean extends DataSupport implements Parcelable {
     public void setSaveAddress(String saveAddress) {
         this.saveAddress = saveAddress;
     }
-
 
 
     public String getLoginName() {
@@ -151,8 +157,6 @@ public class EquipmentBean extends DataSupport implements Parcelable {
     public void setEqId(String eqId) {
         this.eqId = eqId;
     }
-
-
 
 
     public String getPropertyStatus() {
@@ -252,6 +256,7 @@ public class EquipmentBean extends DataSupport implements Parcelable {
         dest.writeString(this.remark);
         dest.writeString(this.loginName);
         dest.writeString(this.PDDH);
+        dest.writeString(this.StoreId);
     }
 
     protected EquipmentBean(Parcel in) {
@@ -276,6 +281,7 @@ public class EquipmentBean extends DataSupport implements Parcelable {
         this.remark = in.readString();
         this.loginName = in.readString();
         this.PDDH = in.readString();
+        this.StoreId = in.readString();
     }
 
     public static final Creator<EquipmentBean> CREATOR = new Creator<EquipmentBean>() {

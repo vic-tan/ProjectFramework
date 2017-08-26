@@ -10,6 +10,6 @@ public interface IUserPresenter {
 
     void save(UserBean bean);//保存数据
 
-    UserBean findLoginUser();
+    UserBean findLoginUser(UserBean bean);
 
 }

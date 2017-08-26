@@ -1,4 +1,4 @@
-package com.ytd.framework.main.bean;
+package com.ytd.framework.equipment.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -6,15 +6,15 @@ import android.os.Parcelable;
 import java.util.List;
 
 /**
- * Created by tanlifei on 2017/8/17.
+ * Created by tanlifei on 2017/8/8.
  */
 
-public class EntrepotBeanList  implements Parcelable {
+public class PropertyListBean implements Parcelable {
 
     private String PageIndex;
     private String PageSize;
     private String Total;
-    private List<EntrepotBean> ItemList;
+    private List<PropertyBean> ItemList;
 
     public String getPageIndex() {
         return PageIndex;
@@ -40,15 +40,15 @@ public class EntrepotBeanList  implements Parcelable {
         Total = total;
     }
 
-    public List<EntrepotBean> getItemList() {
+    public List<PropertyBean> getItemList() {
         return ItemList;
     }
 
-    public void setItemList(List<EntrepotBean> itemList) {
+    public void setItemList(List<PropertyBean> itemList) {
         ItemList = itemList;
     }
 
-    public EntrepotBeanList() {
+    public PropertyListBean() {
     }
 
     @Override
@@ -64,22 +64,22 @@ public class EntrepotBeanList  implements Parcelable {
         dest.writeTypedList(this.ItemList);
     }
 
-    protected EntrepotBeanList(Parcel in) {
+    protected PropertyListBean(Parcel in) {
         this.PageIndex = in.readString();
         this.PageSize = in.readString();
         this.Total = in.readString();
-        this.ItemList = in.createTypedArrayList(EntrepotBean.CREATOR);
+        this.ItemList = in.createTypedArrayList(PropertyBean.CREATOR);
     }
 
-    public static final Creator<EntrepotBeanList> CREATOR = new Creator<EntrepotBeanList>() {
+    public static final Creator<PropertyListBean> CREATOR = new Creator<PropertyListBean>() {
         @Override
-        public EntrepotBeanList createFromParcel(Parcel source) {
-            return new EntrepotBeanList(source);
+        public PropertyListBean createFromParcel(Parcel source) {
+            return new PropertyListBean(source);
         }
 
         @Override
-        public EntrepotBeanList[] newArray(int size) {
-            return new EntrepotBeanList[size];
+        public PropertyListBean[] newArray(int size) {
+            return new PropertyListBean[size];
         }
     };
 }

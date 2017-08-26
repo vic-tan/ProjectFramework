@@ -9,5 +9,5 @@ package com.ytd.support.constants.fixed;
 public class JsonConstants {
 
     // 分页参数
-    public static final int PAGE_SIZE = 5; // 每页显示 的数据条数
+    public static final int PAGE_SIZE = 20; // 每页显示 的数据条数
 }

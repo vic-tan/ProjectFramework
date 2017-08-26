@@ -13,6 +13,7 @@ import com.ytd.framework.main.bean.ConfigBean;
 import com.ytd.framework.main.presenter.IConfigPresenter;
 import com.ytd.framework.main.presenter.impl.ConfigPresenterImpl;
 import com.ytd.support.constants.fixed.UrlConstants;
+import com.ytd.support.exception.AppException;
 import com.ytd.support.exception.ErrorBean;
 import com.ytd.support.http.TokenCallback;
 import com.ytd.support.utils.HttpParamsUtils;
@@ -72,7 +73,7 @@ public class ConfigActivity extends BaseActivity {
                         .build().execute(new TokenCallback(mContext) {
                     @Override
                     public void onCusResponse(ConfigBean response) {
-                        SPUtils.putBoolean(FIRST_LAUNCHER_APP_TAG, true);
+                        SPUtils.putBoolean(FIRST_LAUNCHER_APP_TAG, false);
                         saveUserInfo(response);
                         StartActUtils.start(mContext, LoginActivity_.class);
                         StartActUtils.finish(mContext);
@@ -82,22 +83,28 @@ public class ConfigActivity extends BaseActivity {
                     public void onError(Call call, Exception e) {
                         if (null != hud && hud.isShowing())
                             hud.dismiss();
-                        try {////{"error":"invalid_grant","error_description":"PDA验证信息不正确！"}
-//                            String error =
-                            ErrorBean jsonBean = new Gson().fromJson(replaceId(new String(e.toString())), ErrorBean.class);
+                        try {
+                            ErrorBean jsonBean = new Gson().fromJson(new Gson().toJson(e), ErrorBean.class);///{"error":"invalid_grant","error_description":"PDA验证信息不正确！"}
                             if (null != jsonBean) {
                                 if (!StringUtils.isEmpty(jsonBean.getError())) {
-                                    if (tag == 0) {
+                                    if (tag == 0 ) {
                                         tag = 1;
                                         ToastUtils.show(mContext, "请再试一次");
                                     } else {
                                         ToastUtils.show(mContext, jsonBean.getError_description());
                                     }
+                                }else{
+                                    throw new AppException(mContext, e);
                                 }
+                            }else{
+                                throw new AppException(mContext, e);
                             }
                         } catch (Exception e1) {
-                            e1.printStackTrace();
-                            ToastUtils.show(mContext, "请再试一次");
+                            try {
+                                throw new AppException(mContext, e);
+                            } catch (AppException e2) {
+                                e2.printStackTrace();
+                            }
                         }
                     }
 

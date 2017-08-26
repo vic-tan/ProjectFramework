@@ -25,5 +25,7 @@ public interface IProperyPresenter {
 
     int deleteAll(Context mContext);
 
+    int deleteById(Context mContext,String id);
+
     int findTotalcount(Context mContext);
 }
