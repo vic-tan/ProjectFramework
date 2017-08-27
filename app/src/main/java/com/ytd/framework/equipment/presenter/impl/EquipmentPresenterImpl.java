@@ -59,13 +59,11 @@ public class EquipmentPresenterImpl extends BasePresenterImpl implements IEquipm
     }
 
 
-    //TODO  字段名修改
     @Override
     public List<EquipmentBean> findAll(Context mContext, String propertyId) {
         return where(DB_LOGIN_NAME + "  = ? and PDDH = ? and " + STORE_ID + " = ? ", getLoginName(), propertyId, getUserBean().getStoreId()).find(EquipmentBean.class);
     }
 
-    //TODO  字段名修改
     @Override
     public List<EquipmentBean> findByState(Context mContext, String propertyId, String state) {
         return where(DB_LOGIN_NAME + "  = ? and PDDH = ? and lookStatus = ? and " + STORE_ID + " = ? ", getLoginName(), propertyId, state, getUserBean().getStoreId()).find(EquipmentBean.class);
@@ -74,13 +72,12 @@ public class EquipmentPresenterImpl extends BasePresenterImpl implements IEquipm
 
     @Override
     public List<EquipmentBean> findScanCode(Context mContext, String eqId) {
-        return where(DB_LOGIN_NAME + "  = ?  and my_id = ? and " + STORE_ID + " = ? ", getLoginName(), eqId, getUserBean().getStoreId()).find(EquipmentBean.class);
+        return where(DB_LOGIN_NAME + "  = ?  and SBBH  = ? and " + STORE_ID + " = ? ", getLoginName(), eqId, getUserBean().getStoreId()).find(EquipmentBean.class);
     }
 
-    //TODO  字段名修改
     @Override
     public boolean update(Context mContext, EquipmentBean equipmentBean) {
-        List<EquipmentBean> list = findScanCode(mContext, equipmentBean.getMy_id());
+        List<EquipmentBean> list = findScanCode(mContext, equipmentBean.getSBBH());
         EquipmentBean albumToUpdate;
         if (!ListUtils.isEmpty(list)) {
             albumToUpdate = list.get(0);

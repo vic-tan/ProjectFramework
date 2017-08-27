@@ -14,6 +14,7 @@ public interface IProperyPresenter {
 
     void asySave(Context mContext, List<PropertyBean> list);//保存数据
     void save(Context mContext, List<PropertyBean> list);//保存数据
+    void update(Context mContext, PropertyBean bean);
 
     List<PropertyBean> findAll(Context mContext);
 

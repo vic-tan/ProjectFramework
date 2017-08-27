@@ -407,6 +407,7 @@ public class AddPropertyFragment extends Fragment {
                             dowloadFor(id, hud);
                         } else {
                             propertyList.get(0).setEqList(equipmentList);
+                            propertyList.get(0).setTotalNum(equipmentList.size()+"");
 //                            save(id);
                             save2(id,hud);
                            /* ToastUtils.show(getActivity(), "下载完成");

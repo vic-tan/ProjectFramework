@@ -97,4 +97,18 @@ public class HttpParamsUtils {
         return map;
     }
 
+    /**
+     * 绑定盘点单
+     *
+     * @return
+     */
+    public static Map<String, String> getPDABindParams(String PDDH,String EquId,String InputUserId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("PDDH", PDDH);
+        map.put("EquId", EquId);
+        map.put("InputUserId", InputUserId);
+        return map;
+    }
+
+
 }

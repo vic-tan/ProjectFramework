@@ -57,6 +57,13 @@ public class ProperyPresenterImpl extends BasePresenterImpl implements IProperyP
     }
 
     @Override
+    public void update(Context mContext, PropertyBean bean) {
+        PropertyBean db = findById(mContext, bean.getPDDH());
+        db.setPDABind(bean.isPDABind());
+        db.update(db.getId());
+    }
+
+    @Override
     public List<PropertyBean> findAll(Context mContext) {
         return DataSupport.findAll(PropertyBean.class);
     }

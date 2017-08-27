@@ -24,7 +24,7 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
-import static com.ytd.framework.equipment.bean.PropertyBean.UPDATELOAD_TAG_FALSE;
+import static com.ytd.framework.equipment.bean.PropertyBean.UPDATELOAD_TAG_TRUE;
 
 /**
  * 首页界面
@@ -106,14 +106,14 @@ public class PropertyDetailsActivity extends BaseScannerReceiverActivity {
         qeSumNum.setText("设  备:" + bean.getTotalNum());
         startProperty.setText("资产原值:" + bean.getStart_property());
         endProperty.setText("资产净值:" + bean.getEnd_property());
-        if (StringUtils.isEquals(bean.getUpdateload(), UPDATELOAD_TAG_FALSE)) {//未上传
-            selectTag.setBackground(ResUtils.getDrawable(R.mipmap.unselect));
-            updateload.setText("未上传");
-            opt.setVisibility(View.VISIBLE);
-        } else {
+        if (StringUtils.isEquals(bean.getSTATUS(), UPDATELOAD_TAG_TRUE)) {//未上传
             selectTag.setBackground(ResUtils.getDrawable(R.mipmap.select));
             updateload.setText("已上传");
             opt.setVisibility(View.GONE);
+        } else {
+            selectTag.setBackground(ResUtils.getDrawable(R.mipmap.unselect));
+            updateload.setText("未上传");
+            opt.setVisibility(View.VISIBLE);
         }
 
 

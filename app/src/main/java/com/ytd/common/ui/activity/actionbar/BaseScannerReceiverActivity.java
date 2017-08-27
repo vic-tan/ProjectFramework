@@ -45,7 +45,7 @@ public abstract class BaseScannerReceiverActivity extends BaseActivity {
     IntentFilter intentFilter;
     BroadcastReceiver scanReceiver;
     NormalDialog dialog;
-    private String testScanID = "124a975b5dbcbe9DAFASDFc0ds15DdDFASFD";
+    private String testScanID = "020284500032086";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +92,6 @@ public abstract class BaseScannerReceiverActivity extends BaseActivity {
     }
 
 
-
     /**
      * 结束扫描
      */
@@ -131,12 +130,12 @@ public abstract class BaseScannerReceiverActivity extends BaseActivity {
                 hud.dismiss();
                 ToastUtils.show(mContext, "没有找到您扫描的设备信息!");
             } else {
-                PropertyBean propertyBean = properyPresenter.findById(mContext,list.get(0).getPDDH());
+                PropertyBean propertyBean = properyPresenter.findById(mContext, list.get(0).getPDDH());
                 hud.dismiss();
                 Map<String, Object> map = new HashMap<>();
                 map.put("bean", list.get(0));
                 map.put("scanTag", 0);
-                map.put("propertyBean",propertyBean);
+                map.put("propertyBean", propertyBean);
                 StartActUtils.start(mContext, EquipmentScanDetailsResultActivity_.class, map);
             }
         } catch (Exception e) {

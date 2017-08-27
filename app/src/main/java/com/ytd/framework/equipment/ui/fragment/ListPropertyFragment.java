@@ -96,11 +96,11 @@ public class ListPropertyFragment extends BaseLocalAbsRefreshFragment {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             protected void convert(AbsViewHolder holder, final PropertyBean bean, final int position) {
-                holder.setText(R.id.title, bean.getTitle());
+                holder.setText(R.id.title, bean.getXM());
                 holder.setText(R.id.phone, bean.getPhone());
                 holder.setText(R.id.price, bean.getPrice());
                 holder.setText(R.id.arce, BaseApplication.userBean.getStoreName());
-                holder.setText(R.id.add, bean.getAddress());
+                holder.setText(R.id.add, bean.getSTORE());
                 ImageView selectTag = holder.getView(R.id.selectTag);
                 TextView selectText = holder.getView(R.id.stutas);
                 if (StringUtils.isEquals(bean.getSTATUS(), "0")) {//未完成
@@ -112,7 +112,7 @@ public class ListPropertyFragment extends BaseLocalAbsRefreshFragment {
                 }
                 holder.setText(R.id.start_num, bean.getFinshNum());
                 holder.setText(R.id.end_num, "/" + bean.getTotalNum());
-                holder.setText(R.id.data, bean.getRQ().substring(0, 10) + "一" + bean.getEnd_data());
+                holder.setText(R.id.data, bean.getRQ().substring(0, 10) + "一" + bean.getSHRQ());
 
                 holder.getConvertView().setOnClickListener(new View.OnClickListener() {
                     @Override

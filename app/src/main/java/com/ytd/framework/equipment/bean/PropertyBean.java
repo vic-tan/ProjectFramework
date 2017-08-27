@@ -13,10 +13,14 @@ import java.util.List;
 
 public class PropertyBean extends DataSupport implements Parcelable {
 
+    //0:盘点中
+    //1:未审核
+    //2:已审核
 
-    public static final String UPDATELOAD_TAG_TRUE = "1";//已上传
-    public static final String UPDATELOAD_TAG_FALSE = "0";//未上传
 
+    public static final String UPDATELOAD_TAG_TRUE = "2";//已上传
+    public static final String UPDATELOAD_TAG_FALSE = "1";//未上传
+    private long id;
     private String PDDH;//盘点单号;
     private String title;//名称单名称
     private String PDR;//盘点人编号
@@ -38,9 +42,17 @@ public class PropertyBean extends DataSupport implements Parcelable {
     private String STATUS;//盘点状态
     private String start_property;//资产原值；
     private String end_property;//资产净值；
-    private String updateload;//盘点单是否上传//0,未上传，1,已上传
     private String loginName;
     private String StoreId;//仓库ID
+    private boolean PDABind = false;//盘点单第一次盘点绑定要凋用接口绑定
+
+    public boolean isPDABind() {
+        return PDABind;
+    }
+
+    public void setPDABind(boolean PDABind) {
+        this.PDABind = PDABind;
+    }
 
     public String getStoreId() {
         return StoreId;
@@ -220,13 +232,6 @@ public class PropertyBean extends DataSupport implements Parcelable {
         this.end_property = end_property;
     }
 
-    public String getUpdateload() {
-        return updateload;
-    }
-
-    public void setUpdateload(String updateload) {
-        this.updateload = updateload;
-    }
 
     public String getLoginName() {
         return loginName;
@@ -253,8 +258,17 @@ public class PropertyBean extends DataSupport implements Parcelable {
         return 0;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(this.id);
         dest.writeString(this.PDDH);
         dest.writeString(this.title);
         dest.writeString(this.PDR);
@@ -276,13 +290,14 @@ public class PropertyBean extends DataSupport implements Parcelable {
         dest.writeString(this.STATUS);
         dest.writeString(this.start_property);
         dest.writeString(this.end_property);
-        dest.writeString(this.updateload);
         dest.writeString(this.loginName);
         dest.writeString(this.StoreId);
+        dest.writeByte(this.PDABind ? (byte) 1 : (byte) 0);
         dest.writeTypedList(this.eqList);
     }
 
     protected PropertyBean(Parcel in) {
+        this.id = in.readLong();
         this.PDDH = in.readString();
         this.title = in.readString();
         this.PDR = in.readString();
@@ -304,9 +319,9 @@ public class PropertyBean extends DataSupport implements Parcelable {
         this.STATUS = in.readString();
         this.start_property = in.readString();
         this.end_property = in.readString();
-        this.updateload = in.readString();
         this.loginName = in.readString();
         this.StoreId = in.readString();
+        this.PDABind = in.readByte() != 0;
         this.eqList = in.createTypedArrayList(EquipmentBean.CREATOR);
     }
 
@@ -321,4 +336,5 @@ public class PropertyBean extends DataSupport implements Parcelable {
             return new PropertyBean[size];
         }
     };
+
 }

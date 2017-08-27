@@ -21,16 +21,24 @@ import com.tlf.basic.uikit.roundview.RoundRelativeLayout;
 import com.tlf.basic.uikit.roundview.RoundTextView;
 import com.tlf.basic.utils.CountDownTimer;
 import com.tlf.basic.utils.InputMethodManagerUtils;
+import com.tlf.basic.utils.NetUtils;
 import com.tlf.basic.utils.StartActUtils;
 import com.tlf.basic.utils.StringUtils;
 import com.tlf.basic.utils.ToastUtils;
+import com.ytd.common.bean.BaseJson;
 import com.ytd.common.ui.activity.actionbar.BaseActionBarActivity;
 import com.ytd.framework.R;
 import com.ytd.framework.equipment.bean.EquipmentBean;
 import com.ytd.framework.equipment.bean.PropertyBean;
 import com.ytd.framework.equipment.presenter.IEquipmentPresenter;
+import com.ytd.framework.equipment.presenter.IProperyPresenter;
 import com.ytd.framework.equipment.presenter.impl.EquipmentPresenterImpl;
+import com.ytd.framework.equipment.presenter.impl.ProperyPresenterImpl;
+import com.ytd.framework.main.ui.BaseApplication;
 import com.ytd.framework.main.ui.activity.CameraScanActivity;
+import com.ytd.support.http.ResultCallback;
+import com.ytd.support.utils.HttpParamsUtils;
+import com.ytd.support.utils.HttpRequestUtils;
 import com.ytd.support.utils.ResUtils;
 import com.ytd.uikit.actionbar.ActionBarOptViewTagLevel;
 import com.ytd.uikit.actionbar.OnOptClickListener;
@@ -49,9 +57,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import static com.ytd.framework.equipment.bean.EquipmentBean.LOOKSTATUS_TAG_TRUE;
 import static com.ytd.framework.equipment.bean.PropertyBean.UPDATELOAD_TAG_TRUE;
+import static com.ytd.support.constants.fixed.UrlConstants.PDABIND;
 
 /**
  * Created by ytd on 16/1/19.
@@ -118,6 +128,7 @@ public class EquipmentScanDetailsResultActivity extends BaseActionBarActivity {
 
 
     Unregistrar mUnregistrar;
+    IProperyPresenter properyPresenter;
 
     @AfterViews
     void init() {
@@ -133,6 +144,7 @@ public class EquipmentScanDetailsResultActivity extends BaseActionBarActivity {
         propertyBean = getIntent().getParcelableExtra("propertyBean");
         scanTag = getIntent().getIntExtra("scanTag", 0);
         equipmentPresenter = new EquipmentPresenterImpl();
+        properyPresenter = new ProperyPresenterImpl();
         actionBarView.setOnOptClickListener(new OnOptClickListener() {
             @Override
             public void onClick(View v, ActionBarOptViewTagLevel viewTag) {
@@ -222,8 +234,6 @@ public class EquipmentScanDetailsResultActivity extends BaseActionBarActivity {
                 selectDate();
                 break;
             case R.id.saveBtn://
-
-
                 if (StringUtils.isEmpty(useStatus.getText().toString())) {
                     ToastUtils.show(mContext, "资产状态不能为空,请选择资产状态");
                     return;
@@ -237,34 +247,95 @@ public class EquipmentScanDetailsResultActivity extends BaseActionBarActivity {
                     return;
                 }
 
-                hud.show();
+
                 bean.setUseStatus(useStatus.getText().toString());
                 bean.setLookDate(date.getText().toString());
                 bean.setRemark(remark.getText().toString());
                 bean.setLookStatus("1");
                 if (null != propertyBean) {//不等于空
-                    if (StringUtils.isEquals(propertyBean.getUpdateload(), UPDATELOAD_TAG_TRUE)) {//已上传
-                        hud.dismiss();
+                    if (StringUtils.isEquals(propertyBean.getSTATUS(), UPDATELOAD_TAG_TRUE)) {//已上传
                         nextScan("\n" + "该盘点的设备信息已上传服务器不能修改,请继续扫描下一个设备" + "\n");
                         return;
                     } else {//未上传
                         if (StringUtils.isEquals(bean.getLookStatus(), LOOKSTATUS_TAG_TRUE)) {//是否已经盘点过
-                            hud.dismiss();
                             updateScan("\n" + "该盘点的设备信息已盘点过了，是否重新修改保存 ?" + "\n");
                             return;
                         }
                     }
                 }
-                boolean saveTag = equipmentPresenter.update(mContext, bean);
-                if (saveTag) {
-                    hud.dismiss();
-                    nextScan("\n" + "操作成功,请继续扫描下一个设备" + "\n");
+
+
+                if (null != propertyBean && !propertyBean.isPDABind()) {
+                    bindShow("\n" + "您还未绑定还该盘点单，请先连网绑定再开始盘点！" + "\n");
                 } else {
-                    hud.dismiss();
+                    saveDB();
                 }
                 break;
 
         }
+    }
+
+    //扫描下一个
+    public void bindShow(String title) {
+        NormalDialog dialogBind = new NormalDialog(mContext);
+        dialogBind.content(title)//
+                .btnNum(2)
+                .isTitleShow(false).contentGravity(Gravity.CENTER_HORIZONTAL)
+                .btnText("取消", "确定")//
+                .show();
+        dialogBind.setCancelable(false);
+        dialogBind.setCanceledOnTouchOutside(false);
+        dialogBind.setOnBtnClickL(
+                new OnBtnClickL() {//left btn click listener
+                    @Override
+                    public void onBtnClick(View v, Dialog dialog) {
+                        dialog.dismiss();
+                    }
+                },
+                new OnBtnClickL() {//right btn click listener
+                    @Override
+                    public void onBtnClick(View v, Dialog dialog) {//next
+                        dialog.dismiss();
+                        padBind();
+                    }
+                }
+        );
+    }
+
+    private void saveDB() {
+        boolean saveTag = equipmentPresenter.update(mContext, bean);
+        if (saveTag) {
+            hud.dismiss();
+            nextScan("\n" + "操作成功,请继续扫描下一个设备" + "\n");
+        } else {
+            hud.dismiss();
+        }
+    }
+
+    private void padBind() {
+        if (NetUtils.isConnected(mContext)) {
+            HttpRequestUtils.getInstance().postFormBuilder(PDABIND, getPDABindParams()).build().execute(new ResultCallback(mContext) {
+                @Override
+                public void onCusResponse(BaseJson response) {
+                    String jsonBean = (String) response.getData();
+                    if (!StringUtils.isEmpty(jsonBean) && StringUtils.isEquals("1", jsonBean)) {
+                        propertyBean.setPDABind(true);
+                        properyPresenter.update(mContext,propertyBean);
+                        ToastUtils.show(mContext, "绑定成功,请点击保存继续盘点！");
+                    }else{
+                        ToastUtils.show(mContext, "绑定失败,请重试！");
+                    }
+                }
+
+
+            });
+        }else{
+            ToastUtils.show(mContext,"绑定必须要连网，请连接网络再试！");
+        }
+    }
+
+    private Map<String, String> getPDABindParams() {
+        return HttpParamsUtils.getPDABindParams(propertyBean.getPDDH(), BaseApplication.userBean.getEquId(), BaseApplication.userBean.getLoginName());
     }
 
     //扫描下一个

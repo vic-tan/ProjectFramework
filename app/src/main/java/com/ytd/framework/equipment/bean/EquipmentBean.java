@@ -13,7 +13,9 @@ public class EquipmentBean extends DataSupport implements Parcelable {
     public static final String LOOKSTATUS_TAG_TRUE = "1";//已盘点
     public static final String LOOKSTATUS_TAG_FALSE = "0";//未盘点
 
-    private String my_id;
+    private long id;
+
+
 
     private String SBMC;//名称单名称
     private String count;//数量
@@ -65,7 +67,13 @@ public class EquipmentBean extends DataSupport implements Parcelable {
     public void setQYRQ(String QYRQ) {
         this.QYRQ = QYRQ;
     }
+    public long getId() {
+        return id;
+    }
 
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getUseStatus() {
         return useStatus;
@@ -125,13 +133,7 @@ public class EquipmentBean extends DataSupport implements Parcelable {
         this.PDDH = PDDH;
     }
 
-    public String getMy_id() {
-        return my_id;
-    }
 
-    public void setMy_id(String my_id) {
-        this.my_id = my_id;
-    }
 
     public String getSBMC() {
         return SBMC;
@@ -235,7 +237,7 @@ public class EquipmentBean extends DataSupport implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.my_id);
+        dest.writeLong(this.id);
         dest.writeString(this.SBMC);
         dest.writeString(this.count);
         dest.writeString(this.SBBH);
@@ -260,7 +262,7 @@ public class EquipmentBean extends DataSupport implements Parcelable {
     }
 
     protected EquipmentBean(Parcel in) {
-        this.my_id = in.readString();
+        this.id = in.readLong();
         this.SBMC = in.readString();
         this.count = in.readString();
         this.SBBH = in.readString();
@@ -295,4 +297,6 @@ public class EquipmentBean extends DataSupport implements Parcelable {
             return new EquipmentBean[size];
         }
     };
+
+
 }
