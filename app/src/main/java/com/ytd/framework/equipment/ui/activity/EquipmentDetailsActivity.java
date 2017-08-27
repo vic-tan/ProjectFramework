@@ -4,7 +4,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.tlf.basic.utils.StartActUtils;
-import com.ytd.common.ui.activity.actionbar.BaseActionBarActivity;
+import com.ytd.common.ui.activity.actionbar.BaseScannerReceiverActivity;
 import com.ytd.framework.R;
 import com.ytd.framework.equipment.bean.EquipmentBean;
 import com.ytd.uikit.actionbar.ActionBarOptViewTagLevel;
@@ -19,7 +19,7 @@ import org.androidannotations.annotations.ViewById;
  * Created by ytd on 16/1/19.
  */
 @EActivity(R.layout.equipment_details_activity)
-public class EquipmentDetailsActivity extends BaseActionBarActivity {
+public class EquipmentDetailsActivity extends BaseScannerReceiverActivity {
 
     public static final String TAG = EquipmentDetailsActivity.class.getSimpleName();
     @ViewById

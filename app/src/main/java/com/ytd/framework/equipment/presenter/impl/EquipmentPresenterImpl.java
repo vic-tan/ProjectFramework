@@ -105,7 +105,7 @@ public class EquipmentPresenterImpl extends BasePresenterImpl implements IEquipm
 
     @Override
     public List<EquipmentBean> findBySearch(Context mContext, String search) {
-        return where(DB_LOGIN_NAME + " = ? and  (title like ? or eqType like ?  or KSMC like ?) and " + STORE_ID + " = ? ", getLoginName(), "%" + search + "%", "%" + search + "%", "%" + search + "%", getUserBean().getStoreId()).find(EquipmentBean.class);
+        return where(DB_LOGIN_NAME + " = ? and  (SBMC like ? or SBBH like ?  or KSMC like ? ) and " + STORE_ID + " = ? ", getLoginName(), "%" + search + "%", "%" + search + "%", "%" + search + "%", getUserBean().getStoreId()).find(EquipmentBean.class);
     }
 
 

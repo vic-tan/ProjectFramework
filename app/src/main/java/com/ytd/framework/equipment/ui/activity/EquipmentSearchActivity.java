@@ -17,7 +17,7 @@ import com.tlf.basic.utils.ListUtils;
 import com.tlf.basic.utils.StartActUtils;
 import com.tlf.basic.utils.StringUtils;
 import com.tlf.basic.utils.ToastUtils;
-import com.ytd.common.ui.activity.actionbar.BaseActionBarActivity;
+import com.ytd.common.ui.activity.actionbar.BaseScannerReceiverActivity;
 import com.ytd.framework.R;
 import com.ytd.framework.equipment.bean.EquipmentBean;
 import com.ytd.framework.equipment.presenter.IEquipmentPresenter;
@@ -37,7 +37,7 @@ import java.util.List;
  * Created by ytd on 16/1/19.
  */
 @EActivity(R.layout.equipment_search_activity)
-public class EquipmentSearchActivity extends BaseActionBarActivity {
+public class EquipmentSearchActivity extends BaseScannerReceiverActivity {
 
     public static final String TAG = EquipmentSearchActivity.class.getSimpleName();
     @ViewById

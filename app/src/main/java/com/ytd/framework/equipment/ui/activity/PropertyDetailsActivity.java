@@ -12,7 +12,7 @@ import com.tlf.basic.uikit.kprogresshud.KProgressHUD;
 import com.tlf.basic.uikit.roundview.RoundTextView;
 import com.tlf.basic.utils.StartActUtils;
 import com.tlf.basic.utils.StringUtils;
-import com.ytd.common.ui.activity.actionbar.BaseActionBarActivity;
+import com.ytd.common.ui.activity.actionbar.BaseScannerReceiverActivity;
 import com.ytd.framework.R;
 import com.ytd.framework.equipment.bean.PropertyBean;
 import com.ytd.support.utils.ResUtils;
@@ -31,7 +31,7 @@ import static com.ytd.framework.equipment.bean.PropertyBean.UPDATELOAD_TAG_FALSE
  * Created by ytd on 16/1/19.
  */
 @EActivity(R.layout.property_details_activity)
-public class PropertyDetailsActivity extends BaseActionBarActivity {
+public class PropertyDetailsActivity extends BaseScannerReceiverActivity {
 
     public static final String TAG = PropertyDetailsActivity.class.getSimpleName();
     @ViewById

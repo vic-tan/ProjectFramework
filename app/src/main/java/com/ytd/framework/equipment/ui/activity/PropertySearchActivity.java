@@ -16,7 +16,7 @@ import com.tlf.basic.utils.ListUtils;
 import com.tlf.basic.utils.StartActUtils;
 import com.tlf.basic.utils.StringUtils;
 import com.tlf.basic.utils.ToastUtils;
-import com.ytd.common.ui.activity.actionbar.BaseActionBarActivity;
+import com.ytd.common.ui.activity.actionbar.BaseScannerReceiverActivity;
 import com.ytd.framework.R;
 import com.ytd.framework.equipment.bean.PropertyBean;
 import com.ytd.framework.equipment.presenter.IProperyPresenter;
@@ -36,7 +36,7 @@ import java.util.List;
  * Created by ytd on 16/1/19.
  */
 @EActivity(R.layout.property_search_activity)
-public class PropertySearchActivity extends BaseActionBarActivity {
+public class PropertySearchActivity extends BaseScannerReceiverActivity {
 
     public static final String TAG = PropertySearchActivity.class.getSimpleName();
     @ViewById

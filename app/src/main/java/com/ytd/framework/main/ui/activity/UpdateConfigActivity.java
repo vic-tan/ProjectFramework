@@ -9,7 +9,7 @@ import com.tlf.basic.utils.StartActUtils;
 import com.tlf.basic.utils.StringUtils;
 import com.tlf.basic.utils.ToastUtils;
 import com.tlf.basic.utils.coder.MD5Coder;
-import com.ytd.common.ui.activity.actionbar.BaseActionBarActivity;
+import com.ytd.common.ui.activity.actionbar.BaseScannerReceiverActivity;
 import com.ytd.framework.R;
 import com.ytd.framework.main.bean.ConfigBean;
 import com.ytd.framework.main.presenter.IConfigPresenter;
@@ -39,7 +39,7 @@ import static com.ytd.framework.main.presenter.impl.SplashPresenterImpl.FIRST_LA
  */
 @Fullscreen
 @EActivity(R.layout.update_config_activity)
-public class UpdateConfigActivity extends BaseActionBarActivity {
+public class UpdateConfigActivity extends BaseScannerReceiverActivity {
 
     public static final String TAG = UpdateConfigActivity.class.getSimpleName();
 

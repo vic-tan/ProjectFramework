@@ -303,9 +303,9 @@ public class EquipmentScanDetailsResultActivity extends BaseActionBarActivity {
     }
 
     public void openScan() {
-        if (scanTag == 0) {//感应扫描
-            StartActUtils.start(mContext, EquipmentReactionScanActivity_.class);
-        } else {//相机扫描
+        if (scanTag != 0) {//感应扫描
+         /*   StartActUtils.start(mContext, EquipmentReactionScanActivity_.class);
+        } else {//相机扫描*/
             StartActUtils.start(mContext, CameraScanActivity.class);
         }
         StartActUtils.finish(mContext);
@@ -324,9 +324,9 @@ public class EquipmentScanDetailsResultActivity extends BaseActionBarActivity {
             @Override
             public void onBtnClick(View v, Dialog dialog) {
                 dialog.dismiss();
-                if (scanTag == 0) {//感应扫描
-                    StartActUtils.start(mContext, EquipmentReactionScanActivity_.class);
-                } else {//相机扫描
+                if (scanTag != 0) {//感应扫描
+                 /*   StartActUtils.start(mContext, EquipmentReactionScanActivity_.class);
+                } else {/相机扫描*/
                     StartActUtils.start(mContext, CameraScanActivity.class);
                 }
                 StartActUtils.finish(mContext);

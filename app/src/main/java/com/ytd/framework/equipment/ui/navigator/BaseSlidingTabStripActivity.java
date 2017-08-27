@@ -5,14 +5,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.TypedValue;
 
-import com.ytd.common.ui.activity.actionbar.BaseActionBarActivity;
+import com.ytd.common.ui.activity.actionbar.BaseScannerReceiverActivity;
 import com.ytd.framework.equipment.adapter.SlidingTabStripPagerAdapter;
 import com.ytd.uikit.slider.IndicatorWrapPagerSlider;
 
 /**
  * Created by tanlifei on 16/5/20.
  */
-public abstract class BaseSlidingTabStripActivity extends BaseActionBarActivity {
+public abstract class BaseSlidingTabStripActivity extends BaseScannerReceiverActivity {
     protected int pageMargin;
     protected SlidingTabStripPagerAdapter pagerAdapter;
 

@@ -125,18 +125,24 @@ public abstract class BaseScannerReceiverActivity extends BaseActivity {
 
     //查询单
     protected void findScanResult(String scanResult) {
-        List<EquipmentBean> list = equipmentPresenter.findScanCode(mContext, scanResult);
-        if (ListUtils.isEmpty(list)) {
+        try {
+            List<EquipmentBean> list = equipmentPresenter.findScanCode(mContext, scanResult);
+            if (ListUtils.isEmpty(list)) {
+                hud.dismiss();
+                ToastUtils.show(mContext, "没有找到您扫描的设备信息!");
+            } else {
+                PropertyBean propertyBean = properyPresenter.findById(mContext,list.get(0).getPDDH());
+                hud.dismiss();
+                Map<String, Object> map = new HashMap<>();
+                map.put("bean", list.get(0));
+                map.put("scanTag", 0);
+                map.put("propertyBean",propertyBean);
+                StartActUtils.start(mContext, EquipmentScanDetailsResultActivity_.class, map);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
             hud.dismiss();
-            ToastUtils.show(mContext, "没有找到您扫描的设备信息!");
-        } else {
-            PropertyBean propertyBean = properyPresenter.findById(mContext,list.get(0).getPDDH());
-            hud.dismiss();
-            Map<String, Object> map = new HashMap<>();
-            map.put("bean", list.get(0));
-            map.put("scanTag", 0);
-            map.put("propertyBean",propertyBean);
-            StartActUtils.start(mContext, EquipmentScanDetailsResultActivity_.class, map);
+            ToastUtils.show(mContext, "查找设备信息失败!");
         }
 
     }

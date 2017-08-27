@@ -7,7 +7,7 @@ import android.view.View;
 
 import com.tlf.basic.photoview.galleryfinal.permission.AfterPermissionGranted;
 import com.tlf.basic.photoview.galleryfinal.permission.EasyPermissions;
-import com.ytd.common.ui.activity.actionbar.BaseActionBarActivity;
+import com.ytd.common.ui.activity.actionbar.BaseScannerReceiverActivity;
 import com.ytd.framework.R;
 import com.ytd.framework.main.adapter.HomeNavigatorFragmentAdapter;
 import com.ytd.framework.main.ui.navigator.FragmentNavigator;
@@ -26,7 +26,7 @@ import java.util.List;
  * Created by ytd on 16/1/19.
  */
 @EActivity(R.layout.main_activity_home)
-public class HomeActivity extends BaseActionBarActivity implements HomeNavigatorView.OnBottomNavigatorViewItemClickListener, EasyPermissions.PermissionCallbacks {
+public class HomeActivity extends BaseScannerReceiverActivity implements HomeNavigatorView.OnBottomNavigatorViewItemClickListener, EasyPermissions.PermissionCallbacks {
 
 
     private static final int REQUEST_CODE_QRCODE_PERMISSIONS = 1;
@@ -69,36 +69,12 @@ public class HomeActivity extends BaseActionBarActivity implements HomeNavigator
 
 
     private void start() {
-        /*Intent intent = new Intent(mContext,EquipmentScanActivity.class);
-                    StartActUtils.forResult(mContext,
-                            intent,RESULT_OK);*/
         Intent intent = new Intent(mContext, CameraScanActivity.class);
         startActivityForResult(intent, RESULT_OK);
     }
 
 
-/*
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-         *//* 处理二维码扫描结果
-                *//*
-        if (requestCode == RESULT_OK) {
-            //处理扫描结果（在界面上显示）
-            if (null != data) {
-                Bundle bundle = data.getExtras();
-                if (bundle == null) {
-                    return;
-                }
-                if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
-                    String result = bundle.getString(CodeUtils.RESULT_STRING);
-                    Toast.makeText(this, "解析结果:" + result, Toast.LENGTH_LONG).show();
-                } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
-                    Toast.makeText(mContext, "解析二维码失败", Toast.LENGTH_LONG).show();
-                }
-            }
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }*/
+
 
     @Override
     public void onBottomNavigatorViewItemClick(int position, View view) {
