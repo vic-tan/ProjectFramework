@@ -23,6 +23,19 @@ public class EquipmentPresenterImpl extends BasePresenterImpl implements IEquipm
 
 
     @Override
+    public void asySave(Context mContext, List<EquipmentBean> list, String PDDH) {
+        if (ListUtils.isEmpty(list)) {
+            return;
+        }
+        for (EquipmentBean forBean : list) {
+            forBean.setLoginName(getLoginName());
+            forBean.setStoreId(getUserBean().getStoreId());
+            forBean.setPDDH(PDDH);
+            forBean.saveAsync();
+        }
+    }
+
+    @Override
     public void save(Context mContext, List<EquipmentBean> list, String PDDH) {
         if (ListUtils.isEmpty(list)) {
             return;
@@ -98,7 +111,7 @@ public class EquipmentPresenterImpl extends BasePresenterImpl implements IEquipm
 
     @Override
     public int deleteById(String id) {
-        return  DataSupport.deleteAll(EquipmentBean.class, DB_LOGIN_NAME + "  = ? PDDH = ?  and " + STORE_ID + " = ? ", getLoginName(), id,getUserBean().getStoreId());
+        return  DataSupport.deleteAll(EquipmentBean.class, DB_LOGIN_NAME + "  = ? and  PDDH = ?  and " + STORE_ID + " = ? ", getLoginName(), id,getUserBean().getStoreId());
     }
 
 }

@@ -1,9 +1,11 @@
 package com.ytd.framework.equipment.ui.fragment;
 
 
+import android.app.Dialog;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -13,8 +15,14 @@ import com.tlf.basic.base.adapter.abslistview.AbsCommonAdapter;
 import com.tlf.basic.base.adapter.abslistview.AbsViewHolder;
 import com.tlf.basic.refreshview.more.ListViewFinal;
 import com.tlf.basic.refreshview.more.OnLoadMoreListener;
+import com.tlf.basic.uikit.dialog.listener.OnBtnClickL;
+import com.tlf.basic.uikit.dialog.widget.NormalDialog;
+import com.tlf.basic.uikit.kprogresshud.KProgressHUD;
+import com.tlf.basic.utils.ListUtils;
 import com.tlf.basic.utils.StartActUtils;
 import com.tlf.basic.utils.StringUtils;
+import com.tlf.basic.utils.ToastUtils;
+import com.ytd.common.base.refreshview.ui.EmptyView;
 import com.ytd.common.ui.fragment.refreshview.BaseLocalAbsRefreshFragment;
 import com.ytd.framework.R;
 import com.ytd.framework.equipment.bean.PropertyBean;
@@ -87,7 +95,7 @@ public class ListPropertyFragment extends BaseLocalAbsRefreshFragment {
         return new AbsCommonAdapter<PropertyBean>(getActivity(), R.layout.property_refresh_list_item, (List<PropertyBean>) mRefreshList) {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
-            protected void convert(AbsViewHolder holder, final PropertyBean bean, int position) {
+            protected void convert(AbsViewHolder holder, final PropertyBean bean, final int position) {
                 holder.setText(R.id.title, bean.getTitle());
                 holder.setText(R.id.phone, bean.getPhone());
                 holder.setText(R.id.price, bean.getPrice());
@@ -104,7 +112,7 @@ public class ListPropertyFragment extends BaseLocalAbsRefreshFragment {
                 }
                 holder.setText(R.id.start_num, bean.getFinshNum());
                 holder.setText(R.id.end_num, "/" + bean.getTotalNum());
-                holder.setText(R.id.data, bean.getRQ() + "一" + bean.getEnd_data());
+                holder.setText(R.id.data, bean.getRQ().substring(0, 10) + "一" + bean.getEnd_data());
 
                 holder.getConvertView().setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -112,9 +120,65 @@ public class ListPropertyFragment extends BaseLocalAbsRefreshFragment {
                         StartActUtils.start(mContext, PropertyDetailsActivity_.class, "bean", bean);
                     }
                 });
+                holder.getView(R.id.delete).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (StringUtils.isEquals(bean.getSTATUS(), "0")) {
+//                            ToastUtils.show(getActivity(), "未上传完成，不能删除");
+                            NormalDialogStyleTwo(bean,position);
+                        } else {
+                            NormalDialogStyleTwo(bean,position);
+                        }
+
+                    }
+                });
             }
 
         };
+    }
+
+
+    private void NormalDialogStyleTwo(final PropertyBean bean, final int position) {
+        final NormalDialog dialog = new NormalDialog(getActivity());
+        dialog.isTitleShow(false);
+        dialog.contentGravity(Gravity.CENTER);
+        dialog.content("\n" + "您确定要删除该盘点单吗？？" + "\n")
+                .show();
+
+        dialog.setOnBtnClickL(
+                new OnBtnClickL() {
+                    @Override
+                    public void onBtnClick(View v, Dialog dialog) {
+                        dialog.dismiss();
+                    }
+                },
+                new OnBtnClickL() {
+                    @Override
+                    public void onBtnClick(View v, Dialog dialog) {
+                        delete(bean,position);
+                        dialog.dismiss();
+                    }
+                });
+
+    }
+
+    private void delete(final PropertyBean bean, final int position) {
+        KProgressHUD hud = KProgressHUD.create(getActivity())
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setDimAmount(0.5f)
+                .setLabel(getActivity().getResources().getString(R.string.common_dialog_loading))
+                .setCancellable(false);
+        hud.show();
+        int cout = properyPresenter.deleteById(getActivity(), bean.getPDDH());
+        if (cout > 0) {
+            getmRefreshList().remove(position);
+            getmRefreshAdapter().notifyDataSetChanged();
+            if(ListUtils.isEmpty(getmRefreshList())){
+                EmptyView.showNoDataEmpty(mFlEmptyView);
+            }
+            ToastUtils.show(getActivity(),"删除成功！");
+        }
+        hud.dismiss();
     }
 
 

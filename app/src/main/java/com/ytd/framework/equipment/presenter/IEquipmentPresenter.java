@@ -11,6 +11,7 @@ import java.util.List;
  */
 
 public interface IEquipmentPresenter {
+    void asySave(Context mContext, List<EquipmentBean> list,String propertyId);//保存数据
     void save(Context mContext, List<EquipmentBean> list,String propertyId);//保存数据
 
     List<EquipmentBean> findAll(Context mContext,String propertyId);//查询资产下面所有的设备

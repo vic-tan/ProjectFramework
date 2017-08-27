@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content">
 
                 <LinearLayout
-                    android:id="@+id/stutas_layout"
+                    android:id="@+id/delete_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -40,24 +40,32 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:id="@+id/selectTag"
+                        android:id="@+id/deleteTag"
                         android:layout_width="50px"
                         android:layout_height="50px"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="50px"
-                        android:background="@mipmap/select"/>
+                        android:background="@mipmap/select"
+                        android:visibility="gone"/>
 
-                    <TextView
-                        android:id="@+id/stutas"
+                    <com.tlf.basic.uikit.roundview.RoundTextView
+                        android:id="@+id/delete"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="20px"
-                        android:text="已完成"
+                        android:paddingBottom="15px"
+                        android:paddingLeft="25px"
+                        android:paddingRight="25px"
+                        android:paddingTop="15px"
+                        android:text="删除"
                         android:textColor="@color/txt_color"
-                        android:textSize="32px"/>
+                        android:textSize="32px"
+                        app:rv_cornerRadius="10px"
+                        app:rv_strokeColor="#999999"
+                        app:rv_strokeWidth="3px"/>
                 </LinearLayout>
 
 
@@ -66,7 +74,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="30px"
-                    android:layout_toLeftOf="@id/stutas_layout"
+                    android:layout_toLeftOf="@id/delete_layout"
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="汪科长盘点"
@@ -81,7 +89,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10px"
-                android:layout_toLeftOf="@id/stutas"
+                android:layout_toLeftOf="@id/delete"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="12823297564"
@@ -94,7 +102,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10px"
-                android:layout_toLeftOf="@id/stutas"
+                android:layout_toLeftOf="@id/delete"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="一万元以下"
@@ -106,7 +114,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10px"
-                android:layout_toLeftOf="@id/stutas"
+                android:layout_toLeftOf="@id/delete"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="中心仓库"
@@ -118,7 +126,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10px"
-                android:layout_toLeftOf="@id/stutas"
+                android:layout_toLeftOf="@id/delete"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="中心实验室"
@@ -134,9 +142,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10px"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:layout_marginTop="10px"
                     android:text="一共有："
                     android:textColor="@color/txt_color"
                     android:textSize="32px"/>
@@ -145,9 +153,9 @@
                     android:id="@+id/start_num"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10px"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:layout_marginTop="10px"
                     android:text="200"
                     android:textColor="#FC643F"
                     android:textSize="32px"/>
@@ -156,9 +164,9 @@
                     android:id="@+id/end_num"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10px"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:layout_marginTop="10px"
                     android:text="/300"
                     android:textColor="@color/txt_color"
                     android:textSize="32px"/>
@@ -166,9 +174,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10px"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:layout_marginTop="10px"
                     android:text="台设备已盘点"
                     android:textColor="@color/txt_color"
                     android:textSize="32px"/>
@@ -176,16 +184,52 @@
             </LinearLayout>
 
 
-
-            <TextView
-                android:id="@+id/data"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginTop="20px"
-                android:text="2017年05月12号-2017年05月18号"
-                android:textColor="#FC643F"
-                android:textSize="32px"/>
+                android:layout_marginTop="30px">
+
+                <LinearLayout
+                    android:id="@+id/stutas_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/selectTag"
+                        android:layout_width="50px"
+                        android:layout_height="50px"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
+                        android:background="@mipmap/select"/>
+
+                    <TextView
+                        android:id="@+id/stutas"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="20px"
+                        android:text="已完成"
+                        android:textColor="@color/txt_color"
+                        android:textSize="32px"/>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/data"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:text="2017年05月12号-2017年05月18号"
+                    android:textColor="#FC643F"
+                    android:textSize="32px"/>
+
+            </RelativeLayout>
+
+
         </LinearLayout>
 
     </LinearLayout>

@@ -3,6 +3,7 @@ package com.ytd.framework.equipment.ui.fragment;
 
 import android.app.Dialog;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -273,7 +274,7 @@ public class AddPropertyFragment extends Fragment {
                 }
 
 
-                HttpRequestUtils.getInstance().postFormBuilder(GETINVENTORYLIST, getInventoryListParams()).build().execute(new MultipleCallback(getActivity(), "加载中...") {
+                HttpRequestUtils.getInstance().postFormBuilder(GETINVENTORYLIST, getInventoryListParams()).build().execute(new MultipleCallback(getActivity(), "正在加载中...") {
                     @Override
                     public void onCusResponse(BaseJson response, KProgressHUD hud) {
 
@@ -309,6 +310,7 @@ public class AddPropertyFragment extends Fragment {
                     downloadTag = 1;
                     tishi(PDDH, "\n" + "该盘点单已被其它设备绑定，是否继续下载" + "\n");
                 } else if (StringUtils.isEquals(status, "2")) {
+                    downloadTag = 2;
                     dowload(PDDH);
                 } else if (StringUtils.isEquals(status, "3")) {
                     PropertyBean dbBeen = properyPresenter.findById(getActivity(), PDDH);
@@ -370,6 +372,7 @@ public class AddPropertyFragment extends Fragment {
 
                 } else {
                     pageIndex = 1;
+                    hud.dismiss();
                     ToastUtils.show(getActivity(), "没有查到您要的资源！");
                 }
             }
@@ -404,9 +407,10 @@ public class AddPropertyFragment extends Fragment {
                             dowloadFor(id, hud);
                         } else {
                             propertyList.get(0).setEqList(equipmentList);
-                            save(id);
-                            ToastUtils.show(getActivity(), "下载完成");
-                            hud.dismiss();
+//                            save(id);
+                            save2(id,hud);
+                           /* ToastUtils.show(getActivity(), "下载完成");
+                            hud.dismiss();*/
                         }
                     }
                 } else {
@@ -439,8 +443,60 @@ public class AddPropertyFragment extends Fragment {
                 properyPresenter.deleteById(getActivity(), PDDH);
             }
             properyPresenter.save(getActivity(), propertyList);
+            pageIndex = 1;
         }
     }
+    KProgressHUD showHud;
+    private void save2(final  String PDDH,final KProgressHUD hud) {
+      /*  MyTask mTask = new MyTask();
+        mTask.execute(PDDH);*/
+        if (!ListUtils.isEmpty(propertyList)) {
+            showHud = hud;
+            MyTask mTask = new MyTask();
+            mTask.execute(PDDH);
+            /*new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    if (downloadTag == 2) {
+                        properyPresenter.deleteById(getActivity(), PDDH);
+                    }
+                    properyPresenter.save(getActivity(), propertyList);
+                    pageIndex = 1;
+                    hud.dismiss();
+                }
+            });*/
+
+        }
+    }
+
+    private class MyTask extends AsyncTask<String, Integer, String> {
+        //onPreExecute方法用于在执行后台任务前做一些UI操作
+        @Override
+        protected void onPreExecute() {
+
+        }
+
+        //doInBackground方法内部执行后台任务,不可在此方法内修改UI
+        @Override
+        protected String doInBackground(String... params) {
+            if (downloadTag == 2) {
+                properyPresenter.deleteById(getActivity(), params[0]);
+            }
+            properyPresenter.save(getActivity(), propertyList);
+            return null;
+        }
+
+
+        //onPostExecute方法用于在执行完后台任务后更新UI,显示结果
+        @Override
+        protected void onPostExecute(String result) {
+            pageIndex = 1;
+            showHud.dismiss();
+        }
+
+
+    }
+
 
 
     private Map<String, String> getInventoryListParams() {

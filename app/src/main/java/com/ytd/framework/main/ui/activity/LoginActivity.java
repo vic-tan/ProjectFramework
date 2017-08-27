@@ -9,6 +9,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.tlf.basic.base.adapter.abslistview.AbsCommonAdapter;
 import com.tlf.basic.base.adapter.abslistview.AbsViewHolder;
 import com.tlf.basic.uikit.roundview.RoundTextView;
@@ -191,13 +192,17 @@ public class LoginActivity extends BaseActivity {
             HttpRequestUtils.getInstance().postFormBuilder(LOGIN, getLoginParams()).build().execute(new DialogCallback(mContext) {
                 @Override
                 public void onCusResponse(BaseJson response) {
-                    UserBean jsonBean = new Gson().fromJson(response.getData().toString(), UserBean.class);
-                    if (null != jsonBean) {
-                        saveUserInfo(jsonBean, false);
-                        StartActUtils.start(mContext, HomeActivity_.class);
-                        StartActUtils.finish(mContext);
-                    } else {
-                        ToastUtils.show(mContext, "请求失败");
+                    try {
+                        UserBean jsonBean = new Gson().fromJson(response.getData().toString(), UserBean.class);
+                        if (null != jsonBean) {
+                            saveUserInfo(jsonBean, false);
+                            StartActUtils.start(mContext, HomeActivity_.class);
+                            StartActUtils.finish(mContext);
+                        } else {
+                            ToastUtils.show(mContext, "请求失败");
+                        }
+                    } catch (JsonSyntaxException e) {
+                        e.printStackTrace();
                     }
                 }
 

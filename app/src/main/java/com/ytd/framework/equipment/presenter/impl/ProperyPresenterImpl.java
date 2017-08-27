@@ -23,6 +23,22 @@ import static org.litepal.crud.DataSupport.where;
 public class ProperyPresenterImpl extends BasePresenterImpl implements IProperyPresenter {
     IEquipmentPresenter equipmentPresenter;
 
+    @Override
+    public void asySave(Context mContext, List<PropertyBean> list) {
+        if (ListUtils.isEmpty(list)) {
+            return;
+        }
+        if (null == equipmentPresenter) {
+            equipmentPresenter = new EquipmentPresenterImpl();
+        }
+        for (PropertyBean forBean : list) {
+            forBean.setLoginName(getLoginName());
+            forBean.setStoreId(getUserBean().getStoreId());
+            forBean.saveAsync();
+            equipmentPresenter.save(mContext, forBean.getEqList(), forBean.getPDDH());
+        }
+    }
+
 
     @Override
     public void save(Context mContext, List<PropertyBean> list) {
@@ -89,7 +105,7 @@ public class ProperyPresenterImpl extends BasePresenterImpl implements IProperyP
     }
 
     public int startDelete(String id) {
-        return DataSupport.deleteAll(PropertyBean.class, DB_LOGIN_NAME + "  = ? PDDH = ?  and " + STORE_ID + " = ? ", getLoginName(), id, getUserBean().getStoreId());
+        return DataSupport.deleteAll(PropertyBean.class, DB_LOGIN_NAME + "  = ? and PDDH = ?  and " + STORE_ID + " = ? ", getLoginName(), id, getUserBean().getStoreId());
     }
 
     @Override
