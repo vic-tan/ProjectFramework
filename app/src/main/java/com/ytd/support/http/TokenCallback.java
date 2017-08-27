@@ -3,11 +3,13 @@ package com.ytd.support.http;
 import android.content.Context;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.tlf.basic.http.okhttp.callback.Callback;
 import com.tlf.basic.uikit.kprogresshud.KProgressHUD;
 import com.tlf.basic.utils.Logger;
 import com.ytd.framework.R;
 import com.ytd.framework.main.bean.ConfigBean;
+import com.ytd.support.json.NullStringToEmptyAdapterFactory;
 
 import okhttp3.Call;
 import okhttp3.Request;
@@ -44,7 +46,9 @@ public abstract class TokenCallback extends Callback<ConfigBean> {
     @Override
     public ConfigBean parseNetworkResponse(Response response) throws Exception {
         String string = response.body().string();
-        ConfigBean jsonBean = new Gson().fromJson(replaceId(new String(string)), ConfigBean.class);
+        Gson gson = new GsonBuilder().registerTypeAdapterFactory(new NullStringToEmptyAdapterFactory()).create();
+        ConfigBean jsonBean = gson.fromJson(gson.toJson(new String(string)), ConfigBean.class);
+//        ConfigBean jsonBean = new Gson().fromJson(replaceId(new String(string)), ConfigBean.class);
         return jsonBean;
     }
 

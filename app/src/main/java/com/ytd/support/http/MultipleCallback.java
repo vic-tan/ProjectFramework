@@ -3,6 +3,7 @@ package com.ytd.support.http;
 import android.content.Context;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.tlf.basic.http.okhttp.callback.Callback;
 import com.tlf.basic.uikit.kprogresshud.KProgressHUD;
 import com.tlf.basic.utils.Logger;
@@ -10,6 +11,7 @@ import com.tlf.basic.utils.StringUtils;
 import com.ytd.common.bean.BaseJson;
 import com.ytd.framework.R;
 import com.ytd.support.exception.AppException;
+import com.ytd.support.json.NullStringToEmptyAdapterFactory;
 import com.ytd.support.utils.ConsoleUtils;
 
 import okhttp3.Call;
@@ -95,7 +97,9 @@ public abstract class MultipleCallback extends Callback<BaseJson> {
     @Override
     public BaseJson parseNetworkResponse(Response response) throws Exception {
         String string = response.body().string();
-        BaseJson jsonBean = new Gson().fromJson(replaceId(new String(string)), BaseJson.class);
+        Gson gson = new GsonBuilder().registerTypeAdapterFactory(new NullStringToEmptyAdapterFactory()).create();
+        BaseJson jsonBean = gson.fromJson(gson.toJson(new String(string)), BaseJson.class);
+//        BaseJson jsonBean = new Gson().fromJson(replaceId(new String(string)), BaseJson.class);
         return jsonBean;
     }
 
