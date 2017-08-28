@@ -416,6 +416,7 @@ public class AddPropertyFragment extends Fragment {
                     pageIndex = 1;
                     clearList();
                     hud.dismiss();
+                    Logger.i("---------1111--------");
                     ToastUtils.show(getActivity(), "下载资源失败！请重试");
                 }
             }
@@ -426,6 +427,7 @@ public class AddPropertyFragment extends Fragment {
                 pageIndex = 1;
                 clearList();
                 hud.dismiss();
+                Logger.i("---------2222--------");
                 ToastUtils.show(getActivity(), "下载资源失败！");
             }
         });
@@ -455,7 +457,6 @@ public class AddPropertyFragment extends Fragment {
                             myHandler.sendEmptyMessage(1);
                         } catch (Exception e) {
                             e.printStackTrace();
-                        } finally {
                             myHandler.sendEmptyMessage(2);
                         }
                     }
@@ -480,6 +481,7 @@ public class AddPropertyFragment extends Fragment {
                 case 2:
                     pageIndex = 1;
                     showHud.dismiss();
+                    Logger.i("---------3333--------");
                     ToastUtils.show(getActivity(), "下载资源失败！请重试");
                     break;
             }

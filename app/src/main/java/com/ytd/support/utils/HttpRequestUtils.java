@@ -97,6 +97,9 @@ public class HttpRequestUtils {
         return postFormBuilder(url, map, new HashMap<String, String>());
     }
 
+
+
+
     public PostFormBuilder postFormBuilder(String url, Map<String, String> map, Map<String, String> headerParams) {
         if (MapUtils.isEmpty(headerParams)) {
             if (presenter == null) {
@@ -107,6 +110,32 @@ public class HttpRequestUtils {
             headerParams.put("Authorization", token);
         }
         PostFormBuilder postFormBuilder = OkHttpUtils.post().url(DomainUtils.getInstance().domain() + url).headers(headers(headerParams));
+        if (!MapUtils.isEmpty(map)) {
+            for (Map.Entry<String, String> entry : map.entrySet()) {
+                postFormBuilder.addParams(entry.getKey(), entry.getValue());
+            }
+        }
+        return postFormBuilder;
+    }
+
+    public PostFormBuilder postTestFormBuilder(String url) {
+        return postTestFormBuilder(url, new HashMap<String, String>(), new HashMap<String, String>());
+    }
+
+    public PostFormBuilder postTestFormBuilder(String url, Map<String, String> map) {
+        return postTestFormBuilder(url, map, new HashMap<String, String>());
+    }
+
+    public PostFormBuilder postTestFormBuilder(String url, Map<String, String> map, Map<String, String> headerParams) {
+        if (MapUtils.isEmpty(headerParams)) {
+            if (presenter == null) {
+                presenter = new ConfigPresenterImpl();
+            }
+            String token = "Bearer " + presenter.find().getAccess_token();
+            headerParams = new HashMap<>();
+            headerParams.put("Authorization", token);
+        }
+        PostFormBuilder postFormBuilder = OkHttpUtils.post().url("http://192.168.1.102:8080" + url).headers(headers(headerParams));
         if (!MapUtils.isEmpty(map)) {
             for (Map.Entry<String, String> entry : map.entrySet()) {
                 postFormBuilder.addParams(entry.getKey(), entry.getValue());

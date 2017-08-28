@@ -27,6 +27,7 @@ public class UrlConstants {
     public static final String GETINVENTORYITEMLIST =  "/api/Inventory/GetInventoryItemList";
     //绑定盘点单
     public static final String PDABIND =  "/api/PDABind/PDABind";
+//    public static final String PDABIND =  "/bind.json";
     //回传
     public static final String UPLOADINVENTORYITEMLIST =  "/api/Inventory/UploadInventoryItemList";
 

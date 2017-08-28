@@ -49,7 +49,6 @@ public class EquipmentReactionScanActivity extends BaseActionBarActivity {
     private static final String RES_ACTION = "android.intent.action.SCANRESULT";
     NormalDialog dialog;
 
-    private String testScanID = "124a975b5dbcbe9DAFASDFc0ds15DdDFASFD";
 
     @AfterViews
     void init() {
@@ -59,7 +58,7 @@ public class EquipmentReactionScanActivity extends BaseActionBarActivity {
         actionBarView.setOnOptClickListener(new OnOptClickListener() {
             @Override
             public void onClick(View v, ActionBarOptViewTagLevel viewTag) {
-                findScanResult(testScanID);
+                //findScanResult(scanResult);
             }
         });
         initScanner();
@@ -124,7 +123,7 @@ public class EquipmentReactionScanActivity extends BaseActionBarActivity {
                  * 扫码ID是写死的，还有资产ID，到时修改
                  */
 
-                findScanResult(testScanID);
+                findScanResult(scanResult);
             }
         }
     }

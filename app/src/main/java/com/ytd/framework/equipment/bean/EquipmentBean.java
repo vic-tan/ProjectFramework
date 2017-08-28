@@ -3,6 +3,8 @@ package com.ytd.framework.equipment.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.tlf.basic.utils.StringUtils;
+
 import org.litepal.crud.DataSupport;
 
 /**
@@ -234,7 +236,7 @@ public class EquipmentBean extends DataSupport implements Parcelable {
 
 
     public String getState() {
-        return State;
+        return StringUtils.isEmpty(State) ? "0" :State;
     }
 
     public void setState(String state) {

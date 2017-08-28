@@ -163,7 +163,7 @@ public class PropertyDetailsActivity extends BaseScannerReceiverActivity {
 
     private void getStoreList() {
         if (NetUtils.isConnected(mContext)) {
-            HttpRequestUtils.getInstance().postFormBuilder(UPLOADINVENTORYITEMLIST, HttpParamsUtils.getStorelistParams()).build().execute(new ResultCallback(mContext) {
+            HttpRequestUtils.getInstance().postTestFormBuilder(UPLOADINVENTORYITEMLIST, HttpParamsUtils.getStorelistParams()).build().execute(new ResultCallback(mContext) {
                 @Override
                 public void onCusResponse(BaseJson response) {
                     EntrepotBeanList jsonBean = new Gson().fromJson(new Gson().toJson(response.getData()), EntrepotBeanList.class);
@@ -183,6 +183,7 @@ public class PropertyDetailsActivity extends BaseScannerReceiverActivity {
     private void  uploadInventoryItemList(){
         List<EquipmentBean> updateList = equipmentPresenter.findByUpdateTag(mContext,bean.getPDDH(),EquipmentBean.UPDATE_TAG);
         if(!ListUtils.isEmpty(updateList)){
+            String str = new Gson().toJson(updateList);
 
         }
 

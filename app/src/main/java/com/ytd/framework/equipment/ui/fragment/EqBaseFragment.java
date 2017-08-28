@@ -25,7 +25,7 @@ import com.ytd.support.utils.ResUtils;
 
 import java.util.List;
 
-import static com.ytd.framework.equipment.bean.EquipmentBean.LOOKSTATUS_TAG_FALSE;
+import static com.ytd.framework.equipment.bean.EquipmentBean.LOOKSTATUS_TAG_TRUE;
 
 
 public abstract class EqBaseFragment extends BaseLocalAbsRefreshFragment {
@@ -60,14 +60,14 @@ public abstract class EqBaseFragment extends BaseLocalAbsRefreshFragment {
                 RoundTextView startWork = holder.getView(R.id.startWork);
                 RoundTextView lookDetails = holder.getView(R.id.lookDetails);
 
-                if (StringUtils.isEquals(bean.getState(), LOOKSTATUS_TAG_FALSE)) {//未盘点
-                    selectTag.setBackground(ResUtils.getDrawable(R.mipmap.unselect));
-                    selectText.setText("未盘点");
-                    startWork.setVisibility(View.VISIBLE);
-                } else {
+                if (StringUtils.isEquals(bean.getState(), LOOKSTATUS_TAG_TRUE)) {//未盘点
                     selectTag.setBackground(ResUtils.getDrawable(R.mipmap.select));
                     selectText.setText("已盘点");
                     startWork.setVisibility(View.GONE);
+                } else {
+                    selectTag.setBackground(ResUtils.getDrawable(R.mipmap.unselect));
+                    selectText.setText("未盘点");
+                    startWork.setVisibility(View.VISIBLE);
                 }
 
                 lookDetails.setOnClickListener(new View.OnClickListener() {

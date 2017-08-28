@@ -32,7 +32,6 @@ import cn.bingoogolapple.qrcode.zbar.ZBarView;
 
 public class CameraScanActivity extends BaseActionBarActivity implements QRCodeView.Delegate,AdapterView.OnClickListener {
     private static final String TAG = CameraScanActivity.class.getSimpleName();
-    private String testScanID = "324EWa975b5dbcbefdd9c015WDdbd05f898w";
     private QRCodeView mQRCodeView;
     protected IEquipmentPresenter equipmentPresenter;
     protected IProperyPresenter properyPresenter;
@@ -89,14 +88,14 @@ public class CameraScanActivity extends BaseActionBarActivity implements QRCodeV
     //查询单
     public void findScanResult(String scanResult) {
         //TODO 改testScanID
-        List<EquipmentBean> list = equipmentPresenter.findScanCode(mContext, testScanID);
+        List<EquipmentBean> list = equipmentPresenter.findScanCode(mContext, scanResult);
         if (ListUtils.isEmpty(list)) {
             hud.dismiss();
             ToastUtils.show(mContext, "没有找到您扫描的设备信息!"+scanResult);
             mQRCodeView.startSpot();
         } else {
             PropertyBean propertyBean = properyPresenter.findById(mContext,list.get(0).getPDDH());
-            ToastUtils.show(mContext, scanResult);
+//            ToastUtils.show(mContext, scanResult);
             hud.dismiss();
             Map<String, Object> map = new HashMap<>();
             map.put("bean", list.get(0));

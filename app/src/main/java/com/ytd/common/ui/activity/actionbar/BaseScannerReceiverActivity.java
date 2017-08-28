@@ -45,7 +45,6 @@ public abstract class BaseScannerReceiverActivity extends BaseActivity {
     IntentFilter intentFilter;
     BroadcastReceiver scanReceiver;
     NormalDialog dialog;
-    private String testScanID = "020284500032086";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,7 +115,7 @@ public abstract class BaseScannerReceiverActivity extends BaseActivity {
                  * 扫码ID是写死的，还有资产ID，到时修改
                  */
 
-                findScanResult(testScanID);
+                findScanResult(scanResult);
             }
         }
     }

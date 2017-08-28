@@ -116,7 +116,7 @@ public class EquipmentPresenterImpl extends BasePresenterImpl implements IEquipm
 
     @Override
     public List<EquipmentBean> findByUpdateTag(Context mContext, String PDDH, String updateTag) {
-        return where(DB_LOGIN_NAME + "  = ?  and PDDH = ?  and " + STORE_ID + " = ?  and updateTag = ? ", getLoginName(), PDDH, getUserBean().getStoreId(), updateTag).find(EquipmentBean.class);
+        return DataSupport.where(DB_LOGIN_NAME + "  = ?  and PDDH = ?  and " + STORE_ID + " = ?  and updateTag = ? ", getLoginName(), PDDH, getUserBean().getStoreId(), updateTag).select("SBBH","State").find(EquipmentBean.class);
     }
 
 
