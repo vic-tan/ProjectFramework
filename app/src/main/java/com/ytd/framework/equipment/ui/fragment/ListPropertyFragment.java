@@ -112,8 +112,9 @@ public class ListPropertyFragment extends BaseLocalAbsRefreshFragment {
                 }
                 holder.setText(R.id.start_num, bean.getFinshNum());
                 holder.setText(R.id.end_num, "/" + bean.getTotalNum());
-                holder.setText(R.id.data, bean.getRQ().substring(0, 10) + "一" + bean.getSHRQ());
-
+                if (!StringUtils.isEmpty(bean.getRQ())) {
+                    holder.setText(R.id.data, bean.getRQ().substring(0, 10));
+                }
                 holder.getConvertView().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -125,9 +126,9 @@ public class ListPropertyFragment extends BaseLocalAbsRefreshFragment {
                     public void onClick(View view) {
                         if (StringUtils.isEquals(bean.getSTATUS(), "0")) {
 //                            ToastUtils.show(getActivity(), "未上传完成，不能删除");
-                            NormalDialogStyleTwo(bean,position);
+                            NormalDialogStyleTwo(bean, position);
                         } else {
-                            NormalDialogStyleTwo(bean,position);
+                            NormalDialogStyleTwo(bean, position);
                         }
 
                     }
@@ -155,7 +156,7 @@ public class ListPropertyFragment extends BaseLocalAbsRefreshFragment {
                 new OnBtnClickL() {
                     @Override
                     public void onBtnClick(View v, Dialog dialog) {
-                        delete(bean,position);
+                        delete(bean, position);
                         dialog.dismiss();
                     }
                 });
@@ -173,10 +174,10 @@ public class ListPropertyFragment extends BaseLocalAbsRefreshFragment {
         if (cout > 0) {
             getmRefreshList().remove(position);
             getmRefreshAdapter().notifyDataSetChanged();
-            if(ListUtils.isEmpty(getmRefreshList())){
+            if (ListUtils.isEmpty(getmRefreshList())) {
                 EmptyView.showNoDataEmpty(mFlEmptyView);
             }
-            ToastUtils.show(getActivity(),"删除成功！");
+            ToastUtils.show(getActivity(), "删除成功！");
         }
         hud.dismiss();
     }

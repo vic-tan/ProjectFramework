@@ -6,20 +6,18 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
-import android.widget.TextView;
 
 import com.tlf.basic.base.autolayout.AutoLayoutActivity;
 import com.tlf.basic.uikit.dialog.listener.OnBtnClickL;
+import com.tlf.basic.uikit.dialog.widget.NormalDialog;
 import com.tlf.basic.utils.ActivityManager;
-import com.tlf.basic.utils.InflaterUtils;
 import com.tlf.basic.utils.StringUtils;
 import com.ytd.framework.R;
 import com.ytd.framework.main.bean.AppUpdateBean;
 import com.ytd.framework.main.ui.service.AppDownloadService;
 import com.ytd.framework.main.ui.service.CheckAppUpdateService;
-import com.ytd.support.utils.DialogTools;
-import com.ytd.support.utils.ResUtils;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
@@ -63,11 +61,12 @@ public class AppServiceActivity extends AutoLayoutActivity {
      * @param appUpdateBean
      */
     private void appUpdate(final AppUpdateBean appUpdateBean) {
-        try {
+        NormalDialogStyle(appUpdateBean);
+       /* try {
             View contetView = InflaterUtils.inflate(this, R.layout.main_version_content_view);
             TextView contetent = (TextView) contetView.findViewById(R.id.mTvContent);
-            contetent.setText("\n" + appUpdateBean.getMemo()+"\n");
-            DialogTools.getInstance(mContext).title(ResUtils.getStr(R.string.app_update_dialog_title)).content("\n" + appUpdateBean.getMemo()+"\n").setOnBtnClickL(new OnBtnClickL() {
+            contetent.setText("\n" + appUpdateBean.getMemo() + "\n");
+            DialogTools.getInstance(mContext).title(ResUtils.getStr(R.string.app_update_dialog_title)).content("\n" + appUpdateBean.getMemo() + "\n").setOnBtnClickL(new OnBtnClickL() {
                 @Override
                 public void onBtnClick(View v, Dialog dialog) {
                     dialog.dismiss();
@@ -94,8 +93,50 @@ public class AppServiceActivity extends AutoLayoutActivity {
             }).show();
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
     }
+
+
+    private void NormalDialogStyle(final AppUpdateBean appUpdateBean) {
+        final NormalDialog dialog = new NormalDialog(mContext);
+        dialog.isTitleShow(false);
+        dialog.setCancelable(false);
+        dialog.contentGravity(Gravity.CENTER);
+        dialog.content("\n" + appUpdateBean.getMemo() + "\n")
+                .show();
+
+        dialog.setOnBtnClickL(
+                new OnBtnClickL() {
+                    @Override
+                    public void onBtnClick(View v, Dialog dialog) {
+                        stopService(new Intent(mContext, AppDownloadService.class));
+                        colseAcitvity();
+                        dialog.dismiss();
+                    }
+                },
+                new OnBtnClickL() {
+                    @Override
+                    public void onBtnClick(View v, Dialog dialog) {
+                        Intent intent = new Intent(getBaseContext(), AppDownloadService.class);
+                        Bundle bundle = new Bundle();
+                        //TODO
+                        appUpdateBean.setUrl("http://dltest.zhixueyun.com/app/zxy.apk");
+                        bundle.putParcelable("bean", appUpdateBean);
+                        intent.putExtras(bundle);
+                        startService(intent);
+                        dialog.dismiss();
+                    }
+                });
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                stopService(new Intent(mContext, AppDownloadService.class));
+                colseAcitvity();
+            }
+        });
+
+    }
+
 
     @Override
     protected void onDestroy() {

@@ -1,6 +1,7 @@
 package com.ytd.framework.main.presenter.impl;
 
 import com.tlf.basic.utils.ListUtils;
+import com.tlf.basic.utils.StringUtils;
 import com.ytd.framework.equipment.presenter.impl.BasePresenterImpl;
 import com.ytd.framework.main.bean.UserBean;
 import com.ytd.framework.main.presenter.IUserPresenter;
@@ -31,11 +32,19 @@ public class UserPresenterImpl extends BasePresenterImpl implements IUserPresent
 
     @Override
     public UserBean findLoginUser(UserBean bean) {
-        List<UserBean> list = where(DB_LOGIN_NAME + " = ? and  pwd = ? and " + STORE_ID + " = ? ", bean.getLoginName(), bean.getPwd(), bean.getStoreId()).find(UserBean.class);
-        if (ListUtils.isEmpty(list)) {
-            return null;
+        if (StringUtils.isEmpty(bean.getStoreId())) {
+            List<UserBean> list = where(DB_LOGIN_NAME + " = ? and  pwd = ? ", bean.getLoginName(), bean.getPwd()).find(UserBean.class);
+            if (ListUtils.isEmpty(list)) {
+                return null;
+            }
+            return list.get(0);
+        } else {
+            List<UserBean> list = where(DB_LOGIN_NAME + " = ? and  pwd = ? and " + STORE_ID + " = ? ", bean.getLoginName(), bean.getPwd(), bean.getStoreId()).find(UserBean.class);
+            if (ListUtils.isEmpty(list)) {
+                return null;
+            }
+            return list.get(0);
         }
-        return list.get(0);
     }
 
 

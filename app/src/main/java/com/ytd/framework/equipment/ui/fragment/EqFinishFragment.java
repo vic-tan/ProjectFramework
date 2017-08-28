@@ -13,6 +13,8 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
+import static com.ytd.framework.equipment.bean.EquipmentBean.LOOKSTATUS_TAG_TRUE;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -49,7 +51,7 @@ public class EqFinishFragment extends EqBaseFragment {
 
     @Override
     public String getState() {
-        return "1";
+        return LOOKSTATUS_TAG_TRUE;
     }
 
     @Override

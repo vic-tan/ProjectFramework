@@ -4,6 +4,7 @@ import android.view.View;
 
 import com.google.gson.Gson;
 import com.tlf.basic.uikit.roundview.RoundTextView;
+import com.tlf.basic.utils.NetUtils;
 import com.tlf.basic.utils.StartActUtils;
 import com.tlf.basic.utils.StringUtils;
 import com.tlf.basic.utils.ToastUtils;
@@ -52,7 +53,16 @@ public class ConfigActivity extends BaseActivity {
 
     @AfterViews
     void init() {
+        tag = getIntent().getIntExtra("tag", 0);
         presenter = new ConfigPresenterImpl();
+        if (tag == 1 && !SPUtils.getBoolean(FIRST_LAUNCHER_APP_TAG, true)) {
+            ConfigBean configBean = presenter.find();
+            if (null != configBean) {
+                user_account_edit.setText(configBean.getUrl());
+                user_pwd_edit.setText(configBean.getPDAKEY());
+            }
+            login.setText("获取授权");
+        }
     }
 
 
@@ -68,54 +78,62 @@ public class ConfigActivity extends BaseActivity {
                     ToastUtils.show(this, "密PDAKEY不能为空，请输入PDAKEY");
                     break;
                 }
+                getToken();
+                break;
+        }
+    }
 
-                HttpRequestUtils.getInstance().postTokenFormBuilder(user_account_edit.getText().toString() + UrlConstants.TOKEN, HttpParamsUtils.getTokenParams(mContext, user_pwd_edit.getText().toString()), 1)
-                        .build().execute(new TokenCallback(mContext) {
-                    @Override
-                    public void onCusResponse(ConfigBean response) {
-                        SPUtils.putBoolean(FIRST_LAUNCHER_APP_TAG, false);
-                        saveUserInfo(response);
-                        StartActUtils.start(mContext, LoginActivity_.class);
-                        StartActUtils.finish(mContext);
-                    }
+    public void getToken() {
+        if (NetUtils.isConnected(mContext)) {
+            HttpRequestUtils.getInstance().postTokenFormBuilder(user_account_edit.getText().toString() + UrlConstants.TOKEN, HttpParamsUtils.getTokenParams(mContext, user_pwd_edit.getText().toString()), 1)
+                    .build().execute(new TokenCallback(mContext) {
+                @Override
+                public void onCusResponse(ConfigBean response) {
+                    SPUtils.putBoolean(FIRST_LAUNCHER_APP_TAG, false);
+                    saveUserInfo(response);
+                    StartActUtils.start(mContext, LoginActivity_.class);
+                    StartActUtils.finish(mContext);
+                }
 
-                    @Override
-                    public void onError(Call call, Exception e) {
-                        if (null != hud && hud.isShowing())
-                            hud.dismiss();
-                        try {
-                            ErrorBean jsonBean = new Gson().fromJson(new Gson().toJson(e), ErrorBean.class);///{"error":"invalid_grant","error_description":"PDA验证信息不正确！"}
-                            if (null != jsonBean) {
-                                if (!StringUtils.isEmpty(jsonBean.getError())) {
-                                    if (tag == 0 ) {
-                                        tag = 1;
-                                        ToastUtils.show(mContext, "请再试一次");
-                                    } else {
-                                        ToastUtils.show(mContext, jsonBean.getError_description());
-                                    }
-                                }else{
-                                    throw new AppException(mContext, e);
+                @Override
+                public void onError(Call call, Exception e) {
+                    if (null != hud && hud.isShowing())
+                        hud.dismiss();
+                    try {
+                        ErrorBean jsonBean = new Gson().fromJson(new Gson().toJson(e), ErrorBean.class);///{"error":"invalid_grant","error_description":"PDA验证信息不正确！"}
+                        if (null != jsonBean) {
+                            if (!StringUtils.isEmpty(jsonBean.getError())) {
+                                if (tag == 0) {
+                                    tag = 1;
+                                    ToastUtils.show(mContext, "请再试一次");
+                                } else {
+                                    ToastUtils.show(mContext, jsonBean.getError_description());
                                 }
-                            }else{
+                            } else {
                                 throw new AppException(mContext, e);
                             }
-                        } catch (Exception e1) {
-                            try {
-                                throw new AppException(mContext, e);
-                            } catch (AppException e2) {
-                                e2.printStackTrace();
-                            }
+                        } else {
+                            throw new AppException(mContext, e);
+                        }
+                    } catch (Exception e1) {
+                        try {
+                            throw new AppException(mContext, e);
+                        } catch (AppException e2) {
+                            e2.printStackTrace();
                         }
                     }
+                }
 
-                });
-                break;
+            });
+        } else {
+            ToastUtils.show(mContext, "设置配置必须要连接网络！");
         }
     }
 
     public void saveUserInfo(ConfigBean bean) {
         String pwd = user_pwd_edit.getText().toString();
         bean.setUrl(user_account_edit.getText().toString());
+        bean.setLastDate(System.currentTimeMillis());
         bean.setPDAKEY(pwd);
         presenter.save(bean);
     }

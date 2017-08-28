@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class HttpParamsUtils {
 
-    private static  String PAGESIZE = "5000";
+    private static String PAGESIZE = "5000";
 
     /**
      * 获取TOKEN参数
@@ -77,7 +77,7 @@ public class HttpParamsUtils {
      *
      * @return
      */
-    public static Map<String, String> getPDStateListParams(String PDDH,String EquId) {
+    public static Map<String, String> getPDStateListParams(String PDDH, String EquId) {
         Map<String, String> map = new HashMap<>();
         map.put("EquId", EquId);
         map.put("PDDH", PDDH);
@@ -89,9 +89,9 @@ public class HttpParamsUtils {
      *
      * @return
      */
-    public static Map<String, String> getInventoryItemListParams(int PageIndex,String PDDH) {
+    public static Map<String, String> getInventoryItemListParams(int PageIndex, String PDDH) {
         Map<String, String> map = new HashMap<>();
-        map.put("PageIndex", PageIndex+"");
+        map.put("PageIndex", PageIndex + "");
         map.put("PageSize", PAGESIZE);
         map.put("Id", PDDH);
         return map;
@@ -102,11 +102,25 @@ public class HttpParamsUtils {
      *
      * @return
      */
-    public static Map<String, String> getPDABindParams(String PDDH,String EquId,String InputUserId) {
+    public static Map<String, String> getPDABindParams(String PDDH, String EquId, String InputUserId) {
         Map<String, String> map = new HashMap<>();
         map.put("PDDH", PDDH);
         map.put("EquId", EquId);
         map.put("InputUserId", InputUserId);
+        return map;
+    }
+
+    /**
+     * 盘点单上传
+     *
+     * @return
+     */
+    public static Map<String, String> uploadInventoryItemList(String PDDH, String EquId, String InputUserId, String StoreId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("PDDH", PDDH);
+        map.put("EquId", EquId);
+        map.put("InputUserId", InputUserId);
+        map.put("StoreId", StoreId);
         return map;
     }
 

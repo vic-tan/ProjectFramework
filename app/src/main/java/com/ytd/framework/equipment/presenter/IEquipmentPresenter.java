@@ -29,5 +29,7 @@ public interface IEquipmentPresenter {
 
     int deleteById(String id);
 
+    List<EquipmentBean> findByUpdateTag(Context mContext, String PDDH, String updateTag);//上传盘点单
+
     List<EquipmentBean> findBySearch(Context mContext, String search);//搜索盘点单
 }

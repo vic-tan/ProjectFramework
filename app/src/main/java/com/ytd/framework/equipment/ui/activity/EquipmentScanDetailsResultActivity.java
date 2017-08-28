@@ -246,18 +246,15 @@ public class EquipmentScanDetailsResultActivity extends BaseActionBarActivity {
                     ToastUtils.show(mContext, "备注不能为空,请填写备注");
                     return;
                 }
-
-
                 bean.setUseStatus(useStatus.getText().toString());
                 bean.setLookDate(date.getText().toString());
                 bean.setRemark(remark.getText().toString());
-                bean.setLookStatus("1");
                 if (null != propertyBean) {//不等于空
                     if (StringUtils.isEquals(propertyBean.getSTATUS(), UPDATELOAD_TAG_TRUE)) {//已上传
                         nextScan("\n" + "该盘点的设备信息已上传服务器不能修改,请继续扫描下一个设备" + "\n");
                         return;
                     } else {//未上传
-                        if (StringUtils.isEquals(bean.getLookStatus(), LOOKSTATUS_TAG_TRUE)) {//是否已经盘点过
+                        if (StringUtils.isEquals(bean.getState(), LOOKSTATUS_TAG_TRUE)) {//是否已经盘点过
                             updateScan("\n" + "该盘点的设备信息已盘点过了，是否重新修改保存 ?" + "\n");
                             return;
                         }

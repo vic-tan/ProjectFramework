@@ -11,6 +11,8 @@ import org.litepal.crud.DataSupport;
 
 import java.util.List;
 
+import static com.ytd.framework.equipment.bean.EquipmentBean.LOOKSTATUS_TAG_TRUE;
+import static com.ytd.framework.equipment.bean.EquipmentBean.UPDATE_TAG;
 import static com.ytd.framework.main.bean.UserBean.DB_LOGIN_NAME;
 import static com.ytd.framework.main.bean.UserBean.STORE_ID;
 import static org.litepal.crud.DataSupport.where;
@@ -53,7 +55,7 @@ public class EquipmentPresenterImpl extends BasePresenterImpl implements IEquipm
         if (StringUtils.isEmpty(state)) {
             return where(DB_LOGIN_NAME + "  = ?  and PDDH = ? and " + STORE_ID + " = ? ", getLoginName(), PDDH, getUserBean().getStoreId()).offset(offset).limit(limit).find(EquipmentBean.class);
         } else {
-            return where(DB_LOGIN_NAME + "  = ?  and PDDH = ? and lookStatus = ? and " + STORE_ID + " = ? ", getLoginName(), PDDH, state, getUserBean().getStoreId()).offset(offset).limit(limit).find(EquipmentBean.class);
+            return where(DB_LOGIN_NAME + "  = ?  and PDDH = ? and State = ? and " + STORE_ID + " = ? ", getLoginName(), PDDH, state, getUserBean().getStoreId()).offset(offset).limit(limit).find(EquipmentBean.class);
         }
 
     }
@@ -66,7 +68,7 @@ public class EquipmentPresenterImpl extends BasePresenterImpl implements IEquipm
 
     @Override
     public List<EquipmentBean> findByState(Context mContext, String propertyId, String state) {
-        return where(DB_LOGIN_NAME + "  = ? and PDDH = ? and lookStatus = ? and " + STORE_ID + " = ? ", getLoginName(), propertyId, state, getUserBean().getStoreId()).find(EquipmentBean.class);
+        return where(DB_LOGIN_NAME + "  = ? and PDDH = ? and State = ? and " + STORE_ID + " = ? ", getLoginName(), propertyId, state, getUserBean().getStoreId()).find(EquipmentBean.class);
 
     }
 
@@ -84,7 +86,8 @@ public class EquipmentPresenterImpl extends BasePresenterImpl implements IEquipm
             albumToUpdate.setUseStatus(equipmentBean.getUseStatus());
             albumToUpdate.setLookDate(equipmentBean.getLookDate());
             albumToUpdate.setRemark(equipmentBean.getRemark());
-            albumToUpdate.setLookStatus("1");
+            albumToUpdate.setState(LOOKSTATUS_TAG_TRUE);
+            albumToUpdate.setUpdateTag(UPDATE_TAG);
             albumToUpdate.save();
             return true;
         } else {
@@ -97,7 +100,7 @@ public class EquipmentPresenterImpl extends BasePresenterImpl implements IEquipm
         if (StringUtils.isEmpty(state)) {
             return where(DB_LOGIN_NAME + "  = ?  and PDDH = ?  and " + STORE_ID + " = ? ", getLoginName(), propertyId, getUserBean().getStoreId()).find(EquipmentBean.class).size();
         }
-        return where(DB_LOGIN_NAME + " = ?  and PDDH = ? and lookStatus = ? and " + STORE_ID + " = ? ", getLoginName(), propertyId, state, getUserBean().getStoreId()).find(EquipmentBean.class).size();
+        return where(DB_LOGIN_NAME + " = ?  and PDDH = ? and State = ? and " + STORE_ID + " = ? ", getLoginName(), propertyId, state, getUserBean().getStoreId()).find(EquipmentBean.class).size();
     }
 
     @Override
@@ -108,7 +111,14 @@ public class EquipmentPresenterImpl extends BasePresenterImpl implements IEquipm
 
     @Override
     public int deleteById(String id) {
-        return  DataSupport.deleteAll(EquipmentBean.class, DB_LOGIN_NAME + "  = ? and  PDDH = ?  and " + STORE_ID + " = ? ", getLoginName(), id,getUserBean().getStoreId());
+        return DataSupport.deleteAll(EquipmentBean.class, DB_LOGIN_NAME + "  = ? and  PDDH = ?  and " + STORE_ID + " = ? ", getLoginName(), id, getUserBean().getStoreId());
     }
+
+    @Override
+    public List<EquipmentBean> findByUpdateTag(Context mContext, String PDDH, String updateTag) {
+        return where(DB_LOGIN_NAME + "  = ?  and PDDH = ?  and " + STORE_ID + " = ?  and updateTag = ? ", getLoginName(), PDDH, getUserBean().getStoreId(), updateTag).find(EquipmentBean.class);
+    }
+
+
 
 }

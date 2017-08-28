@@ -1,7 +1,9 @@
 package com.ytd.framework.main.ui.activity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.util.Base64;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -12,6 +14,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.tlf.basic.base.adapter.abslistview.AbsCommonAdapter;
 import com.tlf.basic.base.adapter.abslistview.AbsViewHolder;
+import com.tlf.basic.uikit.dialog.listener.OnBtnClickL;
+import com.tlf.basic.uikit.dialog.widget.NormalDialog;
 import com.tlf.basic.uikit.roundview.RoundTextView;
 import com.tlf.basic.utils.ListUtils;
 import com.tlf.basic.utils.NetUtils;
@@ -22,6 +26,7 @@ import com.tlf.basic.utils.coder.Base64Coder;
 import com.ytd.common.bean.BaseJson;
 import com.ytd.common.ui.activity.BaseActivity;
 import com.ytd.framework.R;
+import com.ytd.framework.main.bean.ConfigBean;
 import com.ytd.framework.main.bean.EntrepotBean;
 import com.ytd.framework.main.bean.EntrepotBeanList;
 import com.ytd.framework.main.bean.UserBean;
@@ -33,10 +38,12 @@ import com.ytd.framework.main.presenter.impl.EntrepotPresenterImpl;
 import com.ytd.framework.main.presenter.impl.UserPresenterImpl;
 import com.ytd.framework.main.ui.BaseApplication;
 import com.ytd.framework.main.ui.service.CheckAppUpdateService;
+import com.ytd.framework.main.ui.service.TokenService;
 import com.ytd.support.http.DialogCallback;
 import com.ytd.support.http.ResultCallback;
 import com.ytd.support.utils.HttpParamsUtils;
 import com.ytd.support.utils.HttpRequestUtils;
+import com.ytd.support.utils.SPUtils;
 import com.ytd.uikit.edittext.MClearEditText;
 
 import org.androidannotations.annotations.AfterViews;
@@ -51,6 +58,7 @@ import java.util.Map;
 
 import okhttp3.Call;
 
+import static com.ytd.framework.main.presenter.impl.SplashPresenterImpl.FIRST_LAUNCHER_APP_TAG;
 import static com.ytd.support.constants.fixed.UrlConstants.GETSTORELIST;
 import static com.ytd.support.constants.fixed.UrlConstants.LOGIN;
 
@@ -98,6 +106,14 @@ public class LoginActivity extends BaseActivity {
         userPresenter = new UserPresenterImpl();
         entrepotPresenter = new EntrepotPresenterImpl();
         startService(new Intent(this, CheckAppUpdateService.class));
+        if (!SPUtils.getBoolean(FIRST_LAUNCHER_APP_TAG, true)) {
+            if (NetUtils.isConnected(mContext)) {
+                startService(new Intent(this, TokenService.class));
+            } else {
+                validityToken();
+            }
+
+        }
         adapter = new AbsCommonAdapter<EntrepotBean>(mContext, R.layout.list_entrepot, listData) {
             @Override
             protected void convert(AbsViewHolder holder, EntrepotBean entrepotBean, int position) {
@@ -118,6 +134,7 @@ public class LoginActivity extends BaseActivity {
 
 
     //仓库列表处理
+
     private void getStoreList() {
         if (NetUtils.isConnected(mContext)) {
             HttpRequestUtils.getInstance().postFormBuilder(GETSTORELIST, HttpParamsUtils.getStorelistParams()).build().execute(new ResultCallback(mContext) {
@@ -208,7 +225,11 @@ public class LoginActivity extends BaseActivity {
 
                 @Override
                 public void onError(Call call, Exception e) {
-                    localLogin();
+                    try {
+                        localLogin();
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
+                    }
                 }
             });
         } else {
@@ -218,27 +239,31 @@ public class LoginActivity extends BaseActivity {
 
     //离线登录
     public void localLogin() {
-        String pwd = "";
-        if (!StringUtils.isEmpty(user_pwd_edit.getText().toString())) {
-            pwd = Base64Coder.encodeToString(user_pwd_edit.getText().toString().getBytes(), Base64.DEFAULT);
-        }
-        UserBean userBean = new UserBean();
-        userBean.setLoginName(user_account_edit.getText().toString());
-        userBean.setPwd(pwd);
-        if (null == selectBean) {
-            userBean.setStoreId("0101");
-        } else {
-            if(StringUtils.isEmpty(selectBean.getStoreId())){
-                userBean.setStoreId(selectBean.getId());
-            }else {
-                userBean.setStoreId(selectBean.getStoreId());
+        try {
+            String pwd = "";
+            if (!StringUtils.isEmpty(user_pwd_edit.getText().toString())) {
+                pwd = Base64Coder.encodeToString(user_pwd_edit.getText().toString().getBytes(), Base64.DEFAULT);
             }
-        }
-        UserBean loginUser = userPresenter.findLoginUser(userBean);
-        if (null == loginUser) {
-            ToastUtils.show(mContext, "离线登录失败，查看仓库及用户名或者密码是否正确");
-        } else {
-            validityLogin(loginUser);
+            UserBean userBean = new UserBean();
+            userBean.setLoginName(user_account_edit.getText().toString());
+            userBean.setPwd(pwd);
+            if (null == selectBean) {
+                userBean.setStoreId("0101");
+            } else {
+                if (StringUtils.isEmpty(selectBean.getStoreId())) {
+                    userBean.setStoreId(selectBean.getId());
+                } else {
+                    userBean.setStoreId(selectBean.getStoreId());
+                }
+            }
+            UserBean loginUser = userPresenter.findLoginUser(userBean);
+            if (null == loginUser) {
+                ToastUtils.show(mContext, "离线登录失败，查看仓库及用户名或者密码是否正确");
+            } else {
+                validityLogin(loginUser);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
     }
@@ -256,9 +281,44 @@ public class LoginActivity extends BaseActivity {
             StartActUtils.start(mContext, HomeActivity_.class);
             StartActUtils.finish(mContext);
         }
-
-
     }
+
+    public void validityToken() {
+        ConfigBean configBean = configPresenter.find();
+        if (null != configBean) {
+            long oneDay = 86400000;//一天的毫秒数
+            long curr = System.currentTimeMillis();
+            long sevenDay = oneDay * 30;//30天有效
+            long interval = curr - configBean.getLastDate();
+            if (interval > sevenDay) {
+                tishi();
+            }
+        }
+    }
+
+    //扫描下一个
+    public void tishi() {
+        NormalDialog dialog = new NormalDialog(mContext);
+        dialog.content("\n" + "您登录的账号授权已过期，请重新授权！" + "\n")//
+                .btnNum(1)
+                .isTitleShow(false).contentGravity(Gravity.CENTER_HORIZONTAL)
+                .btnText("确定")//
+                .show();
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setOnBtnClickL(
+
+                new OnBtnClickL() {//right btn click listener
+                    @Override
+                    public void onBtnClick(View v, Dialog dialog) {//next
+                        dialog.dismiss();
+                        StartActUtils.start(mContext, ConfigActivity_.class, "tag", 1);
+                        StartActUtils.finish(mContext);
+                    }
+                }
+        );
+    }
+
 
     public void saveUserInfo(UserBean jsonBean, boolean isOnlineLogin) {
         if (!isOnlineLogin) {//在线

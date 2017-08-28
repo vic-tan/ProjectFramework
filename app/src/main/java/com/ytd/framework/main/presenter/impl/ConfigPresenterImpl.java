@@ -14,6 +14,7 @@ public class ConfigPresenterImpl implements IConfigPresenter {
 
     @Override
     public void save(ConfigBean bean) {
+        DataSupport.deleteAll(ConfigBean.class);
         bean.save();
     }
 

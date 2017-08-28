@@ -23,7 +23,6 @@ import com.ytd.uikit.edittext.MClearEditText;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.Fullscreen;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.HashMap;
@@ -37,7 +36,6 @@ import static com.ytd.framework.main.presenter.impl.SplashPresenterImpl.FIRST_LA
  * 登录
  * * Created by ytd on 16/1/19.
  */
-@Fullscreen
 @EActivity(R.layout.update_config_activity)
 public class UpdateConfigActivity extends BaseScannerReceiverActivity {
 

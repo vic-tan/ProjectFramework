@@ -60,7 +60,7 @@ public abstract class EqBaseFragment extends BaseLocalAbsRefreshFragment {
                 RoundTextView startWork = holder.getView(R.id.startWork);
                 RoundTextView lookDetails = holder.getView(R.id.lookDetails);
 
-                if (StringUtils.isEquals(bean.getLookStatus(), LOOKSTATUS_TAG_FALSE)) {//未盘点
+                if (StringUtils.isEquals(bean.getState(), LOOKSTATUS_TAG_FALSE)) {//未盘点
                     selectTag.setBackground(ResUtils.getDrawable(R.mipmap.unselect));
                     selectText.setText("未盘点");
                     startWork.setVisibility(View.VISIBLE);

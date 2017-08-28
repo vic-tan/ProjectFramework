@@ -3,6 +3,8 @@ package com.ytd.framework.equipment.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.tlf.basic.utils.StringUtils;
+
 import org.litepal.crud.DataSupport;
 
 import java.util.List;
@@ -201,7 +203,7 @@ public class PropertyBean extends DataSupport implements Parcelable {
     }
 
     public String getFinshNum() {
-        return finshNum;
+        return StringUtils.isEmpty(finshNum) ? "0" :finshNum;
     }
 
     public void setFinshNum(String finshNum) {

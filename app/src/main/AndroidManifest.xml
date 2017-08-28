@@ -60,6 +60,7 @@
             android:value="1920"/>
 
         <service android:name="com.ytd.framework.main.ui.service.CheckAppUpdateService"/><!--检查app 升级服务-->
+        <service android:name=".main.ui.service.TokenService"/><!--检查app 升级服务-->
         <service android:name="com.ytd.framework.main.ui.service.AppDownloadService"/><!--下载app servce-->
         <activity
             android:name="com.ytd.framework.main.ui.activity.AppServiceActivity_"

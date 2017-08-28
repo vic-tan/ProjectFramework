@@ -56,9 +56,9 @@ public class GuideActivity extends BaseActivity implements GuideView,
     @Override
     public void onClick(View v) {
         //TODO
-//        StartActUtils.start(mContext, ConfigActivity_.class);
+        StartActUtils.start(mContext, ConfigActivity_.class);
 
-        StartActUtils.start(mContext, HomeActivity_.class);
+//        StartActUtils.start(mContext, HomeActivity_.class);
         StartActUtils.finish(mContext);
     }
 

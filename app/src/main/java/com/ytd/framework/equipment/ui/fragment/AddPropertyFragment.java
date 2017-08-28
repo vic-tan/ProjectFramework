@@ -3,9 +3,10 @@ package com.ytd.framework.equipment.ui.fragment;
 
 import android.app.Dialog;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
@@ -407,11 +408,8 @@ public class AddPropertyFragment extends Fragment {
                             dowloadFor(id, hud);
                         } else {
                             propertyList.get(0).setEqList(equipmentList);
-                            propertyList.get(0).setTotalNum(equipmentList.size()+"");
-//                            save(id);
-                            save2(id,hud);
-                           /* ToastUtils.show(getActivity(), "下载完成");
-                            hud.dismiss();*/
+                            propertyList.get(0).setTotalNum(equipmentList.size() + "");
+                            save(id, hud);
                         }
                     }
                 } else {
@@ -438,66 +436,56 @@ public class AddPropertyFragment extends Fragment {
         equipmentList.clear();
     }
 
-    private void save(String PDDH) {
-        if (!ListUtils.isEmpty(propertyList)) {
-            if (downloadTag == 2) {
-                properyPresenter.deleteById(getActivity(), PDDH);
-            }
-            properyPresenter.save(getActivity(), propertyList);
-            pageIndex = 1;
-        }
-    }
+
     KProgressHUD showHud;
-    private void save2(final  String PDDH,final KProgressHUD hud) {
-      /*  MyTask mTask = new MyTask();
-        mTask.execute(PDDH);*/
+
+    private void save(final String PDDH, final KProgressHUD hud) {
         if (!ListUtils.isEmpty(propertyList)) {
-            showHud = hud;
-            MyTask mTask = new MyTask();
-            mTask.execute(PDDH);
-            /*new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    if (downloadTag == 2) {
-                        properyPresenter.deleteById(getActivity(), PDDH);
+            try {
+                showHud = hud;
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            if (downloadTag == 2) {
+                                properyPresenter.deleteById(getActivity(), PDDH);
+                            }
+                            properyPresenter.save(getActivity(), propertyList);
+                            Logger.i("------save run -----");
+                            myHandler.sendEmptyMessage(1);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        } finally {
+                            myHandler.sendEmptyMessage(2);
+                        }
                     }
-                    properyPresenter.save(getActivity(), propertyList);
-                    pageIndex = 1;
-                    hud.dismiss();
-                }
-            });*/
-
-        }
-    }
-
-    private class MyTask extends AsyncTask<String, Integer, String> {
-        //onPreExecute方法用于在执行后台任务前做一些UI操作
-        @Override
-        protected void onPreExecute() {
-
-        }
-
-        //doInBackground方法内部执行后台任务,不可在此方法内修改UI
-        @Override
-        protected String doInBackground(String... params) {
-            if (downloadTag == 2) {
-                properyPresenter.deleteById(getActivity(), params[0]);
+                }).start();
+            } finally {
+                myHandler.sendEmptyMessage(2);
             }
-            properyPresenter.save(getActivity(), propertyList);
-            return null;
+        } else {
+            ToastUtils.show(getActivity(), "没有查到您要的资源！");
+            hud.dismiss();
         }
-
-
-        //onPostExecute方法用于在执行完后台任务后更新UI,显示结果
-        @Override
-        protected void onPostExecute(String result) {
-            pageIndex = 1;
-            showHud.dismiss();
-        }
-
-
     }
 
+    Handler myHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 1:
+                    pageIndex = 1;
+                    showHud.dismiss();
+                    ToastUtils.show(getActivity(), "下载完成");
+                    break;
+                case 2:
+                    pageIndex = 1;
+                    showHud.dismiss();
+                    ToastUtils.show(getActivity(), "下载资源失败！请重试");
+                    break;
+            }
+            super.handleMessage(msg);
+        }
+    };
 
 
     private Map<String, String> getInventoryListParams() {

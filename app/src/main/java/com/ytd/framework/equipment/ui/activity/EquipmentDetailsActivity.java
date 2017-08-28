@@ -7,6 +7,7 @@ import com.tlf.basic.utils.StartActUtils;
 import com.ytd.common.ui.activity.actionbar.BaseScannerReceiverActivity;
 import com.ytd.framework.R;
 import com.ytd.framework.equipment.bean.EquipmentBean;
+import com.ytd.framework.main.ui.activity.CameraScanActivity;
 import com.ytd.uikit.actionbar.ActionBarOptViewTagLevel;
 import com.ytd.uikit.actionbar.OnOptClickListener;
 
@@ -58,7 +59,7 @@ public class EquipmentDetailsActivity extends BaseScannerReceiverActivity {
             @Override
             public void onClick(View v, ActionBarOptViewTagLevel viewTag) {
                 StartActUtils.start(mContext,
-                        EquipmentReactionScanActivity_.class);
+                        CameraScanActivity.class);
             }
         });
         setData();

@@ -12,9 +12,9 @@ import org.litepal.crud.DataSupport;
 public class EquipmentBean extends DataSupport implements Parcelable {
     public static final String LOOKSTATUS_TAG_TRUE = "1";//已盘点
     public static final String LOOKSTATUS_TAG_FALSE = "0";//未盘点
+    public static final String UPDATE_TAG = "1";//本地扫描修改
 
     private long id;
-
 
 
     private String SBMC;//名称单名称
@@ -35,13 +35,23 @@ public class EquipmentBean extends DataSupport implements Parcelable {
     private String ZJ;//折旧
     private String useStatus;//资产状态
     private String lookDate;//盘点时间
-    private String lookStatus;//盘点状态
+    private String State;//盘点状态 //
+    private String updateTag;//0表示默认的，1，表示本扫描修改的
+
 
     private String remark;//备注
     private String loginName;
     private String PDDH;
 
     private String StoreId;//仓库ID
+
+    public String getUpdateTag() {
+        return updateTag;
+    }
+
+    public void setUpdateTag(String updateTag) {
+        this.updateTag = updateTag;
+    }
 
     public String getStoreId() {
         return StoreId;
@@ -67,6 +77,7 @@ public class EquipmentBean extends DataSupport implements Parcelable {
     public void setQYRQ(String QYRQ) {
         this.QYRQ = QYRQ;
     }
+
     public long getId() {
         return id;
     }
@@ -134,7 +145,6 @@ public class EquipmentBean extends DataSupport implements Parcelable {
     }
 
 
-
     public String getSBMC() {
         return SBMC;
     }
@@ -169,13 +179,6 @@ public class EquipmentBean extends DataSupport implements Parcelable {
         this.propertyStatus = propertyStatus;
     }
 
-    public String getLookStatus() {
-        return lookStatus;
-    }
-
-    public void setLookStatus(String lookStatus) {
-        this.lookStatus = lookStatus;
-    }
 
     public EquipmentBean() {
     }
@@ -230,6 +233,15 @@ public class EquipmentBean extends DataSupport implements Parcelable {
     }
 
 
+    public String getState() {
+        return State;
+    }
+
+    public void setState(String state) {
+        State = state;
+    }
+
+
     @Override
     public int describeContents() {
         return 0;
@@ -254,7 +266,8 @@ public class EquipmentBean extends DataSupport implements Parcelable {
         dest.writeString(this.ZJ);
         dest.writeString(this.useStatus);
         dest.writeString(this.lookDate);
-        dest.writeString(this.lookStatus);
+        dest.writeString(this.State);
+        dest.writeString(this.updateTag);
         dest.writeString(this.remark);
         dest.writeString(this.loginName);
         dest.writeString(this.PDDH);
@@ -279,7 +292,8 @@ public class EquipmentBean extends DataSupport implements Parcelable {
         this.ZJ = in.readString();
         this.useStatus = in.readString();
         this.lookDate = in.readString();
-        this.lookStatus = in.readString();
+        this.State = in.readString();
+        this.updateTag = in.readString();
         this.remark = in.readString();
         this.loginName = in.readString();
         this.PDDH = in.readString();
@@ -297,6 +311,4 @@ public class EquipmentBean extends DataSupport implements Parcelable {
             return new EquipmentBean[size];
         }
     };
-
-
 }

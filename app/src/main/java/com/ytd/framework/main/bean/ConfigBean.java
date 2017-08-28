@@ -16,8 +16,16 @@ public class ConfigBean extends DataSupport implements Parcelable {
     private String access_token;
     private String token_type;
     private String expires_in;
+    private long lastDate;
     private boolean isFrist = true;
 
+    public long getLastDate() {
+        return lastDate;
+    }
+
+    public void setLastDate(long lastDate) {
+        this.lastDate = lastDate;
+    }
 
     public boolean isFrist() {
         return isFrist;
@@ -70,6 +78,7 @@ public class ConfigBean extends DataSupport implements Parcelable {
     public ConfigBean() {
     }
 
+
     @Override
     public int describeContents() {
         return 0;
@@ -82,6 +91,7 @@ public class ConfigBean extends DataSupport implements Parcelable {
         dest.writeString(this.access_token);
         dest.writeString(this.token_type);
         dest.writeString(this.expires_in);
+        dest.writeLong(this.lastDate);
         dest.writeByte(this.isFrist ? (byte) 1 : (byte) 0);
     }
 
@@ -91,6 +101,7 @@ public class ConfigBean extends DataSupport implements Parcelable {
         this.access_token = in.readString();
         this.token_type = in.readString();
         this.expires_in = in.readString();
+        this.lastDate = in.readLong();
         this.isFrist = in.readByte() != 0;
     }
 
