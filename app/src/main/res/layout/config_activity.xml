@@ -63,7 +63,7 @@
         android:layout_marginRight="30px"
         android:layout_marginTop="80px"
         android:gravity="center"
-        android:text="修改配置"
+        android:text="保存配置"
         android:textColor="@color/white"
         android:textSize="50px"
         rv:rv_backgroundColor="@color/base_button_bg_normal"

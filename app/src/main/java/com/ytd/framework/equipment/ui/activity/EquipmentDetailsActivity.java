@@ -70,8 +70,8 @@ public class EquipmentDetailsActivity extends BaseScannerReceiverActivity {
         title.setText("资产名称：" + bean.getSBMC());
         address.setText("资产编号：" + bean.getSBBH());
         eqNumber.setText("资产条码号：" + bean.getSBTMBH());
-        useAddress.setText("使用科室：" + bean.getEqStandard());
-        eqStandard.setText("使用科室：" + bean.getKSMC());
+        useAddress.setText("使用科室：" + bean.getKSMC());
+        eqStandard.setText("资产规格：：" + bean.getEqStandard());
         unitName.setText("单位：" + bean.getDW());
         startDate.setText("启用日期：" + bean.getQYRQ());
         startProperty.setText("原值：" + bean.getYZ());

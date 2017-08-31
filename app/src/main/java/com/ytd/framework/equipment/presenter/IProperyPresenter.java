@@ -2,6 +2,7 @@ package com.ytd.framework.equipment.presenter;
 
 import android.content.Context;
 
+import com.ytd.framework.equipment.bean.EquipmentBean;
 import com.ytd.framework.equipment.bean.PropertyBean;
 
 import java.util.List;
@@ -13,8 +14,17 @@ import java.util.List;
 public interface IProperyPresenter {
 
     void asySave(Context mContext, List<PropertyBean> list);//保存数据
+
     void save(Context mContext, List<PropertyBean> list);//保存数据
+
     void update(Context mContext, PropertyBean bean);
+
+
+    void updateFinish(Context mContext, String PDDH, List<EquipmentBean> updateList);
+
+    void updateFinishNum(Context mContext, String PDDH, String num);
+    void addFinishNum(Context mContext, String PDDH, String num);
+    void initFinishNum(Context mContext, String PDDH, String num);
 
     List<PropertyBean> findAll(Context mContext);
 
@@ -27,7 +37,7 @@ public interface IProperyPresenter {
 
     int deleteAll(Context mContext);
 
-    int deleteById(Context mContext,String id);
+    int deleteById(Context mContext, String id);
 
     int findTotalcount(Context mContext);
 }

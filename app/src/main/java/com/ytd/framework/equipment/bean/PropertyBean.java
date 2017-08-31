@@ -18,10 +18,8 @@ public class PropertyBean extends DataSupport implements Parcelable {
     //0:盘点中
     //1:未审核
     //2:已审核
-
-
     public static final String UPDATELOAD_TAG_TRUE = "2";//已上传
-    public static final String UPDATELOAD_TAG_FALSE = "1";//未上传
+    public static final String UPDATELOAD_TAG_FALSE = "0";//未上传
     private long id;
     private String PDDH;//盘点单号;
     private String title;//名称单名称
@@ -203,7 +201,7 @@ public class PropertyBean extends DataSupport implements Parcelable {
     }
 
     public String getFinshNum() {
-        return StringUtils.isEmpty(finshNum) ? "0" :finshNum;
+        return StringUtils.isEmpty(finshNum) ? "0" : finshNum;
     }
 
     public void setFinshNum(String finshNum) {

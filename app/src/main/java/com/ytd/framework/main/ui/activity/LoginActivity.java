@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import com.tlf.basic.base.adapter.abslistview.AbsCommonAdapter;
 import com.tlf.basic.base.adapter.abslistview.AbsViewHolder;
@@ -29,12 +30,15 @@ import com.ytd.framework.R;
 import com.ytd.framework.main.bean.ConfigBean;
 import com.ytd.framework.main.bean.EntrepotBean;
 import com.ytd.framework.main.bean.EntrepotBeanList;
+import com.ytd.framework.main.bean.PDStateBeanList;
 import com.ytd.framework.main.bean.UserBean;
 import com.ytd.framework.main.presenter.IConfigPresenter;
 import com.ytd.framework.main.presenter.IEntrepotPresenter;
+import com.ytd.framework.main.presenter.IPDStatePresenter;
 import com.ytd.framework.main.presenter.IUserPresenter;
 import com.ytd.framework.main.presenter.impl.ConfigPresenterImpl;
 import com.ytd.framework.main.presenter.impl.EntrepotPresenterImpl;
+import com.ytd.framework.main.presenter.impl.PDStatePresenterImpl;
 import com.ytd.framework.main.presenter.impl.UserPresenterImpl;
 import com.ytd.framework.main.ui.BaseApplication;
 import com.ytd.framework.main.ui.service.CheckAppUpdateService;
@@ -59,6 +63,7 @@ import java.util.Map;
 import okhttp3.Call;
 
 import static com.ytd.framework.main.presenter.impl.SplashPresenterImpl.FIRST_LAUNCHER_APP_TAG;
+import static com.ytd.support.constants.fixed.UrlConstants.GETPDSTATELIST;
 import static com.ytd.support.constants.fixed.UrlConstants.GETSTORELIST;
 import static com.ytd.support.constants.fixed.UrlConstants.LOGIN;
 
@@ -123,6 +128,7 @@ public class LoginActivity extends BaseActivity {
         list.setAdapter(adapter);
         list.setVisibility(View.GONE);
         getStoreList();
+        getPDStateList();
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -134,7 +140,6 @@ public class LoginActivity extends BaseActivity {
 
 
     //仓库列表处理
-
     private void getStoreList() {
         if (NetUtils.isConnected(mContext)) {
             HttpRequestUtils.getInstance().postFormBuilder(GETSTORELIST, HttpParamsUtils.getStorelistParams()).build().execute(new ResultCallback(mContext) {
@@ -162,6 +167,28 @@ public class LoginActivity extends BaseActivity {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+
+    //获取盘点状态列表
+    private void getPDStateList() {
+        if (NetUtils.isConnected(mContext)) {
+            HttpRequestUtils.getInstance().postFormBuilder(GETPDSTATELIST, HttpParamsUtils.getPDStateListParams()).build().execute(new ResultCallback(mContext) {
+                @Override
+                public void onCusResponse(BaseJson response) {
+                    PDStateBeanList jsonBean = new Gson().fromJson(new Gson().toJson(response.getData()), PDStateBeanList.class);
+                    if (null != jsonBean && !ListUtils.isEmpty(jsonBean.getItemList())) {
+                        IPDStatePresenter statePresenter = new PDStatePresenterImpl();
+                        statePresenter.save(jsonBean.getItemList());
+                    }
+                }
+
+                @Override
+                public void onError(Call call, Exception e) {
+
+                }
+            });
         }
     }
 
@@ -210,7 +237,8 @@ public class LoginActivity extends BaseActivity {
                 @Override
                 public void onCusResponse(BaseJson response) {
                     try {
-                        UserBean jsonBean = new Gson().fromJson(response.getData().toString(), UserBean.class);
+                        Gson gson = new GsonBuilder().serializeNulls().create();
+                        UserBean jsonBean = gson.fromJson(response.getData().toString(), UserBean.class);
                         if (null != jsonBean) {
                             saveUserInfo(jsonBean, false);
                             StartActUtils.start(mContext, HomeActivity_.class);

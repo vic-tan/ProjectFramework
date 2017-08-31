@@ -6,15 +6,15 @@ import android.os.Parcelable;
 import java.util.List;
 
 /**
- * Created by tanlifei on 2017/8/17.
+ * Created by tanlifei on 2017/8/29.
  */
 
-public class EntrepotBeanList implements Parcelable {
+public class PDStateBeanList implements Parcelable {
 
     private String PageIndex;
     private String PageSize;
     private String Total;
-    private List<EntrepotBean> ItemList;
+    private List<PDStateBean> ItemList;
 
     public String getPageIndex() {
         return PageIndex;
@@ -40,15 +40,12 @@ public class EntrepotBeanList implements Parcelable {
         Total = total;
     }
 
-    public List<EntrepotBean> getItemList() {
+    public List<PDStateBean> getItemList() {
         return ItemList;
     }
 
-    public void setItemList(List<EntrepotBean> itemList) {
+    public void setItemList(List<PDStateBean> itemList) {
         ItemList = itemList;
-    }
-
-    public EntrepotBeanList() {
     }
 
     @Override
@@ -64,22 +61,25 @@ public class EntrepotBeanList implements Parcelable {
         dest.writeTypedList(this.ItemList);
     }
 
-    protected EntrepotBeanList(Parcel in) {
+    public PDStateBeanList() {
+    }
+
+    protected PDStateBeanList(Parcel in) {
         this.PageIndex = in.readString();
         this.PageSize = in.readString();
         this.Total = in.readString();
-        this.ItemList = in.createTypedArrayList(EntrepotBean.CREATOR);
+        this.ItemList = in.createTypedArrayList(PDStateBean.CREATOR);
     }
 
-    public static final Creator<EntrepotBeanList> CREATOR = new Creator<EntrepotBeanList>() {
+    public static final Creator<PDStateBeanList> CREATOR = new Creator<PDStateBeanList>() {
         @Override
-        public EntrepotBeanList createFromParcel(Parcel source) {
-            return new EntrepotBeanList(source);
+        public PDStateBeanList createFromParcel(Parcel source) {
+            return new PDStateBeanList(source);
         }
 
         @Override
-        public EntrepotBeanList[] newArray(int size) {
-            return new EntrepotBeanList[size];
+        public PDStateBeanList[] newArray(int size) {
+            return new PDStateBeanList[size];
         }
     };
 }

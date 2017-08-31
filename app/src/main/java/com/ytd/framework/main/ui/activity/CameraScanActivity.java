@@ -91,7 +91,7 @@ public class CameraScanActivity extends BaseActionBarActivity implements QRCodeV
         List<EquipmentBean> list = equipmentPresenter.findScanCode(mContext, scanResult);
         if (ListUtils.isEmpty(list)) {
             hud.dismiss();
-            ToastUtils.show(mContext, "没有找到您扫描的设备信息!"+scanResult);
+            ToastUtils.show(mContext, "没有找到您扫描的设备信息!");
             mQRCodeView.startSpot();
         } else {
             PropertyBean propertyBean = properyPresenter.findById(mContext,list.get(0).getPDDH());

@@ -15,7 +15,7 @@ public class OnOffConstants {
     /**
      * 是否开启异常状态
      */
-    public static final OnOffLevel UNCAUGHT_EX_LEVEL = OnOffLevel.OFF;// 全局未捕获异常是否打开
+    public static final OnOffLevel UNCAUGHT_EX_LEVEL = OnOffLevel.ON;// 全局未捕获异常是否打开
 
 
 }

@@ -67,7 +67,7 @@ public abstract class EqBaseFragment extends BaseLocalAbsRefreshFragment {
                 } else {
                     selectTag.setBackground(ResUtils.getDrawable(R.mipmap.unselect));
                     selectText.setText("未盘点");
-                    startWork.setVisibility(View.VISIBLE);
+                    startWork.setVisibility(View.GONE);
                 }
 
                 lookDetails.setOnClickListener(new View.OnClickListener() {
@@ -92,8 +92,6 @@ public abstract class EqBaseFragment extends BaseLocalAbsRefreshFragment {
     }
 
 
-
-
     @Override
     public List localSQLFindLimit(boolean isPage, int currPagetemp) {
         int currPage = currPagetemp - 1;
@@ -108,7 +106,7 @@ public abstract class EqBaseFragment extends BaseLocalAbsRefreshFragment {
     }
 
     protected void setTabsTitleText(int indexTabs, int tabsTitileTxt) {
-        String tab = ResUtils.getStr(tabsTitileTxt) + "  (" + equipmentPresenter.findTotalcount(getActivity(),getPropertyBean().getPDDH(),getState()) + ")";
+        String tab = ResUtils.getStr(tabsTitileTxt) + "  (" + equipmentPresenter.findTotalcount(getActivity(), getPropertyBean().getPDDH(), getState()) + ")";
         ((TextView) (((EquipmentActivity) getActivity()).getmTabs().getTabsContainer().getChildAt(indexTabs))).setText(tab);
     }
 }

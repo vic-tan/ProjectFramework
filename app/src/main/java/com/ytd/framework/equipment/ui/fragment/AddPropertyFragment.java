@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.bigkoo.pickerview.TimePickerView;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.tlf.basic.uikit.dialog.listener.OnBtnClickL;
 import com.tlf.basic.uikit.dialog.widget.NormalDialog;
 import com.tlf.basic.uikit.kprogresshud.KProgressHUD;
@@ -47,6 +48,7 @@ import com.ytd.framework.main.presenter.impl.ConfigPresenterImpl;
 import com.ytd.framework.main.presenter.impl.UserPresenterImpl;
 import com.ytd.framework.main.ui.BaseApplication;
 import com.ytd.support.http.MultipleCallback;
+import com.ytd.support.json.StringConverter;
 import com.ytd.support.utils.HttpParamsUtils;
 import com.ytd.support.utils.HttpRequestUtils;
 import com.ytd.support.utils.ResUtils;
@@ -71,7 +73,7 @@ import okhttp3.Call;
 
 import static com.ytd.support.constants.fixed.UrlConstants.GETINVENTORYITEMLIST;
 import static com.ytd.support.constants.fixed.UrlConstants.GETINVENTORYLIST;
-import static com.ytd.support.constants.fixed.UrlConstants.GETPDSTATELIST;
+import static com.ytd.support.constants.fixed.UrlConstants.GET_PDABIND;
 
 
 /**
@@ -278,8 +280,11 @@ public class AddPropertyFragment extends Fragment {
                 HttpRequestUtils.getInstance().postFormBuilder(GETINVENTORYLIST, getInventoryListParams()).build().execute(new MultipleCallback(getActivity(), "正在加载中...") {
                     @Override
                     public void onCusResponse(BaseJson response, KProgressHUD hud) {
-
-                        PropertyListBean jsonBean = new Gson().fromJson(new Gson().toJson(response.getData()), PropertyListBean.class);
+                        GsonBuilder gsonBuilder = new GsonBuilder();
+                        //注册自定义String的适配器
+                        gsonBuilder.registerTypeAdapter(String.class, new StringConverter());
+                        Gson gson = gsonBuilder.create();
+                        PropertyListBean jsonBean = gson.fromJson(gson.toJson(response.getData()), PropertyListBean.class);
                         if (null != jsonBean && !ListUtils.isEmpty(jsonBean.getItemList())) {
                             clearList();
                             propertyList.add(jsonBean.getItemList().get(0));
@@ -298,7 +303,7 @@ public class AddPropertyFragment extends Fragment {
 
 
     public void getPDStateList(final String PDDH, KProgressHUD hud) {
-        HttpRequestUtils.getInstance().postFormBuilder(GETPDSTATELIST, getPDStateListParams(PDDH)).build().execute(new MultipleCallback(getActivity(), hud, true) {
+        HttpRequestUtils.getInstance().postFormBuilder(GET_PDABIND, getPDStateListParams(PDDH)).build().execute(new MultipleCallback(getActivity(), hud, true) {
             @Override
             public void onCusResponse(BaseJson response, KProgressHUD hud) {
                 String status = (String) response.getData();
@@ -325,6 +330,7 @@ public class AddPropertyFragment extends Fragment {
             }
         });
     }
+
 
 
     //扫描下一个
@@ -355,10 +361,14 @@ public class AddPropertyFragment extends Fragment {
 
 
     public void dowload(final String id) {
-        HttpRequestUtils.getInstance().postFormBuilder(GETINVENTORYITEMLIST, getInventoryItemListParams(pageIndex, id)).build().execute(new MultipleCallback(getActivity(), "正在下载资源") {
+        HttpRequestUtils.getInstance().postFormBuilder(GETINVENTORYITEMLIST, getInventoryItemListParams(pageIndex, id)).build().execute(new MultipleCallback(getActivity(), "正在下载资源...") {
             @Override
             public void onCusResponse(BaseJson response, KProgressHUD hud) {
-                EquipmentListBean jsonBean = new Gson().fromJson(new Gson().toJson(response.getData()), EquipmentListBean.class);
+                GsonBuilder gsonBuilder = new GsonBuilder();
+                //注册自定义String的适配器
+                gsonBuilder.registerTypeAdapter(String.class, new StringConverter());
+                Gson gson = gsonBuilder.create();
+                EquipmentListBean jsonBean = gson.fromJson(gson.toJson(response.getData()), EquipmentListBean.class);
                 if (null != jsonBean && !ListUtils.isEmpty(jsonBean.getItemList())) {
                     if (!ListUtils.isEmpty(propertyList)) {
                         equipmentList.addAll(jsonBean.getItemList());
@@ -399,7 +409,11 @@ public class AddPropertyFragment extends Fragment {
         HttpRequestUtils.getInstance().postFormBuilder(GETINVENTORYITEMLIST, getInventoryItemListParams(pageIndex, id)).build().execute(new MultipleCallback(getActivity(), hud, false) {
             @Override
             public void onCusResponse(BaseJson response, KProgressHUD hud) {
-                EquipmentListBean jsonBean = new Gson().fromJson(new Gson().toJson(response.getData()), EquipmentListBean.class);
+                GsonBuilder gsonBuilder = new GsonBuilder();
+                //注册自定义String的适配器
+                gsonBuilder.registerTypeAdapter(String.class, new StringConverter());
+                Gson gson = gsonBuilder.create();
+                EquipmentListBean jsonBean = gson.fromJson(gson.toJson(response.getData()), EquipmentListBean.class);
                 if (null != jsonBean && !ListUtils.isEmpty(jsonBean.getItemList())) {
                     if (!ListUtils.isEmpty(propertyList)) {
                         equipmentList.addAll(jsonBean.getItemList());
@@ -453,7 +467,6 @@ public class AddPropertyFragment extends Fragment {
                                 properyPresenter.deleteById(getActivity(), PDDH);
                             }
                             properyPresenter.save(getActivity(), propertyList);
-                            Logger.i("------save run -----");
                             myHandler.sendEmptyMessage(1);
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -461,7 +474,8 @@ public class AddPropertyFragment extends Fragment {
                         }
                     }
                 }).start();
-            } finally {
+            } catch (Exception e) {
+                e.printStackTrace();
                 myHandler.sendEmptyMessage(2);
             }
         } else {

@@ -6,11 +6,13 @@ import com.tlf.basic.utils.ListUtils;
 import com.tlf.basic.utils.StringUtils;
 import com.ytd.framework.equipment.bean.EquipmentBean;
 import com.ytd.framework.equipment.presenter.IEquipmentPresenter;
+import com.ytd.framework.equipment.presenter.IProperyPresenter;
 
 import org.litepal.crud.DataSupport;
 
 import java.util.List;
 
+import static com.ytd.framework.equipment.bean.EquipmentBean.LOOKSTATUS_TAG_FALSE;
 import static com.ytd.framework.equipment.bean.EquipmentBean.LOOKSTATUS_TAG_TRUE;
 import static com.ytd.framework.equipment.bean.EquipmentBean.UPDATE_TAG;
 import static com.ytd.framework.main.bean.UserBean.DB_LOGIN_NAME;
@@ -22,7 +24,7 @@ import static org.litepal.crud.DataSupport.where;
  */
 
 public class EquipmentPresenterImpl extends BasePresenterImpl implements IEquipmentPresenter {
-
+    IProperyPresenter properyPresenter;
 
     @Override
     public void asySave(Context mContext, List<EquipmentBean> list, String PDDH) {
@@ -42,11 +44,59 @@ public class EquipmentPresenterImpl extends BasePresenterImpl implements IEquipm
         if (ListUtils.isEmpty(list)) {
             return;
         }
+        int finishCount = 0;
         for (EquipmentBean forBean : list) {
             forBean.setLoginName(getLoginName());
             forBean.setStoreId(getUserBean().getStoreId());
             forBean.setPDDH(PDDH);
-            forBean.save();
+            forBean.setState(empty(forBean.getState(), LOOKSTATUS_TAG_FALSE));
+            if (StringUtils.isEquals(forBean.getState(), LOOKSTATUS_TAG_TRUE)) {
+                finishCount++;
+            }
+            setEmpty(forBean).save();
+        }
+        if (properyPresenter == null) {
+            properyPresenter = new ProperyPresenterImpl();
+        }
+        properyPresenter.initFinishNum(mContext, PDDH, finishCount + "");
+    }
+
+
+    public EquipmentBean setEmpty(EquipmentBean bean) {
+        if (null != bean) {
+            bean.setSBMC(empty(bean.getSBMC()));
+            bean.setSBBH(empty(bean.getSBBH()));
+            bean.setSBTMBH(empty(bean.getSBTMBH()));
+            bean.setEqId(empty(bean.getEqId()));
+            bean.setKSMC(empty(bean.getKSMC()));
+            bean.setQYRQ(empty(bean.getQYRQ()));
+            bean.setYZ(empty(bean.getYZ()));
+            bean.setJZ(empty(bean.getJZ()));
+            bean.setZJ(empty(bean.getZJ()));
+            bean.setSaveAddress(empty(bean.getSaveAddress()));
+            bean.setEqStandard(empty(bean.getEqStandard()));
+            bean.setCount(empty(bean.getCount(), "1"));
+            bean.setUseStatus(empty(bean.getUseStatus()));
+            bean.setLookDate(empty(bean.getLookDate()));
+            bean.setUpdateTag(empty(bean.getUpdateTag(), "0"));
+            bean.setPropertyStatus(empty(bean.getPropertyStatus()));
+        }
+        return bean;
+
+    }
+
+
+    @Override
+    public void updateFinsh(Context mContext, List<EquipmentBean> updateList, List<EquipmentBean> failList) {
+        if (!ListUtils.isEmpty(updateList)) {
+            for (EquipmentBean forBean : updateList) {
+                update(mContext, forBean);
+            }
+        }
+        if (!ListUtils.isEmpty(failList)) {
+            for (EquipmentBean forBean : failList) {
+                loUpdate(mContext, forBean, LOOKSTATUS_TAG_FALSE);
+            }
         }
     }
 
@@ -79,6 +129,21 @@ public class EquipmentPresenterImpl extends BasePresenterImpl implements IEquipm
 
     @Override
     public boolean update(Context mContext, EquipmentBean equipmentBean) {
+        return loUpdate(mContext, equipmentBean, LOOKSTATUS_TAG_TRUE);
+    }
+
+
+    @Override
+    public boolean scanUpdate(Context mContext, EquipmentBean equipmentBean) {
+        if (properyPresenter == null) {
+            properyPresenter = new ProperyPresenterImpl();
+        }
+        properyPresenter.addFinishNum(mContext, equipmentBean.getPDDH(),  "1");
+        return loUpdate(mContext, equipmentBean, LOOKSTATUS_TAG_TRUE);
+    }
+
+
+    private boolean loUpdate(Context mContext, EquipmentBean equipmentBean, String state) {
         List<EquipmentBean> list = findScanCode(mContext, equipmentBean.getSBBH());
         EquipmentBean albumToUpdate;
         if (!ListUtils.isEmpty(list)) {
@@ -86,10 +151,9 @@ public class EquipmentPresenterImpl extends BasePresenterImpl implements IEquipm
             albumToUpdate.setUseStatus(equipmentBean.getUseStatus());
             albumToUpdate.setLookDate(equipmentBean.getLookDate());
             albumToUpdate.setRemark(equipmentBean.getRemark());
-            albumToUpdate.setState(LOOKSTATUS_TAG_TRUE);
+            albumToUpdate.setState(state);
             albumToUpdate.setUpdateTag(UPDATE_TAG);
-            albumToUpdate.save();
-            return true;
+            return albumToUpdate.save();
         } else {
             return false;
         }
@@ -116,9 +180,8 @@ public class EquipmentPresenterImpl extends BasePresenterImpl implements IEquipm
 
     @Override
     public List<EquipmentBean> findByUpdateTag(Context mContext, String PDDH, String updateTag) {
-        return DataSupport.where(DB_LOGIN_NAME + "  = ?  and PDDH = ?  and " + STORE_ID + " = ?  and updateTag = ? ", getLoginName(), PDDH, getUserBean().getStoreId(), updateTag).select("SBBH","State").find(EquipmentBean.class);
+        return DataSupport.where(DB_LOGIN_NAME + "  = ?  and PDDH = ?  and " + STORE_ID + " = ?  and updateTag = ? ", getLoginName(), PDDH, getUserBean().getStoreId(), updateTag).select("SBBH", "State").find(EquipmentBean.class);
     }
-
 
 
 }

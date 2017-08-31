@@ -47,6 +47,25 @@ public class EquipmentBean extends DataSupport implements Parcelable {
 
     private String StoreId;//仓库ID
 
+    private String Code;
+    private String Msg;
+
+    public String getCode() {
+        return Code;
+    }
+
+    public void setCode(String code) {
+        Code = code;
+    }
+
+    public String getMsg() {
+        return Msg;
+    }
+
+    public void setMsg(String msg) {
+        Msg = msg;
+    }
+
     public String getUpdateTag() {
         return updateTag;
     }
@@ -236,7 +255,7 @@ public class EquipmentBean extends DataSupport implements Parcelable {
 
 
     public String getState() {
-        return StringUtils.isEmpty(State) ? "0" :State;
+        return StringUtils.isEmpty(State) ? "0" : State;
     }
 
     public void setState(String state) {
@@ -274,6 +293,8 @@ public class EquipmentBean extends DataSupport implements Parcelable {
         dest.writeString(this.loginName);
         dest.writeString(this.PDDH);
         dest.writeString(this.StoreId);
+        dest.writeString(this.Code);
+        dest.writeString(this.Msg);
     }
 
     protected EquipmentBean(Parcel in) {
@@ -300,6 +321,8 @@ public class EquipmentBean extends DataSupport implements Parcelable {
         this.loginName = in.readString();
         this.PDDH = in.readString();
         this.StoreId = in.readString();
+        this.Code = in.readString();
+        this.Msg = in.readString();
     }
 
     public static final Creator<EquipmentBean> CREATOR = new Creator<EquipmentBean>() {

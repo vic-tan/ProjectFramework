@@ -50,6 +50,7 @@ public class ConfigActivity extends BaseActivity {
     RoundTextView login;
     IConfigPresenter presenter;
     int tag = 0;
+    int rquetTag = 0;
 
     @AfterViews
     void init() {
@@ -62,6 +63,8 @@ public class ConfigActivity extends BaseActivity {
                 user_pwd_edit.setText(configBean.getPDAKEY());
             }
             login.setText("获取授权");
+        } else {
+            login.setText("保存配置");
         }
     }
 
@@ -103,8 +106,8 @@ public class ConfigActivity extends BaseActivity {
                         ErrorBean jsonBean = new Gson().fromJson(new Gson().toJson(e), ErrorBean.class);///{"error":"invalid_grant","error_description":"PDA验证信息不正确！"}
                         if (null != jsonBean) {
                             if (!StringUtils.isEmpty(jsonBean.getError())) {
-                                if (tag == 0) {
-                                    tag = 1;
+                                if (rquetTag == 0) {
+                                    rquetTag = 1;
                                     ToastUtils.show(mContext, "请再试一次");
                                 } else {
                                     ToastUtils.show(mContext, jsonBean.getError_description());

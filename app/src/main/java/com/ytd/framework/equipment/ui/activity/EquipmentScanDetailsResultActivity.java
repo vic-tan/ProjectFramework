@@ -34,6 +34,9 @@ import com.ytd.framework.equipment.presenter.IEquipmentPresenter;
 import com.ytd.framework.equipment.presenter.IProperyPresenter;
 import com.ytd.framework.equipment.presenter.impl.EquipmentPresenterImpl;
 import com.ytd.framework.equipment.presenter.impl.ProperyPresenterImpl;
+import com.ytd.framework.main.bean.PDStateBean;
+import com.ytd.framework.main.presenter.IPDStatePresenter;
+import com.ytd.framework.main.presenter.impl.PDStatePresenterImpl;
 import com.ytd.framework.main.ui.BaseApplication;
 import com.ytd.framework.main.ui.activity.CameraScanActivity;
 import com.ytd.support.http.ResultCallback;
@@ -121,7 +124,7 @@ public class EquipmentScanDetailsResultActivity extends BaseActionBarActivity {
     PropertyBean propertyBean;
     private int scanTag = 0;//0，表示感应扫描，1，表示相机扫描
     protected IEquipmentPresenter equipmentPresenter;
-
+    IPDStatePresenter statePresenter;
 
     public static final String TAG = EquipmentScanDetailsResultActivity.class.getSimpleName();
     NormalDialog dialog;
@@ -129,6 +132,8 @@ public class EquipmentScanDetailsResultActivity extends BaseActionBarActivity {
 
     Unregistrar mUnregistrar;
     IProperyPresenter properyPresenter;
+
+    List<PDStateBean> pdStatelist;
 
     @AfterViews
     void init() {
@@ -139,12 +144,16 @@ public class EquipmentScanDetailsResultActivity extends BaseActionBarActivity {
                 updateKeyboardStatusText(isOpen);
             }
         });
+
         updateKeyboardStatusText(KeyboardVisibilityEvent.isKeyboardVisible(this));
         bean = getIntent().getParcelableExtra("bean");
         propertyBean = getIntent().getParcelableExtra("propertyBean");
         scanTag = getIntent().getIntExtra("scanTag", 0);
         equipmentPresenter = new EquipmentPresenterImpl();
         properyPresenter = new ProperyPresenterImpl();
+        statePresenter = new PDStatePresenterImpl();
+        pdStatelist = new ArrayList<>();
+        pdStatelist = statePresenter.findAll();
         actionBarView.setOnOptClickListener(new OnOptClickListener() {
             @Override
             public void onClick(View v, ActionBarOptViewTagLevel viewTag) {
@@ -214,8 +223,18 @@ public class EquipmentScanDetailsResultActivity extends BaseActionBarActivity {
         oldProperty.setText("折旧：" + bean.getZJ());
         eqType.setText("资产分类：" + bean.getSBBH());
         saveAddress.setText("存放地点：" + bean.getSaveAddress());
-        useStatus.setText(bean.getUseStatus());
-        date.setText(bean.getLookDate());
+        int i = 0;
+        for (PDStateBean pdStateBean : pdStatelist) {
+            if(pdStateBean.getMy_id().equals(bean.getUseStatus())){
+                useStatus.setText(pdStateBean.getName());
+                i=1;
+            }
+        }
+        if(i==0){
+            useStatus.setText(StringUtils.isEquals(bean.getUseStatus(), "暂无") ? "" : bean.getUseStatus());
+        }
+
+        date.setText(StringUtils.isEquals(bean.getLookDate(), "暂无") ? "" : bean.getLookDate());
         remark.setText(bean.getRemark());
 
     }
@@ -246,7 +265,7 @@ public class EquipmentScanDetailsResultActivity extends BaseActionBarActivity {
                     ToastUtils.show(mContext, "备注不能为空,请填写备注");
                     return;
                 }
-                bean.setUseStatus(useStatus.getText().toString());
+                bean.setUseStatus(pdStatelist.get((Integer) useStatus.getTag()).getMy_id());
                 bean.setLookDate(date.getText().toString());
                 bean.setRemark(remark.getText().toString());
                 if (null != propertyBean) {//不等于空
@@ -300,7 +319,7 @@ public class EquipmentScanDetailsResultActivity extends BaseActionBarActivity {
     }
 
     private void saveDB() {
-        boolean saveTag = equipmentPresenter.update(mContext, bean);
+        boolean saveTag = equipmentPresenter.scanUpdate(mContext, bean);
         if (saveTag) {
             hud.dismiss();
             nextScan("\n" + "操作成功,请继续扫描下一个设备" + "\n");
@@ -317,17 +336,17 @@ public class EquipmentScanDetailsResultActivity extends BaseActionBarActivity {
                     String jsonBean = (String) response.getData();
                     if (!StringUtils.isEmpty(jsonBean) && StringUtils.isEquals("1", jsonBean)) {
                         propertyBean.setPDABind(true);
-                        properyPresenter.update(mContext,propertyBean);
+                        properyPresenter.update(mContext, propertyBean);
                         ToastUtils.show(mContext, "绑定成功,请点击保存继续盘点！");
-                    }else{
+                    } else {
                         ToastUtils.show(mContext, "绑定失败,请重试！");
                     }
                 }
 
 
             });
-        }else{
-            ToastUtils.show(mContext,"绑定必须要连网，请连接网络再试！");
+        } else {
+            ToastUtils.show(mContext, "绑定必须要连网，请连接网络再试！");
         }
     }
 
@@ -402,18 +421,18 @@ public class EquipmentScanDetailsResultActivity extends BaseActionBarActivity {
         });
     }
 
-
     public void useStatus() {
         final List<String> optionsItems = new ArrayList<>();
-        optionsItems.add("在用");
-        optionsItems.add("停用");
-        optionsItems.add("禁用");
+        for (PDStateBean pdStateBean : pdStatelist) {
+            optionsItems.add(pdStateBean.getName());
+        }
         //条件选择器
         OptionsPickerView pvOptions = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3, View v) {
                 //返回的分别是三个级别的选中位置
                 useStatus.setText(optionsItems.get(options1));
+                useStatus.setTag(options1);
             }
         }).setSubmitColor(Color.WHITE)//确定按钮文字颜色
                 .setCancelColor(Color.WHITE)//取消按钮文字颜色

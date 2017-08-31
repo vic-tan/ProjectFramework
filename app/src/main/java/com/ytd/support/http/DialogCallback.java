@@ -39,6 +39,16 @@ public abstract class DialogCallback extends Callback<BaseJson> {
                 .setCancellable(true);
     }
 
+    public DialogCallback(Context mContext, String title) {
+        this.mContext = mContext;
+        Logger.d(mContext.getClass().getName());
+        hud = KProgressHUD.create(mContext)
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setDimAmount(0.5f)
+                .setLabel(title)
+                .setCancellable(false);
+    }
+
 
     @Override
     public void onAfter() {
@@ -59,12 +69,12 @@ public abstract class DialogCallback extends Callback<BaseJson> {
     public void onResponse(BaseJson response) {
         try {
             if (null == response) {
-                throw new AppException(mContext,CODE_DATA_ERROR, CODE_DATA_ERROR);
+                throw new AppException(mContext, CODE_DATA_ERROR, CODE_DATA_ERROR);
             }
-            if (StringUtils.isEquals(response.getCode(), ConsoleUtils.randomRequest())){
+            if (StringUtils.isEquals(response.getCode(), ConsoleUtils.randomRequest())) {
                 onCusResponse(response);
-            }else{
-                throw new AppException(mContext,response.getCode(), response.getMsg());
+            } else {
+                throw new AppException(mContext, response.getCode(), response.getMsg());
             }
         } catch (AppException e) {
             e.printStackTrace();
@@ -74,14 +84,14 @@ public abstract class DialogCallback extends Callback<BaseJson> {
     @Override
     public void onBefore(Request request) {
         super.onBefore(request);
-        if(null!=hud)
+        if (null != hud)
             hud.show();
     }
 
     @Override
     public void onError(Call call, Exception e) {
         super.onError(call, e);
-        if(null!=hud && hud.isShowing())
+        if (null != hud && hud.isShowing())
             hud.dismiss();
         try {
             throw new AppException(mContext, e);

@@ -62,38 +62,6 @@ public class AppServiceActivity extends AutoLayoutActivity {
      */
     private void appUpdate(final AppUpdateBean appUpdateBean) {
         NormalDialogStyle(appUpdateBean);
-       /* try {
-            View contetView = InflaterUtils.inflate(this, R.layout.main_version_content_view);
-            TextView contetent = (TextView) contetView.findViewById(R.id.mTvContent);
-            contetent.setText("\n" + appUpdateBean.getMemo() + "\n");
-            DialogTools.getInstance(mContext).title(ResUtils.getStr(R.string.app_update_dialog_title)).content("\n" + appUpdateBean.getMemo() + "\n").setOnBtnClickL(new OnBtnClickL() {
-                @Override
-                public void onBtnClick(View v, Dialog dialog) {
-                    dialog.dismiss();
-                    dialog.setCancelable(false);
-                }
-            }, new OnBtnClickL() {
-                @Override
-                public void onBtnClick(View v, Dialog dialog) {
-                    Intent intent = new Intent(getBaseContext(), AppDownloadService.class);
-                    Bundle bundle = new Bundle();
-                    //TODO
-                    appUpdateBean.setUrl("http://dltest.zhixueyun.com/app/zxy.apk");
-                    bundle.putParcelable("bean", appUpdateBean);
-                    intent.putExtras(bundle);
-                    startService(intent);
-                    dialog.dismiss();
-                }
-            }).setOnDismissListener(new DialogInterface.OnDismissListener() {
-                @Override
-                public void onDismiss(DialogInterface dialog) {
-                    stopService(new Intent(mContext, AppDownloadService.class));
-                    colseAcitvity();
-                }
-            }).show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
     }
 
 
@@ -104,6 +72,7 @@ public class AppServiceActivity extends AutoLayoutActivity {
         dialog.contentGravity(Gravity.CENTER);
         dialog.content("\n" + appUpdateBean.getMemo() + "\n")
                 .show();
+        dialog.setCanceledOnTouchOutside(false);
 
         dialog.setOnBtnClickL(
                 new OnBtnClickL() {
@@ -119,8 +88,6 @@ public class AppServiceActivity extends AutoLayoutActivity {
                     public void onBtnClick(View v, Dialog dialog) {
                         Intent intent = new Intent(getBaseContext(), AppDownloadService.class);
                         Bundle bundle = new Bundle();
-                        //TODO
-                        appUpdateBean.setUrl("http://dltest.zhixueyun.com/app/zxy.apk");
                         bundle.putParcelable("bean", appUpdateBean);
                         intent.putExtras(bundle);
                         startService(intent);

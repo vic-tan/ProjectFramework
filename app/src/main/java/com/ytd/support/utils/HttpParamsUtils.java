@@ -44,6 +44,20 @@ public class HttpParamsUtils {
 
 
     /**
+     * 盘点单列表参数
+     *
+     * @return
+     */
+    public static Map<String, String> getPDStateListParams() {
+        Map<String, String> map = new HashMap<>();
+        map.put("ID", "");
+        map.put("PageIndex", "1");
+        map.put("PageSize", PAGESIZE);
+        return map;
+    }
+
+
+    /**
      * 登录参数
      *
      * @return
@@ -115,12 +129,13 @@ public class HttpParamsUtils {
      *
      * @return
      */
-    public static Map<String, String> uploadInventoryItemList(String PDDH, String EquId, String InputUserId, String StoreId) {
+    public static Map<String, String> uploadInventoryItemList(String PDDH, String EquId, String InputUserId, String StoreId, String ItemList) {
         Map<String, String> map = new HashMap<>();
         map.put("PDDH", PDDH);
         map.put("EquId", EquId);
         map.put("InputUserId", InputUserId);
         map.put("StoreId", StoreId);
+        map.put("ItemList", ItemList);
         return map;
     }
 

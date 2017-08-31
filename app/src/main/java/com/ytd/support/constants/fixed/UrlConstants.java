@@ -12,24 +12,26 @@ public class UrlConstants {
     public static final String DOMAIN_NAME = "http://1811o171v6.iask.in";
 
     //TOKEN
-    public static final String TOKEN =  "/token";
+    public static final String TOKEN = "/token";
     //仓库列表
-    public static final String GETSTORELIST =  "/api/Store/GetStoreList";
+    public static final String GETSTORELIST = "/api/Store/GetStoreList";
     //登录
-    public static final String LOGIN =  "/api/User/UserLogin";
+    public static final String LOGIN = "/api/User/UserLogin";
     //app版本升级
-    public static final String APP_VERSION_UPDATE =  "/api/AppVersion/GetLastVersion";
+    public static final String APP_VERSION_UPDATE = "/api/AppVersion/GetLastVersion";
     //获取盘点单列表
-    public static final String GETINVENTORYLIST =  "/api/Inventory/GetInventoryList";
+    public static final String GETINVENTORYLIST = "/api/Inventory/GetInventoryList";
     //检查盘点单状态
-    public static final String GETPDSTATELIST =  "/api/PDABind/GetPDABind";
+    public static final String GET_PDABIND = "/api/PDABind/GetPDABind";
     //获取盘点单明细
-    public static final String GETINVENTORYITEMLIST =  "/api/Inventory/GetInventoryItemList";
+    public static final String GETINVENTORYITEMLIST = "/api/Inventory/GetInventoryItemList";
     //绑定盘点单
-    public static final String PDABIND =  "/api/PDABind/PDABind";
-//    public static final String PDABIND =  "/bind.json";
+    public static final String PDABIND = "/api/PDABind/PDABind";
+    //获取盘点单状态值
+    public static final String GETPDSTATELIST = "/api/PDState/GetPDStateList";
+
     //回传
-    public static final String UPLOADINVENTORYITEMLIST =  "/api/Inventory/UploadInventoryItemList";
+    public static final String UPLOADINVENTORYITEMLIST = "/api/Inventory/UploadInventoryItemList";
 
     //分页测试列表
     public static final String LIST_URL = DOMAIN_NAME + "/train/class/publicList";

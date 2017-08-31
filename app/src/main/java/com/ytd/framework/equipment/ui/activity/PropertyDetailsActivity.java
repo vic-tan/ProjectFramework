@@ -21,9 +21,10 @@ import com.ytd.common.ui.activity.actionbar.BaseScannerReceiverActivity;
 import com.ytd.framework.R;
 import com.ytd.framework.equipment.bean.EquipmentBean;
 import com.ytd.framework.equipment.bean.PropertyBean;
-import com.ytd.framework.main.bean.EntrepotBeanList;
+import com.ytd.framework.main.ui.BaseApplication;
 import com.ytd.framework.main.ui.activity.CameraScanActivity;
-import com.ytd.support.http.ResultCallback;
+import com.ytd.support.http.DialogCallback;
+import com.ytd.support.utils.GsonJsonUtils;
 import com.ytd.support.utils.HttpParamsUtils;
 import com.ytd.support.utils.HttpRequestUtils;
 import com.ytd.support.utils.ResUtils;
@@ -36,6 +37,7 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.Call;
 
@@ -46,6 +48,7 @@ import static com.ytd.support.constants.fixed.UrlConstants.UPLOADINVENTORYITEMLI
  * 首页界面
  * Created by ytd on 16/1/19.
  */
+@RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
 @EActivity(R.layout.property_details_activity)
 public class PropertyDetailsActivity extends BaseScannerReceiverActivity {
 
@@ -109,7 +112,6 @@ public class PropertyDetailsActivity extends BaseScannerReceiverActivity {
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     private void setData() {
         try {
-            finshNum.setText(bean.getFinshNum());
             totalNum.setText(bean.getTotalNum());
 
             name.setText("盘点人:" + bean.getXM());
@@ -118,7 +120,7 @@ public class PropertyDetailsActivity extends BaseScannerReceiverActivity {
 
             area.setText("盘点区域：" + bean.getArea());
             address.setText("资产分类：" + bean.getAddress());
-            if(!StringUtils.isEmpty(bean.getRQ())){
+            if (!StringUtils.isEmpty(bean.getRQ())) {
                 startDate.setText("启用日期:" + bean.getRQ().substring(0, 10));
             }
 
@@ -126,15 +128,7 @@ public class PropertyDetailsActivity extends BaseScannerReceiverActivity {
             qeSumNum.setText("设  备:" + bean.getTotalNum());
             startProperty.setText("资产原值:" + bean.getStart_property());
             endProperty.setText("资产净值:" + bean.getEnd_property());
-            if (StringUtils.isEquals(bean.getSTATUS(), UPDATELOAD_TAG_TRUE)) {//未上传
-                selectTag.setBackground(ResUtils.getDrawable(R.mipmap.select));
-                updateload.setText("已上传");
-                opt.setVisibility(View.GONE);
-            } else {
-                selectTag.setBackground(ResUtils.getDrawable(R.mipmap.unselect));
-                updateload.setText("未上传");
-                opt.setVisibility(View.VISIBLE);
-            }
+            changeDate();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -142,31 +136,73 @@ public class PropertyDetailsActivity extends BaseScannerReceiverActivity {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+    private void changeDate() {
+        finshNum.setText(bean.getFinshNum());
+        if (StringUtils.isEquals(bean.getSTATUS(), UPDATELOAD_TAG_TRUE)) {//未上传
+            selectTag.setBackground(ResUtils.getDrawable(R.mipmap.select));
+            updateload.setText("已上传");
+            opt.setVisibility(View.GONE);
+        } else {
+            selectTag.setBackground(ResUtils.getDrawable(R.mipmap.unselect));
+            updateload.setText("未上传");
+            opt.setVisibility(View.VISIBLE);
+        }
+    }
+
     @Click({R.id.lookeEqBtn, R.id.updateLoadBtn, R.id.lookQe})
     void click(View v) {
         switch (v.getId()) {
             case R.id.updateLoadBtn://上传
-                hud = KProgressHUD.create(mContext)
+            /*    hud = KProgressHUD.create(mContext)
                         .setStyle(KProgressHUD.Style.BAR_DETERMINATE)
                         .setDimAmount(0.5f)
                         .setCancellable(false)
                         .setLabel("正在上传....");
-                simulateProgressUpdate();
-                hud.show();
+                simulateProgressUpdate();*/
+                getUploadInventoryItemList();
+//                hud.show();
                 break;
             case R.id.lookQe://查看
             case R.id.lookeEqBtn://查看
                 StartActUtils.start(mContext, EquipmentActivity_.class, "bean", bean);
+                StartActUtils.finish(mContext);
                 break;
         }
     }
 
-    private void getStoreList() {
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+    private void getUploadInventoryItemList() {
         if (NetUtils.isConnected(mContext)) {
-            HttpRequestUtils.getInstance().postTestFormBuilder(UPLOADINVENTORYITEMLIST, HttpParamsUtils.getStorelistParams()).build().execute(new ResultCallback(mContext) {
+            final List<EquipmentBean> updateList = equipmentPresenter.findByUpdateTag(mContext, bean.getPDDH(), EquipmentBean.UPDATE_TAG);
+            if (ListUtils.isEmpty(updateList)) {
+                ToastUtils.show(mContext, "您没有盘点过设备！请先去盘点再上传");
+                return;
+            }
+            HttpRequestUtils.getInstance().postFormBuilder(UPLOADINVENTORYITEMLIST, uploadInventoryItemList(updateList)).build().execute(new DialogCallback(mContext, "正在上传盘点单....") {
                 @Override
                 public void onCusResponse(BaseJson response) {
-                    EntrepotBeanList jsonBean = new Gson().fromJson(new Gson().toJson(response.getData()), EntrepotBeanList.class);
+//                    List<EquipmentBean> jsonBean = (List<EquipmentBean>) response.getData();
+                    List<EquipmentBean> jsonBean = GsonJsonUtils.fromJsonArray(new Gson().toJson(response.getData()), EquipmentBean.class);
+                    if (ListUtils.isEmpty(jsonBean)) {
+                        ToastUtils.show(mContext, "上传成功");
+                        properyPresenter.updateFinish(mContext, bean.getPDDH(), updateList);
+                        bean.setSTATUS(UPDATELOAD_TAG_TRUE);
+                        bean.setFinshNum((Integer.parseInt(bean.getFinshNum()) + updateList.size()) + "");
+                        changeDate();
+                    } else {
+                        try {
+                            equipmentPresenter.updateFinsh(mContext, updateList, jsonBean);
+                            if (updateList.size() > jsonBean.size()) {
+                                bean.setFinshNum((Integer.parseInt(bean.getFinshNum()) + (updateList.size() - jsonBean.size())) + "");
+                                properyPresenter.updateFinishNum(mContext, bean.getPDDH(), (updateList.size() - jsonBean.size()) + "");
+                            }
+                            changeDate();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        ToastUtils.show(mContext, "上传失败");
+                    }
 
                 }
 
@@ -176,17 +212,13 @@ public class PropertyDetailsActivity extends BaseScannerReceiverActivity {
                 }
             });
         } else {
-            ToastUtils.show(mContext,"请连接网络！");
+            ToastUtils.show(mContext, "请连接网络！");
         }
     }
 
-    private void  uploadInventoryItemList(){
-        List<EquipmentBean> updateList = equipmentPresenter.findByUpdateTag(mContext,bean.getPDDH(),EquipmentBean.UPDATE_TAG);
-        if(!ListUtils.isEmpty(updateList)){
-            String str = new Gson().toJson(updateList);
-
-        }
-
+    private Map<String, String> uploadInventoryItemList(List<EquipmentBean> updateList) {
+        String str = new Gson().toJson(updateList);
+        return HttpParamsUtils.uploadInventoryItemList(bean.getPDDH(), BaseApplication.userBean.getEquId(), BaseApplication.userBean.getLoginName(), BaseApplication.userBean.getStoreId(), str);
     }
 
 

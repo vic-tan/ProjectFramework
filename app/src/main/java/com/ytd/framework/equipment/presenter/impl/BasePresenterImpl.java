@@ -1,5 +1,6 @@
 package com.ytd.framework.equipment.presenter.impl;
 
+import com.tlf.basic.utils.StringUtils;
 import com.ytd.framework.main.bean.UserBean;
 import com.ytd.framework.main.ui.BaseApplication;
 
@@ -22,5 +23,31 @@ public class BasePresenterImpl {
             return BaseApplication.userBean;
         }
         return null;
+    }
+
+    public String empty(String str) {
+        if (StringUtils.isEmpty(str)) {
+            return "暂无";
+        } else if (null == str) {
+            return "暂无";
+        } else if ("null" == str) {
+            return "暂无";
+        } else {
+            return str;
+        }
+
+    }
+
+    public String empty(String str,String defult) {
+        if (StringUtils.isEmpty(str)) {
+            return defult;
+        } else if (null == str) {
+            return defult;
+        } else if ("null" == str) {
+            return defult;
+        } else {
+            return str;
+        }
+
     }
 }

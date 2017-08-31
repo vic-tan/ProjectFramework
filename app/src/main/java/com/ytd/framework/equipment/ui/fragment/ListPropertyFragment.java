@@ -40,6 +40,8 @@ import org.androidannotations.annotations.ViewById;
 
 import java.util.List;
 
+import static com.ytd.framework.equipment.bean.PropertyBean.UPDATELOAD_TAG_TRUE;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -100,15 +102,15 @@ public class ListPropertyFragment extends BaseLocalAbsRefreshFragment {
                 holder.setText(R.id.phone, bean.getPhone());
                 holder.setText(R.id.price, bean.getPrice());
                 holder.setText(R.id.arce, BaseApplication.userBean.getStoreName());
-                holder.setText(R.id.add, bean.getSTORE());
+                holder.setText(R.id.add, bean.getAddress());
                 ImageView selectTag = holder.getView(R.id.selectTag);
                 TextView selectText = holder.getView(R.id.stutas);
-                if (StringUtils.isEquals(bean.getSTATUS(), "0")) {//未完成
-                    selectTag.setBackground(ResUtils.getDrawable(R.mipmap.unselect));
-                    selectText.setText("未完成");
-                } else {
+                if (StringUtils.isEquals(bean.getSTATUS(), UPDATELOAD_TAG_TRUE)) {//已完成
                     selectTag.setBackground(ResUtils.getDrawable(R.mipmap.select));
                     selectText.setText("已完成");
+                } else {
+                    selectTag.setBackground(ResUtils.getDrawable(R.mipmap.unselect));
+                    selectText.setText("未完成");
                 }
                 holder.setText(R.id.start_num, bean.getFinshNum());
                 holder.setText(R.id.end_num, "/" + bean.getTotalNum());
@@ -125,7 +127,7 @@ public class ListPropertyFragment extends BaseLocalAbsRefreshFragment {
                     @Override
                     public void onClick(View view) {
                         if (StringUtils.isEquals(bean.getSTATUS(), "0")) {
-//                            ToastUtils.show(getActivity(), "未上传完成，不能删除");
+                            ToastUtils.show(getActivity(), "未上传完成，不能删除");
                             NormalDialogStyleTwo(bean, position);
                         } else {
                             NormalDialogStyleTwo(bean, position);
@@ -177,6 +179,7 @@ public class ListPropertyFragment extends BaseLocalAbsRefreshFragment {
             if (ListUtils.isEmpty(getmRefreshList())) {
                 EmptyView.showNoDataEmpty(mFlEmptyView);
             }
+            setTabTotalcount();
             ToastUtils.show(getActivity(), "删除成功！");
         }
         hud.dismiss();

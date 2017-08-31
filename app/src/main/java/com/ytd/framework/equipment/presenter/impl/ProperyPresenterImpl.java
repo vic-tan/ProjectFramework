@@ -12,6 +12,8 @@ import org.litepal.crud.DataSupport;
 
 import java.util.List;
 
+import static com.ytd.framework.equipment.bean.PropertyBean.UPDATELOAD_TAG_FALSE;
+import static com.ytd.framework.equipment.bean.PropertyBean.UPDATELOAD_TAG_TRUE;
 import static com.ytd.framework.main.bean.UserBean.DB_LOGIN_NAME;
 import static com.ytd.framework.main.bean.UserBean.STORE_ID;
 import static org.litepal.crud.DataSupport.where;
@@ -40,6 +42,24 @@ public class ProperyPresenterImpl extends BasePresenterImpl implements IProperyP
     }
 
 
+    public PropertyBean setEmpty(PropertyBean bean) {
+        if (null != bean) {
+            bean.setXM(empty(bean.getXM()));
+            bean.setPhone(empty(bean.getPhone()));
+            bean.setPrice(empty(bean.getPrice()));
+            bean.setSTATUS(empty(bean.getSTATUS(), UPDATELOAD_TAG_FALSE));
+            bean.setSTORE(empty(bean.getSTORE()));
+            bean.setAddress(empty(bean.getAddress()));
+            bean.setArea(empty(bean.getAddress()));
+            bean.setStart_property(empty(bean.getStart_property()));
+            bean.setEnd_property(empty(bean.getEnd_property()));
+            bean.setTitle(empty(bean.getTitle()));
+            bean.setEnd_data(empty(bean.getEnd_data()));
+        }
+        return bean;
+
+    }
+
     @Override
     public void save(Context mContext, List<PropertyBean> list) {
         if (ListUtils.isEmpty(list)) {
@@ -51,7 +71,7 @@ public class ProperyPresenterImpl extends BasePresenterImpl implements IProperyP
         for (PropertyBean forBean : list) {
             forBean.setLoginName(getLoginName());
             forBean.setStoreId(getUserBean().getStoreId());
-            forBean.save();
+            setEmpty(forBean).save();
             equipmentPresenter.save(mContext, forBean.getEqList(), forBean.getPDDH());
         }
     }
@@ -61,6 +81,48 @@ public class ProperyPresenterImpl extends BasePresenterImpl implements IProperyP
         PropertyBean db = findById(mContext, bean.getPDDH());
         db.setPDABind(bean.isPDABind());
         db.update(db.getId());
+    }
+
+    @Override
+    public void updateFinishNum(Context mContext, String PDDH, String num) {
+        PropertyBean bean = findById(mContext, PDDH);
+        if (null != bean) {
+            bean.setSTATUS(UPDATELOAD_TAG_TRUE);
+            bean.setFinshNum((Integer.parseInt(bean.getFinshNum()) + Integer.parseInt(num)) + "");
+            bean.update(bean.getId());
+        }
+    }
+
+    @Override
+    public void addFinishNum(Context mContext, String PDDH, String num) {
+        PropertyBean bean = findById(mContext, PDDH);
+        if (null != bean) {
+            bean.setFinshNum((Integer.parseInt(bean.getFinshNum()) + Integer.parseInt(num)) + "");
+            bean.update(bean.getId());
+        }
+    }
+
+    @Override
+    public void initFinishNum(Context mContext, String PDDH, String num) {
+        PropertyBean bean = findById(mContext, PDDH);
+        if (null != bean) {
+            bean.setFinshNum(num + "");
+            bean.update(bean.getId());
+        }
+    }
+
+    @Override
+    public void updateFinish(Context mContext, String PDDH, List<EquipmentBean> updateList) {
+        PropertyBean bean = findById(mContext, PDDH);
+        if (null != bean) {
+            bean.setSTATUS(UPDATELOAD_TAG_TRUE);
+            bean.setFinshNum((Integer.parseInt(bean.getFinshNum()) + updateList.size()) + "");
+            bean.update(bean.getId());
+            if (null == equipmentPresenter) {
+                equipmentPresenter = new EquipmentPresenterImpl();
+            }
+            equipmentPresenter.updateFinsh(mContext, updateList, null);
+        }
     }
 
     @Override
@@ -114,6 +176,7 @@ public class ProperyPresenterImpl extends BasePresenterImpl implements IProperyP
     public int startDelete(String id) {
         return DataSupport.deleteAll(PropertyBean.class, DB_LOGIN_NAME + "  = ? and PDDH = ?  and " + STORE_ID + " = ? ", getLoginName(), id, getUserBean().getStoreId());
     }
+
 
     @Override
     public int findTotalcount(Context mContext) {
