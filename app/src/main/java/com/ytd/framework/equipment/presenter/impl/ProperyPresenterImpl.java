@@ -3,6 +3,7 @@ package com.ytd.framework.equipment.presenter.impl;
 import android.content.Context;
 
 import com.tlf.basic.utils.ListUtils;
+import com.tlf.basic.utils.StringUtils;
 import com.ytd.framework.equipment.bean.EquipmentBean;
 import com.ytd.framework.equipment.bean.PropertyBean;
 import com.ytd.framework.equipment.presenter.IEquipmentPresenter;
@@ -94,9 +95,12 @@ public class ProperyPresenterImpl extends BasePresenterImpl implements IProperyP
     }
 
     @Override
-    public void addFinishNum(Context mContext, String PDDH, String num) {
+    public void addFinishNum(Context mContext, String PDDH, String num,String end_date) {
         PropertyBean bean = findById(mContext, PDDH);
         if (null != bean) {
+            if(StringUtils.isEmpty(bean.getEnd_data()) || StringUtils.isEquals("暂无",bean.getEnd_data())){
+                bean.setEnd_data(end_date);
+            }
             bean.setFinshNum((Integer.parseInt(bean.getFinshNum()) + Integer.parseInt(num)) + "");
             bean.update(bean.getId());
         }
@@ -116,7 +120,6 @@ public class ProperyPresenterImpl extends BasePresenterImpl implements IProperyP
         PropertyBean bean = findById(mContext, PDDH);
         if (null != bean) {
             bean.setSTATUS(UPDATELOAD_TAG_TRUE);
-            bean.setFinshNum((Integer.parseInt(bean.getFinshNum()) + updateList.size()) + "");
             bean.update(bean.getId());
             if (null == equipmentPresenter) {
                 equipmentPresenter = new EquipmentPresenterImpl();

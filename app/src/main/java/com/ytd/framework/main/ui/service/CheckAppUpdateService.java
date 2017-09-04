@@ -47,12 +47,13 @@ public class CheckAppUpdateService extends IntentService {
      */
     public void appUpdate() {
         if (NetUtils.isConnected(CheckAppUpdateService.this)) {
-           HttpRequestUtils.getInstance().postFormBuilder(APP_VERSION_UPDATE).build().execute(new ResultCallback(this) {
+            HttpRequestUtils.getInstance().postFormBuilder(APP_VERSION_UPDATE).build().execute(new ResultCallback(this) {
                 @Override
                 public void onCusResponse(BaseJson response) {
                     checkAppUpdate(response);
                 }
             });
+            HttpRequestUtils.getInstance().console(CheckAppUpdateService.this);
         }
     }
 
@@ -68,7 +69,7 @@ public class CheckAppUpdateService extends IntentService {
             if (!StringUtils.isEquals(getVersionName(this), appUpdateBean.getVersionID())) {//版本跟服务器配置不同
                 String versionName[] = getVersionName(this).split("\\.");
                 String updateVersion[] = appUpdateBean.getVersionID().split("\\.");
-                appUpdateBean.setName(System.currentTimeMillis()+"app");
+                appUpdateBean.setName(System.currentTimeMillis() + "app");
                 for (int i = 0; i < versionName.length; i++) {
                     if (Integer.parseInt(versionName[i]) < Integer.parseInt(updateVersion[i])) {
                         Intent intent = new Intent(getBaseContext(), AppServiceActivity_.class);
@@ -98,7 +99,7 @@ public class CheckAppUpdateService extends IntentService {
     public String getVersionName(Context context)//获取版本号(内部识别号)
     {
         try {
-            PackageInfo pi=context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+            PackageInfo pi = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
             return pi.versionName;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();

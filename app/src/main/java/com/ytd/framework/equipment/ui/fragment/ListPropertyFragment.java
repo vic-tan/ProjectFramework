@@ -23,6 +23,7 @@ import com.tlf.basic.utils.StartActUtils;
 import com.tlf.basic.utils.StringUtils;
 import com.tlf.basic.utils.ToastUtils;
 import com.ytd.common.base.refreshview.ui.EmptyView;
+import com.ytd.common.bean.params.BaseEventbusParams;
 import com.ytd.common.ui.fragment.refreshview.BaseLocalAbsRefreshFragment;
 import com.ytd.framework.R;
 import com.ytd.framework.equipment.bean.PropertyBean;
@@ -37,9 +38,14 @@ import com.ytd.support.utils.ResUtils;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
+import static com.ytd.common.bean.params.BaseEventbusParams.RE_SCAN_START;
+import static com.ytd.common.bean.params.BaseEventbusParams.RE_START;
+import static com.ytd.common.bean.params.BaseEventbusParams.UPDATE_START;
 import static com.ytd.framework.equipment.bean.PropertyBean.UPDATELOAD_TAG_TRUE;
 
 
@@ -61,6 +67,7 @@ public class ListPropertyFragment extends BaseLocalAbsRefreshFragment {
 
     @AfterViews
     void init() {
+        EventBus.getDefault().register(this);
         super.supperInit(getActivity());
         properyPresenter = new ProperyPresenterImpl();
         mLvGames.setAdapter(getmRefreshAdapter());
@@ -72,6 +79,20 @@ public class ListPropertyFragment extends BaseLocalAbsRefreshFragment {
             }
         });
         setTabTotalcount();
+    }
+
+    @Subscribe
+    public void onEventMainThread(BaseEventbusParams event) {
+        if (event.getTag() == RE_START || event.getTag() == RE_SCAN_START || event.getTag() == UPDATE_START) {
+            getRefreshPtrLayoutView().autoRefresh();
+        }
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);//反注册EventBus
     }
 
 
@@ -98,11 +119,11 @@ public class ListPropertyFragment extends BaseLocalAbsRefreshFragment {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             protected void convert(AbsViewHolder holder, final PropertyBean bean, final int position) {
-                holder.setText(R.id.title, bean.getXM());
-                holder.setText(R.id.phone, bean.getPhone());
-                holder.setText(R.id.price, bean.getPrice());
+                holder.setText(R.id.title, bean.getBZ());
+//                holder.setText(R.id.phone, bean.getPhone());
+//                holder.setText(R.id.price, bean.getPrice());
                 holder.setText(R.id.arce, BaseApplication.userBean.getStoreName());
-                holder.setText(R.id.add, bean.getAddress());
+//                holder.setText(R.id.add, bean.getAddress());
                 ImageView selectTag = holder.getView(R.id.selectTag);
                 TextView selectText = holder.getView(R.id.stutas);
                 if (StringUtils.isEquals(bean.getSTATUS(), UPDATELOAD_TAG_TRUE)) {//已完成
@@ -120,7 +141,8 @@ public class ListPropertyFragment extends BaseLocalAbsRefreshFragment {
                 holder.getConvertView().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        StartActUtils.start(mContext, PropertyDetailsActivity_.class, "bean", bean);
+                        PropertyBean bean1 = properyPresenter.findById(mContext, bean.getPDDH());
+                        StartActUtils.start(mContext, PropertyDetailsActivity_.class, "bean", bean1);
                     }
                 });
                 holder.getView(R.id.delete).setOnClickListener(new View.OnClickListener() {
@@ -128,7 +150,7 @@ public class ListPropertyFragment extends BaseLocalAbsRefreshFragment {
                     public void onClick(View view) {
                         if (StringUtils.isEquals(bean.getSTATUS(), "0")) {
                             ToastUtils.show(getActivity(), "未上传完成，不能删除");
-                            NormalDialogStyleTwo(bean, position);
+//                            NormalDialogStyleTwo(bean, position);
                         } else {
                             NormalDialogStyleTwo(bean, position);
                         }

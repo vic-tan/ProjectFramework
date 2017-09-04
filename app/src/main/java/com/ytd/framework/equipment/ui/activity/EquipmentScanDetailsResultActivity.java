@@ -26,6 +26,7 @@ import com.tlf.basic.utils.StartActUtils;
 import com.tlf.basic.utils.StringUtils;
 import com.tlf.basic.utils.ToastUtils;
 import com.ytd.common.bean.BaseJson;
+import com.ytd.common.bean.params.BaseEventbusParams;
 import com.ytd.common.ui.activity.actionbar.BaseActionBarActivity;
 import com.ytd.framework.R;
 import com.ytd.framework.equipment.bean.EquipmentBean;
@@ -54,6 +55,7 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+import org.greenrobot.eventbus.EventBus;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -62,6 +64,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import static com.ytd.common.bean.params.BaseEventbusParams.RE_SCAN_START;
 import static com.ytd.framework.equipment.bean.EquipmentBean.LOOKSTATUS_TAG_TRUE;
 import static com.ytd.framework.equipment.bean.PropertyBean.UPDATELOAD_TAG_TRUE;
 import static com.ytd.support.constants.fixed.UrlConstants.PDABIND;
@@ -122,7 +125,7 @@ public class EquipmentScanDetailsResultActivity extends BaseActionBarActivity {
     protected KProgressHUD hud;
     EquipmentBean bean;
     PropertyBean propertyBean;
-    private int scanTag = 0;//0，表示感应扫描，1，表示相机扫描
+    private int scanTag = 0;//0，表示感应扫描，1，表示相机扫描,3,手工盘点
     protected IEquipmentPresenter equipmentPresenter;
     IPDStatePresenter statePresenter;
 
@@ -144,7 +147,6 @@ public class EquipmentScanDetailsResultActivity extends BaseActionBarActivity {
                 updateKeyboardStatusText(isOpen);
             }
         });
-
         updateKeyboardStatusText(KeyboardVisibilityEvent.isKeyboardVisible(this));
         bean = getIntent().getParcelableExtra("bean");
         propertyBean = getIntent().getParcelableExtra("propertyBean");
@@ -225,12 +227,12 @@ public class EquipmentScanDetailsResultActivity extends BaseActionBarActivity {
         saveAddress.setText("存放地点：" + bean.getSaveAddress());
         int i = 0;
         for (PDStateBean pdStateBean : pdStatelist) {
-            if(pdStateBean.getMy_id().equals(bean.getUseStatus())){
+            if (pdStateBean.getMy_id().equals(bean.getUseStatus())) {
                 useStatus.setText(pdStateBean.getName());
-                i=1;
+                i = 1;
             }
         }
-        if(i==0){
+        if (i == 0) {
             useStatus.setText(StringUtils.isEquals(bean.getUseStatus(), "暂无") ? "" : bean.getUseStatus());
         }
 
@@ -322,6 +324,8 @@ public class EquipmentScanDetailsResultActivity extends BaseActionBarActivity {
         boolean saveTag = equipmentPresenter.scanUpdate(mContext, bean);
         if (saveTag) {
             hud.dismiss();
+            EventBus.getDefault().post(
+                    new BaseEventbusParams(RE_SCAN_START, "scan"));
             nextScan("\n" + "操作成功,请继续扫描下一个设备" + "\n");
         } else {
             hud.dismiss();
@@ -390,7 +394,7 @@ public class EquipmentScanDetailsResultActivity extends BaseActionBarActivity {
     }
 
     public void openScan() {
-        if (scanTag != 0) {//感应扫描
+        if (scanTag == 1) {//感应扫描
          /*   StartActUtils.start(mContext, EquipmentReactionScanActivity_.class);
         } else {//相机扫描*/
             StartActUtils.start(mContext, CameraScanActivity.class);
@@ -411,7 +415,7 @@ public class EquipmentScanDetailsResultActivity extends BaseActionBarActivity {
             @Override
             public void onBtnClick(View v, Dialog dialog) {
                 dialog.dismiss();
-                if (scanTag != 0) {//感应扫描
+                if (scanTag == 1) {//感应扫描
                  /*   StartActUtils.start(mContext, EquipmentReactionScanActivity_.class);
                 } else {/相机扫描*/
                     StartActUtils.start(mContext, CameraScanActivity.class);

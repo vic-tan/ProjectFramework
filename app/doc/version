@@ -1,5 +1,0 @@
-1、升级提示用scollView 显示，不然显示的内容过多则显示不全。
-2、6.0版本的权限问题，在application 时在sdcard无法创建文件夹.
-3、学会RxJava、RxAndroid，EventBug。
-4、MVVM模式的开发。
-5、安全问题可控制,推送,后台开关

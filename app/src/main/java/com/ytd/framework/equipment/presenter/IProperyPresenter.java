@@ -23,7 +23,7 @@ public interface IProperyPresenter {
     void updateFinish(Context mContext, String PDDH, List<EquipmentBean> updateList);
 
     void updateFinishNum(Context mContext, String PDDH, String num);
-    void addFinishNum(Context mContext, String PDDH, String num);
+    void addFinishNum(Context mContext, String PDDH, String num,String end_date);
     void initFinishNum(Context mContext, String PDDH, String num);
 
     List<PropertyBean> findAll(Context mContext);

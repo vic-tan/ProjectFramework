@@ -33,6 +33,7 @@ import com.tlf.basic.utils.Logger;
 import com.tlf.basic.utils.StringUtils;
 import com.tlf.basic.utils.ToastUtils;
 import com.ytd.common.bean.BaseJson;
+import com.ytd.common.bean.params.BaseEventbusParams;
 import com.ytd.framework.R;
 import com.ytd.framework.equipment.bean.EquipmentBean;
 import com.ytd.framework.equipment.bean.EquipmentListBean;
@@ -61,6 +62,7 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
+import org.greenrobot.eventbus.EventBus;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -71,6 +73,7 @@ import java.util.Map;
 
 import okhttp3.Call;
 
+import static com.ytd.common.bean.params.BaseEventbusParams.RE_START;
 import static com.ytd.support.constants.fixed.UrlConstants.GETINVENTORYITEMLIST;
 import static com.ytd.support.constants.fixed.UrlConstants.GETINVENTORYLIST;
 import static com.ytd.support.constants.fixed.UrlConstants.GET_PDABIND;
@@ -490,6 +493,8 @@ public class AddPropertyFragment extends Fragment {
                 case 1:
                     pageIndex = 1;
                     showHud.dismiss();
+                    EventBus.getDefault().post(
+                            new BaseEventbusParams(RE_START,"add"));
                     ToastUtils.show(getActivity(), "下载完成");
                     break;
                 case 2:

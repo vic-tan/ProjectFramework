@@ -11,6 +11,9 @@ public class BaseEventbusParams {
     public int intParam;
     public String strParam;
     public Object prepareParam;
+    public static  int  RE_START = 10000;//添加完成
+    public static  int  RE_SCAN_START = 10001;//扫描完成
+    public static  int  UPDATE_START = 10002;//上传完成
 
 
     //一个参数

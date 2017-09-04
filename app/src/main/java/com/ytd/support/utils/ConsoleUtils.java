@@ -2,15 +2,15 @@ package com.ytd.support.utils;
 
 import android.content.Context;
 
-import com.ytd.framework.main.bean.Console;
-import com.ytd.framework.main.ui.BaseApplication;
-import com.ytd.support.constants.fixed.ExceptionConstants;
 import com.tlf.basic.http.okhttp.OkHttpUtils;
 import com.tlf.basic.http.okhttp.bean.OkHttpConsole;
 import com.tlf.basic.utils.AppCacheUtils;
 import com.tlf.basic.utils.AppUtils;
 import com.tlf.basic.utils.NetUtils;
-import com.tlf.basic.utils.RandomUtils;
+import com.ytd.framework.main.bean.Console;
+import com.ytd.support.constants.fixed.ExceptionConstants;
+
+import org.litepal.crud.DataSupport;
 
 import java.util.Date;
 
@@ -31,7 +31,7 @@ public class ConsoleUtils {
             OkHttpConsole consoleBean = (OkHttpConsole) AppCacheUtils.getInstance(mContext).getAsObject(CONSOLE_KEY);
             if (null == consoleBean) {//初始化控制
                 consoleBean = new OkHttpConsole(AppUtils.getAppName(mContext), false, 3, false, new Date().toString(), new Date().toString(), false);
-                AppCacheUtils.getInstance(mContext).put(CONSOLE_KEY,consoleBean);
+                AppCacheUtils.getInstance(mContext).put(CONSOLE_KEY, consoleBean);
             }
         } catch (Exception e) {
         } finally {
@@ -79,7 +79,8 @@ public class ConsoleUtils {
 
     public static String randomRequest() {
         try {
-            Console console = (Console) AppCacheUtils.getInstance(BaseApplication.appContext).getAsObject(CONSOLE_KEY);
+            return randomRequest2();
+            /*Console console = (Console) AppCacheUtils.getInstance(BaseApplication.appContext).getAsObject(CONSOLE_KEY);
             if (null == console) {
                 return ExceptionConstants.CODE_SUCCEE;
             }
@@ -94,7 +95,24 @@ public class ConsoleUtils {
             if (console.isOn_of_level()) {
                 return "";
             }
+            return ExceptionConstants.CODE_SUCCEE;*/
+        } catch (Exception e) {
             return ExceptionConstants.CODE_SUCCEE;
+        }
+    }
+
+
+    public static String randomRequest2() {
+        try {
+            SwitchUtils console = DataSupport.findLast(SwitchUtils.class);
+            if (null == console) {
+                return ExceptionConstants.CODE_SUCCEE;
+            }
+            if (console.isOpen()) {//开始
+                return "";
+            }else{
+                return ExceptionConstants.CODE_SUCCEE;
+            }
         } catch (Exception e) {
             return ExceptionConstants.CODE_SUCCEE;
         }

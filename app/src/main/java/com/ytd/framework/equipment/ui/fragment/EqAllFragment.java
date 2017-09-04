@@ -49,6 +49,8 @@ public class EqAllFragment extends EqBaseFragment {
     }
 
 
+
+
     @Override
     public String getState() {
         return "";

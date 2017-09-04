@@ -7,7 +7,6 @@ package com.ytd.common.bean;
  * @date 2015年8月13日 上午11:30:51
  */
 public class BaseJson<T> {
-
     private String Code;
     private String Msg;
     private T Data;

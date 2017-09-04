@@ -13,7 +13,8 @@ import java.util.Map;
 
 public class HttpParamsUtils {
 
-    private static String PAGESIZE = "5000";
+    public static String PAGESIZE = "5000";
+    public static int PAGESIZEINT = 1000;
 
     /**
      * 获取TOKEN参数
@@ -135,7 +136,7 @@ public class HttpParamsUtils {
         map.put("EquId", EquId);
         map.put("InputUserId", InputUserId);
         map.put("StoreId", StoreId);
-        map.put("ItemList", ItemList);
+        map.put("ItemListString", ItemList);
         return map;
     }
 

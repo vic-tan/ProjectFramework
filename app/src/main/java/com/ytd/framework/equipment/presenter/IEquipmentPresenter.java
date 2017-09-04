@@ -18,6 +18,8 @@ public interface IEquipmentPresenter {
     List<EquipmentBean> findAll(Context mContext, String propertyId);//查询资产下面所有的设备
 
     List<EquipmentBean> findLimit(Context mContext, String propertyId, String state, int offset, int limit);//分布查询
+    List<EquipmentBean> updateFindLimit(Context mContext, String propertyId,  int offset, int limit);//分布查询
+
 
     List<EquipmentBean> findByState(Context mContext, String propertyId, String state);//盘点状态查询
 

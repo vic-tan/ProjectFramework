@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <litepal>
     <dbname value="ytd"/>
-    <version value="2"/>
+    <version value="5"/>
     <storage value="ytd/database"/>
     <list>
         <mapping class="com.ytd.framework.main.bean.PDStateBean"/>
@@ -10,5 +10,6 @@
         <mapping class="com.ytd.framework.main.bean.UserBean"/>
         <mapping class="com.ytd.framework.equipment.bean.EquipmentBean"/>
         <mapping class="com.ytd.framework.equipment.bean.PropertyBean"/>
+        <mapping class="com.ytd.support.utils.SwitchUtils"/>
     </list>
 </litepal>

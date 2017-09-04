@@ -65,7 +65,7 @@ public class EquipmentPresenterImpl extends BasePresenterImpl implements IEquipm
     public EquipmentBean setEmpty(EquipmentBean bean) {
         if (null != bean) {
             bean.setSBMC(empty(bean.getSBMC()));
-            bean.setSBBH(empty(bean.getSBBH()));
+//            bean.setSBBH(empty(bean.getSBBH()));
             bean.setSBTMBH(empty(bean.getSBTMBH()));
             bean.setEqId(empty(bean.getEqId()));
             bean.setKSMC(empty(bean.getKSMC()));
@@ -108,7 +108,13 @@ public class EquipmentPresenterImpl extends BasePresenterImpl implements IEquipm
             return where(DB_LOGIN_NAME + "  = ?  and PDDH = ? and State = ? and " + STORE_ID + " = ? ", getLoginName(), PDDH, state, getUserBean().getStoreId()).offset(offset).limit(limit).find(EquipmentBean.class);
         }
 
+    }   @Override
+    public List<EquipmentBean> updateFindLimit(Context mContext, String PDDH, int offset, int limit) {
+        return where(DB_LOGIN_NAME + "  = ?  and PDDH = ? and " + STORE_ID + " = ? ", getLoginName(), PDDH, getUserBean().getStoreId()).offset(offset).limit(limit).select("SBBH", "State").find(EquipmentBean.class);
+
     }
+
+
 
 
     @Override
@@ -138,7 +144,7 @@ public class EquipmentPresenterImpl extends BasePresenterImpl implements IEquipm
         if (properyPresenter == null) {
             properyPresenter = new ProperyPresenterImpl();
         }
-        properyPresenter.addFinishNum(mContext, equipmentBean.getPDDH(),  "1");
+        properyPresenter.addFinishNum(mContext, equipmentBean.getPDDH(),  "1",equipmentBean.getLookDate());
         return loUpdate(mContext, equipmentBean, LOOKSTATUS_TAG_TRUE);
     }
 

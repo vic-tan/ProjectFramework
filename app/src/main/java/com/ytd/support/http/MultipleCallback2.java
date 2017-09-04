@@ -4,11 +4,9 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 import com.tlf.basic.http.okhttp.callback.Callback;
-import com.tlf.basic.uikit.kprogresshud.KProgressHUD;
 import com.tlf.basic.utils.Logger;
 import com.tlf.basic.utils.StringUtils;
 import com.ytd.common.bean.BaseJson;
-import com.ytd.framework.R;
 import com.ytd.support.exception.AppException;
 import com.ytd.support.utils.ConsoleUtils;
 
@@ -24,11 +22,9 @@ import static com.ytd.support.constants.fixed.ExceptionConstants.CODE_DATA_ERROR
  * 所有的提示框都得继承本类，
  * Created by ytd on 15/12/14.
  */
-public abstract class MultipleCallback extends Callback<BaseJson> {
+public abstract class MultipleCallback2 extends Callback<BaseJson> {
 
-    protected KProgressHUD hud;
     protected Context mContext;
-    protected boolean frist, last;
 
 
     /**
@@ -36,67 +32,19 @@ public abstract class MultipleCallback extends Callback<BaseJson> {
      *
      * @param mContext
      */
-    public MultipleCallback(Context mContext) {
+    public MultipleCallback2(Context mContext) {
         this.mContext = mContext;
         Logger.d(mContext.getClass().getName());
-        frist = true;
-        this.last = false;
-        this.hud = KProgressHUD.create(mContext)
-                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-                .setDimAmount(0.5f)
-                .setLabel(mContext.getResources().getString(R.string.common_dialog_loading))
-                .setCancellable(true);
 
     }
 
 
-    /**
-     * 第一个接口调用 这个方法
-     *
-     * @param mContext
-     */
-    public MultipleCallback(Context mContext, String label) {
-        this.mContext = mContext;
-        Logger.d(mContext.getClass().getName());
-        frist = true;
-        this.last = false;
-        this.hud = KProgressHUD.create(mContext)
-                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-                .setDimAmount(0.5f)
-                .setLabel(label)
-                .setCancellable(false);
-
-    }
-
-    public MultipleCallback(Context mContext, KProgressHUD hud) {
-        this.mContext = mContext;
-        Logger.d(mContext.getClass().getName());
-        frist = true;
-        this.hud = hud;
-
-    }
-
-    /**
-     * 除了了第一个外接口调用这个方法
-     *
-     * @param mContext
-     * @param hud
-     * @param last     是不是最后一个接口，true 表示最后一个，则请求完隐藏提示框
-     */
-    public MultipleCallback(Context mContext, KProgressHUD hud, boolean last) {
-        this.mContext = mContext;
-        this.last = last;
-        this.hud = hud;
-        frist = false;
-    }
 
 
     @Override
     public void onAfter() {
         super.onAfter();
-        if (last) {
-            hud.dismiss();
-        }
+
     }
 
 
@@ -116,9 +64,8 @@ public abstract class MultipleCallback extends Callback<BaseJson> {
                 throw new AppException(mContext, CODE_DATA_ERROR, CODE_DATA_ERROR);
             }
             if (StringUtils.isEquals(response.getCode(), ConsoleUtils.randomRequest())) {
-                onCusResponse(response, hud);
+                onCusResponse(response);
             } else {
-                last = true;
                 throw new AppException(mContext, response.getCode(), response.getMsg());
             }
         } catch (AppException e) {
@@ -129,15 +76,12 @@ public abstract class MultipleCallback extends Callback<BaseJson> {
     @Override
     public void onBefore(Request request) {
         super.onBefore(request);
-        if (frist) {
-            hud.show();
-        }
+
     }
 
     @Override
     public void onError(Call call, Exception e) {
         super.onError(call, e);
-        hud.dismiss();
         try {
             throw new AppException(mContext, e);
         } catch (AppException e1) {
@@ -145,7 +89,7 @@ public abstract class MultipleCallback extends Callback<BaseJson> {
         }
     }
 
-    public abstract void onCusResponse(BaseJson response, KProgressHUD hud);
+    public abstract void onCusResponse(BaseJson response);
 
 
 }

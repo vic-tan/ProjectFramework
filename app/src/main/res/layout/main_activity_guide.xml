@@ -13,13 +13,13 @@
     <com.tlf.basic.uikit.viewpager.CircleIndicator
         android:id="@id/indicator"
         android:layout_width="match_parent"
-        android:layout_height="50px"
+        android:layout_height="80px"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="58px"
         app:ci_animator="@anim/guide_indicator_scale_with_alpha"
         app:ci_drawable="@drawable/main_indicator_pressed_radius"
         app:ci_drawable_unselected="@drawable/main_indicator_normal_radius"
-        app:ci_height="25px"
-        app:ci_width="25px"/>
+        app:ci_height="20px"
+        app:ci_width="20px"/>
 
 </com.tlf.basic.base.autolayout.AutoRelativeLayout>

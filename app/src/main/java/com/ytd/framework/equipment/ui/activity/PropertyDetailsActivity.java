@@ -1,29 +1,36 @@
 package com.ytd.framework.equipment.ui.activity;
 
+import android.app.Dialog;
 import android.os.Build;
 import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.RequiresApi;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.tlf.basic.uikit.dialog.listener.OnBtnClickL;
+import com.tlf.basic.uikit.dialog.widget.NormalDialog;
 import com.tlf.basic.uikit.kprogresshud.KProgressHUD;
 import com.tlf.basic.uikit.roundview.RoundTextView;
 import com.tlf.basic.utils.ListUtils;
+import com.tlf.basic.utils.Logger;
 import com.tlf.basic.utils.NetUtils;
 import com.tlf.basic.utils.StartActUtils;
 import com.tlf.basic.utils.StringUtils;
 import com.tlf.basic.utils.ToastUtils;
 import com.ytd.common.bean.BaseJson;
+import com.ytd.common.bean.params.BaseEventbusParams;
 import com.ytd.common.ui.activity.actionbar.BaseScannerReceiverActivity;
 import com.ytd.framework.R;
 import com.ytd.framework.equipment.bean.EquipmentBean;
 import com.ytd.framework.equipment.bean.PropertyBean;
 import com.ytd.framework.main.ui.BaseApplication;
 import com.ytd.framework.main.ui.activity.CameraScanActivity;
-import com.ytd.support.http.DialogCallback;
+import com.ytd.support.http.MultipleCallback2;
 import com.ytd.support.utils.GsonJsonUtils;
 import com.ytd.support.utils.HttpParamsUtils;
 import com.ytd.support.utils.HttpRequestUtils;
@@ -35,14 +42,20 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import okhttp3.Call;
 
+import static com.ytd.common.bean.params.BaseEventbusParams.RE_SCAN_START;
+import static com.ytd.common.bean.params.BaseEventbusParams.UPDATE_START;
 import static com.ytd.framework.equipment.bean.PropertyBean.UPDATELOAD_TAG_TRUE;
 import static com.ytd.support.constants.fixed.UrlConstants.UPLOADINVENTORYITEMLIST;
+import static com.ytd.support.utils.HttpParamsUtils.PAGESIZEINT;
 
 /**
  * 首页界面
@@ -90,11 +103,19 @@ public class PropertyDetailsActivity extends BaseScannerReceiverActivity {
 
     private PropertyBean bean;
 
-    private KProgressHUD hud;
+    private KProgressHUD supperHud;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @AfterViews
     void init() {
+//        supperHud = KProgressHUD.create(mContext)
+//                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+//                .setDimAmount(0.5f)
+//                .setLabel("正在上传盘点单....")
+//                .setCancellable(false);
+
+        beDefeated = new ArrayList<>();
+        EventBus.getDefault().register(this);
         initActionBar();
         bean = getIntent().getParcelableExtra("bean");
         actionBarView.setOnOptClickListener(new OnOptClickListener() {
@@ -109,6 +130,22 @@ public class PropertyDetailsActivity extends BaseScannerReceiverActivity {
 
     }
 
+    @Subscribe
+    public void onEventMainThread(BaseEventbusParams event) {
+        if (event.getTag() == RE_SCAN_START) {
+            PropertyBean bean1 = properyPresenter.findById(mContext, bean.getPDDH());
+            bean = bean1;
+            setData();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);//反注册EventBus
+    }
+
+
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     private void setData() {
         try {
@@ -116,18 +153,18 @@ public class PropertyDetailsActivity extends BaseScannerReceiverActivity {
 
             name.setText("盘点人:" + bean.getXM());
             data.setText("盘点日期:" + bean.getEnd_data());
-            title.setText("盘点单名称:" + bean.getTitle());
+            title.setText("盘点单名称:" + bean.getBZ());
 
-            area.setText("盘点区域：" + bean.getArea());
-            address.setText("资产分类：" + bean.getAddress());
+//            area.setText("盘点区域：" + bean.getArea());
+//            address.setText("资产分类：" + bean.getAddress());
             if (!StringUtils.isEmpty(bean.getRQ())) {
                 startDate.setText("启用日期:" + bean.getRQ().substring(0, 10));
             }
 
-            price.setText("价格区间:" + bean.getPrice());
+//            price.setText("价格区间:" + bean.getPrice());
             qeSumNum.setText("设  备:" + bean.getTotalNum());
-            startProperty.setText("资产原值:" + bean.getStart_property());
-            endProperty.setText("资产净值:" + bean.getEnd_property());
+//            startProperty.setText("资产原值:" + bean.getStart_property());
+//            endProperty.setText("资产净值:" + bean.getEnd_property());
             changeDate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -150,71 +187,247 @@ public class PropertyDetailsActivity extends BaseScannerReceiverActivity {
         }
     }
 
+    int currentProgress = 0;
+
     @Click({R.id.lookeEqBtn, R.id.updateLoadBtn, R.id.lookQe})
     void click(View v) {
         switch (v.getId()) {
             case R.id.updateLoadBtn://上传
-            /*    hud = KProgressHUD.create(mContext)
+                supperHud = KProgressHUD.create(mContext)
                         .setStyle(KProgressHUD.Style.BAR_DETERMINATE)
                         .setDimAmount(0.5f)
                         .setCancellable(false)
-                        .setLabel("正在上传....");
-                simulateProgressUpdate();*/
-                getUploadInventoryItemList();
-//                hud.show();
+                        .setLabel("正在上传盘点单....");
+                simulateProgressUpdate();
+                final List<EquipmentBean> updateList = equipmentPresenter.findByUpdateTag(mContext, bean.getPDDH(), EquipmentBean.UPDATE_TAG);
+
+                if (ListUtils.isEmpty(updateList)) {
+                    bindShow("\n" + "您没有盘点过设备！请先去盘点再上传" + "\n");
+                    return;
+                }
+                if (Integer.parseInt(bean.getTotalNum()) > updateList.size()) {
+                    int cuont = Integer.parseInt(bean.getTotalNum()) - updateList.size();
+                    bindShow("\n" + "您还有" + cuont + "个设备未盘点，请先去盘点" + "\n");
+                    return;
+                }
+                beDefeated.clear();
+                pageIndex = 1;
+                supperHud.setMaxProgress(Integer.parseInt(bean.getTotalNum()));
+                currentProgress = 0;
+                supperHud.show();
+                findData(supperHud);
                 break;
             case R.id.lookQe://查看
             case R.id.lookeEqBtn://查看
                 StartActUtils.start(mContext, EquipmentActivity_.class, "bean", bean);
-                StartActUtils.finish(mContext);
+//                StartActUtils.finish(mContext);
                 break;
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-    private void getUploadInventoryItemList() {
-        if (NetUtils.isConnected(mContext)) {
-            final List<EquipmentBean> updateList = equipmentPresenter.findByUpdateTag(mContext, bean.getPDDH(), EquipmentBean.UPDATE_TAG);
-            if (ListUtils.isEmpty(updateList)) {
-                ToastUtils.show(mContext, "您没有盘点过设备！请先去盘点再上传");
-                return;
+    //扫描下一个
+    public void bindShow(String title) {
+        NormalDialog dialogBind = new NormalDialog(mContext);
+        dialogBind.content(title)//
+                .btnNum(1)
+                .isTitleShow(false).contentGravity(Gravity.CENTER_HORIZONTAL)
+                .btnText("确定")//
+                .show();
+        dialogBind.setCancelable(false);
+        dialogBind.setCanceledOnTouchOutside(false);
+        dialogBind.setOnBtnClickL(
+                new OnBtnClickL() {//left btn click listener
+                    @Override
+                    public void onBtnClick(View v, Dialog dialog) {
+                        dialog.dismiss();
+                        StartActUtils.start(mContext, EquipmentActivity_.class, "bean", bean);
+//                        StartActUtils.finish(mContext);
+                    }
+                }
+        );
+    }
+
+    public int totalPage(int total) {
+        int pa = (int) Math.ceil(total / (PAGESIZEINT * 1.0));
+        return pa;
+
+    }
+
+    public List localSQLFindLimit(int currPagetemp) {
+        int currPage = currPagetemp - 1;
+        return equipmentPresenter.updateFindLimit(this, bean.getPDDH(), currPage * PAGESIZEINT, PAGESIZEINT);
+    }
+
+    Handler myHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 1:
+
+                    getUploadInventoryItemList((List<EquipmentBean>) msg.obj);
+                    break;
+                case 2:
+                    getUploadInventoryItemList2((List<EquipmentBean>) msg.obj);
+                    break;
+                case 3:
+                    supperHud.dismiss();
+                    Logger.i("---------3333--------");
+                    ToastUtils.show(mContext, "上传失败");
+                    break;
             }
-            HttpRequestUtils.getInstance().postFormBuilder(UPLOADINVENTORYITEMLIST, uploadInventoryItemList(updateList)).build().execute(new DialogCallback(mContext, "正在上传盘点单....") {
+            super.handleMessage(msg);
+        }
+    };
+
+    private void findData(final KProgressHUD runHud) {
+        try {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        List<EquipmentBean> updateList = localSQLFindLimit(pageIndex);
+                        if (pageIndex == 1) {
+                            myHandler.obtainMessage(1, updateList).sendToTarget();
+                        } else {
+                            myHandler.obtainMessage(2, updateList).sendToTarget();
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        myHandler.sendEmptyMessage(2);
+                    }
+                }
+            }).start();
+        } catch (Exception e) {
+            e.printStackTrace();
+            myHandler.sendEmptyMessage(3);
+        }
+
+    }
+
+
+    List<EquipmentBean> beDefeated;
+    int pageIndex = 1;
+
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+    private void getUploadInventoryItemList(final List<EquipmentBean> updateList) {
+        if (NetUtils.isConnected(mContext)) {
+            HttpRequestUtils.getInstance().postFormBuilder(UPLOADINVENTORYITEMLIST, uploadInventoryItemList(updateList)).build().execute(new MultipleCallback2(mContext) {
                 @Override
                 public void onCusResponse(BaseJson response) {
 //                    List<EquipmentBean> jsonBean = (List<EquipmentBean>) response.getData();
-                    List<EquipmentBean> jsonBean = GsonJsonUtils.fromJsonArray(new Gson().toJson(response.getData()), EquipmentBean.class);
-                    if (ListUtils.isEmpty(jsonBean)) {
-                        ToastUtils.show(mContext, "上传成功");
-                        properyPresenter.updateFinish(mContext, bean.getPDDH(), updateList);
-                        bean.setSTATUS(UPDATELOAD_TAG_TRUE);
-                        bean.setFinshNum((Integer.parseInt(bean.getFinshNum()) + updateList.size()) + "");
-                        changeDate();
-                    } else {
-                        try {
-                            equipmentPresenter.updateFinsh(mContext, updateList, jsonBean);
-                            if (updateList.size() > jsonBean.size()) {
-                                bean.setFinshNum((Integer.parseInt(bean.getFinshNum()) + (updateList.size() - jsonBean.size())) + "");
-                                properyPresenter.updateFinishNum(mContext, bean.getPDDH(), (updateList.size() - jsonBean.size()) + "");
+                    try {
+                        List<EquipmentBean> jsonBean = GsonJsonUtils.fromJsonArray(new Gson().toJson(response.getData()), EquipmentBean.class);
+                        currentProgress = currentProgress + updateList.size();
+                        supperHud.setProgress(currentProgress);
+                        pageIndex = pageIndex + 1;
+                        if (totalPage(Integer.parseInt(bean.getTotalNum())) >= pageIndex) {
+                            findData(supperHud);
+                            if (ListUtils.isEmpty(jsonBean)) {
+                                properyPresenter.updateFinish(mContext, bean.getPDDH(), updateList);
+                            } else {
+                                beDefeated.addAll(jsonBean);
                             }
-                            changeDate();
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                        } else {
+                            if (ListUtils.isEmpty(jsonBean)) {
+                                ToastUtils.show(mContext, "上传成功");
+                                properyPresenter.updateFinish(mContext, bean.getPDDH(), updateList);
+                                bean.setSTATUS(UPDATELOAD_TAG_TRUE);
+                                changeDate();
+                                EventBus.getDefault().post(
+                                        new BaseEventbusParams(UPDATE_START, "update"));
+                            } else {
+                                try {
+                                    equipmentPresenter.updateFinsh(mContext, updateList, jsonBean);
+                                    if (updateList.size() > jsonBean.size()) {
+                                        bean.setFinshNum((Integer.parseInt(bean.getFinshNum()) + (updateList.size() - jsonBean.size())) + "");
+                                        properyPresenter.updateFinishNum(mContext, bean.getPDDH(), (updateList.size() - jsonBean.size()) + "");
+                                    }
+                                    changeDate();
+                                    EventBus.getDefault().post(
+                                            new BaseEventbusParams(UPDATE_START, "update"));
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                ToastUtils.show(mContext, "上传失败");
+                            }
                         }
-                        ToastUtils.show(mContext, "上传失败");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        supperHud.dismiss();
                     }
-
                 }
 
                 @Override
                 public void onError(Call call, Exception e) {
-
+                    supperHud.dismiss();
                 }
             });
         } else {
             ToastUtils.show(mContext, "请连接网络！");
         }
     }
+
+
+    public void getUploadInventoryItemList2(final List<EquipmentBean> updateList) {
+        if (NetUtils.isConnected(mContext)) {
+            HttpRequestUtils.getInstance().postFormBuilder(UPLOADINVENTORYITEMLIST, uploadInventoryItemList(updateList)).build().execute(new MultipleCallback2(mContext) {
+                @Override
+                public void onCusResponse(BaseJson response) {
+//                    List<EquipmentBean> jsonBean = (List<EquipmentBean>) response.getData();
+                    try {
+                        List<EquipmentBean> jsonBean = GsonJsonUtils.fromJsonArray(new Gson().toJson(response.getData()), EquipmentBean.class);
+                        pageIndex = pageIndex + 1;
+                        currentProgress = currentProgress + updateList.size();
+                        supperHud.setProgress(currentProgress);
+                        if (totalPage(Integer.parseInt(bean.getTotalNum())) >= pageIndex) {
+                            findData(supperHud);
+                            if (ListUtils.isEmpty(jsonBean)) {
+                                properyPresenter.updateFinish(mContext, bean.getPDDH(), updateList);
+                            } else {
+                                beDefeated.addAll(jsonBean);
+                            }
+                        } else {
+                            if (ListUtils.isEmpty(jsonBean)) {
+                                supperHud.dismiss();
+                                ToastUtils.show(mContext, "上传成功");
+                                properyPresenter.updateFinish(mContext, bean.getPDDH(), updateList);
+                                bean.setSTATUS(UPDATELOAD_TAG_TRUE);
+                                changeDate();
+                                EventBus.getDefault().post(
+                                        new BaseEventbusParams(UPDATE_START, "update"));
+                            } else {
+                                try {
+                                    equipmentPresenter.updateFinsh(mContext, updateList, jsonBean);
+                                    if (updateList.size() > jsonBean.size()) {
+                                        bean.setFinshNum((Integer.parseInt(bean.getFinshNum()) + (updateList.size() - jsonBean.size())) + "");
+                                        properyPresenter.updateFinishNum(mContext, bean.getPDDH(), (updateList.size() - jsonBean.size()) + "");
+                                    }
+                                    changeDate();
+                                    EventBus.getDefault().post(
+                                            new BaseEventbusParams(UPDATE_START, "update"));
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                ToastUtils.show(mContext, "上传失败");
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        supperHud.dismiss();
+                    }
+
+                }
+
+                @Override
+                public void onError(Call call, Exception e) {
+                    supperHud.dismiss();
+                }
+            });
+        } else {
+            ToastUtils.show(mContext, "请连接网络！");
+        }
+    }
+
 
     private Map<String, String> uploadInventoryItemList(List<EquipmentBean> updateList) {
         String str = new Gson().toJson(updateList);
@@ -223,7 +436,6 @@ public class PropertyDetailsActivity extends BaseScannerReceiverActivity {
 
 
     private void simulateProgressUpdate() {
-        hud.setMaxProgress(100);
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             int currentProgress;
@@ -231,11 +443,7 @@ public class PropertyDetailsActivity extends BaseScannerReceiverActivity {
             @Override
             public void run() {
                 currentProgress += 1;
-                hud.setProgress(currentProgress);
-                hud.setLabel("已上传" + currentProgress + "%");
-                if (currentProgress < 100) {
-                    handler.postDelayed(this, 50);
-                }
+                supperHud.setProgress(currentProgress);
             }
         }, 100);
     }
