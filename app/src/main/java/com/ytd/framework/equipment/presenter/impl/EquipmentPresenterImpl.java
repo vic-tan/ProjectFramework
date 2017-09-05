@@ -65,21 +65,23 @@ public class EquipmentPresenterImpl extends BasePresenterImpl implements IEquipm
     public EquipmentBean setEmpty(EquipmentBean bean) {
         if (null != bean) {
             bean.setSBMC(empty(bean.getSBMC()));
-//            bean.setSBBH(empty(bean.getSBBH()));
+            bean.setSBBH(empty(bean.getSBBH()));
             bean.setSBTMBH(empty(bean.getSBTMBH()));
             bean.setEqId(empty(bean.getEqId()));
             bean.setKSMC(empty(bean.getKSMC()));
             bean.setQYRQ(empty(bean.getQYRQ()));
+            bean.setSBZT(empty(bean.getSBZT()));
+            bean.setSBXH(empty(bean.getSBXH()));
             bean.setYZ(empty(bean.getYZ()));
             bean.setJZ(empty(bean.getJZ()));
             bean.setZJ(empty(bean.getZJ()));
-            bean.setSaveAddress(empty(bean.getSaveAddress()));
-            bean.setEqStandard(empty(bean.getEqStandard()));
+            bean.setCFDD(empty(bean.getCFDD()));
+            bean.setSBGG(empty(bean.getSBGG()));
             bean.setCount(empty(bean.getCount(), "1"));
             bean.setUseStatus(empty(bean.getUseStatus()));
             bean.setLookDate(empty(bean.getLookDate()));
             bean.setUpdateTag(empty(bean.getUpdateTag(), "0"));
-            bean.setPropertyStatus(empty(bean.getPropertyStatus()));
+            bean.setSBZT(empty(bean.getSBZT()));
         }
         return bean;
 
@@ -110,7 +112,7 @@ public class EquipmentPresenterImpl extends BasePresenterImpl implements IEquipm
 
     }   @Override
     public List<EquipmentBean> updateFindLimit(Context mContext, String PDDH, int offset, int limit) {
-        return where(DB_LOGIN_NAME + "  = ?  and PDDH = ? and " + STORE_ID + " = ? ", getLoginName(), PDDH, getUserBean().getStoreId()).offset(offset).limit(limit).select("SBBH", "State").find(EquipmentBean.class);
+        return where(DB_LOGIN_NAME + "  = ?  and PDDH = ? and " + STORE_ID + " = ? ", getLoginName(), PDDH, getUserBean().getStoreId()).offset(offset).limit(limit).select("SBBH", "State","Memo").find(EquipmentBean.class);
 
     }
 
@@ -156,7 +158,7 @@ public class EquipmentPresenterImpl extends BasePresenterImpl implements IEquipm
             albumToUpdate = list.get(0);
             albumToUpdate.setUseStatus(equipmentBean.getUseStatus());
             albumToUpdate.setLookDate(equipmentBean.getLookDate());
-            albumToUpdate.setRemark(equipmentBean.getRemark());
+            albumToUpdate.setMemo(equipmentBean.getMemo());
             albumToUpdate.setState(state);
             albumToUpdate.setUpdateTag(UPDATE_TAG);
             return albumToUpdate.save();

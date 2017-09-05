@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.tlf.basic.base.adapter.abslistview.AbsCommonAdapter;
 import com.tlf.basic.base.adapter.abslistview.AbsViewHolder;
 import com.tlf.basic.uikit.roundview.RoundTextView;
+import com.tlf.basic.utils.ListUtils;
 import com.tlf.basic.utils.StartActUtils;
 import com.tlf.basic.utils.StringUtils;
 import com.ytd.common.bean.params.BaseEventbusParams;
@@ -24,12 +25,16 @@ import com.ytd.framework.equipment.presenter.impl.ProperyPresenterImpl;
 import com.ytd.framework.equipment.ui.activity.EquipmentActivity;
 import com.ytd.framework.equipment.ui.activity.EquipmentDetailsActivity_;
 import com.ytd.framework.equipment.ui.activity.EquipmentScanDetailsResultActivity_;
+import com.ytd.framework.main.bean.PDStateBean;
+import com.ytd.framework.main.presenter.IPDStatePresenter;
+import com.ytd.framework.main.presenter.impl.PDStatePresenterImpl;
 import com.ytd.support.constants.fixed.JsonConstants;
 import com.ytd.support.utils.ResUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,13 +48,25 @@ public abstract class EqBaseFragment extends BaseLocalAbsRefreshFragment {
 
     protected IEquipmentPresenter equipmentPresenter;
     protected IProperyPresenter properyPresenter;
-
+    IPDStatePresenter statePresenter;
+    List<PDStateBean> pdStatelist;
+    Map<String, PDStateBean> map;
 
     void init() {
         EventBus.getDefault().register(this);
         super.supperInit(getActivity());
         equipmentPresenter = new EquipmentPresenterImpl();
+        statePresenter = new PDStatePresenterImpl();
         properyPresenter = new ProperyPresenterImpl();
+        pdStatelist = new ArrayList<>();
+        pdStatelist = statePresenter.findAll();
+        map = new HashMap<>();
+        if (!ListUtils.isEmpty(pdStatelist)) {
+            for (PDStateBean forBean : pdStatelist) {
+                map.put(forBean.getMy_id(), forBean);
+            }
+        }
+
 
     }
 
@@ -75,10 +92,15 @@ public abstract class EqBaseFragment extends BaseLocalAbsRefreshFragment {
             protected void convert(AbsViewHolder holder, final EquipmentBean bean, int position) {
                 holder.setText(R.id.title, bean.getSBMC());
                 holder.setText(R.id.count, "x" + bean.getCount());
-                holder.setText(R.id.eqType, "设备型号：" + bean.getQYRQ());
+                holder.setText(R.id.eqType, "设备型号：" + bean.getSBXH());
                 holder.setText(R.id.propertyID, "资产编号：" + bean.getSBBH());
                 holder.setText(R.id.useAddress, "使用科室：" + bean.getKSMC());
-                holder.setText(R.id.propertyStutas, "资产状态:" + bean.getPropertyStatus());
+                if(map.containsKey(bean.getSBZT())){
+                    holder.setText(R.id.propertyStutas, "资产状态：" + map.get(bean.getSBZT()).getName());
+                }else{
+                    holder.setText(R.id.propertyStutas, "资产状态：");
+                }
+
                 holder.setText(R.id.startDate, "启用日期：" + bean.getQYRQ());
                 holder.setText(R.id.unitName, bean.getDW());
                 ImageView selectTag = holder.getView(R.id.selectTag);
@@ -115,7 +137,7 @@ public abstract class EqBaseFragment extends BaseLocalAbsRefreshFragment {
                         Map<String, Object> map = new HashMap<>();
                         map.put("bean", bean);
                         map.put("scanTag", 3);
-                        map.put("propertyBean",bean2);
+                        map.put("propertyBean", bean2);
                         StartActUtils.start(mContext, EquipmentScanDetailsResultActivity_.class, map);
                     }
                 });

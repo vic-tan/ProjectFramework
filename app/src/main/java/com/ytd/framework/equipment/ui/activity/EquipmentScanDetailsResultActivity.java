@@ -21,11 +21,9 @@ import com.tlf.basic.uikit.roundview.RoundRelativeLayout;
 import com.tlf.basic.uikit.roundview.RoundTextView;
 import com.tlf.basic.utils.CountDownTimer;
 import com.tlf.basic.utils.InputMethodManagerUtils;
-import com.tlf.basic.utils.NetUtils;
 import com.tlf.basic.utils.StartActUtils;
 import com.tlf.basic.utils.StringUtils;
 import com.tlf.basic.utils.ToastUtils;
-import com.ytd.common.bean.BaseJson;
 import com.ytd.common.bean.params.BaseEventbusParams;
 import com.ytd.common.ui.activity.actionbar.BaseActionBarActivity;
 import com.ytd.framework.R;
@@ -40,9 +38,7 @@ import com.ytd.framework.main.presenter.IPDStatePresenter;
 import com.ytd.framework.main.presenter.impl.PDStatePresenterImpl;
 import com.ytd.framework.main.ui.BaseApplication;
 import com.ytd.framework.main.ui.activity.CameraScanActivity;
-import com.ytd.support.http.ResultCallback;
 import com.ytd.support.utils.HttpParamsUtils;
-import com.ytd.support.utils.HttpRequestUtils;
 import com.ytd.support.utils.ResUtils;
 import com.ytd.uikit.actionbar.ActionBarOptViewTagLevel;
 import com.ytd.uikit.actionbar.OnOptClickListener;
@@ -67,7 +63,6 @@ import java.util.Map;
 import static com.ytd.common.bean.params.BaseEventbusParams.RE_SCAN_START;
 import static com.ytd.framework.equipment.bean.EquipmentBean.LOOKSTATUS_TAG_TRUE;
 import static com.ytd.framework.equipment.bean.PropertyBean.UPDATELOAD_TAG_TRUE;
-import static com.ytd.support.constants.fixed.UrlConstants.PDABIND;
 
 /**
  * Created by ytd on 16/1/19.
@@ -216,15 +211,15 @@ public class EquipmentScanDetailsResultActivity extends BaseActionBarActivity {
         title.setText("资产名称：" + bean.getSBMC());
         address.setText("资产编号：" + bean.getSBBH());
         eqNumber.setText("资产条码号：" + bean.getSBTMBH());
-        useAddress.setText("使用科室：" + bean.getEqStandard());
-        eqStandard.setText("使用科室：" + bean.getKSMC());
+        useAddress.setText("使用科室：" + bean.getKSMC());
+        eqStandard.setText("资产规格：" + bean.getSBGG());
         unitName.setText("单位：" + bean.getDW());
         startDate.setText("启用日期：" + bean.getQYRQ());
         startProperty.setText("原值：" + bean.getYZ());
         endProperty.setText("净值：" + bean.getJZ());
         oldProperty.setText("折旧：" + bean.getZJ());
         eqType.setText("资产分类：" + bean.getSBBH());
-        saveAddress.setText("存放地点：" + bean.getSaveAddress());
+        saveAddress.setText("存放地点：" + bean.getCFDD());
         int i = 0;
         for (PDStateBean pdStateBean : pdStatelist) {
             if (pdStateBean.getMy_id().equals(bean.getUseStatus())) {
@@ -233,11 +228,17 @@ public class EquipmentScanDetailsResultActivity extends BaseActionBarActivity {
             }
         }
         if (i == 0) {
-            useStatus.setText(StringUtils.isEquals(bean.getUseStatus(), "暂无") ? "" : bean.getUseStatus());
+            useStatus.setText(StringUtils.isEquals(bean.getUseStatus(), "") ? "" : bean.getUseStatus());
         }
-
-        date.setText(StringUtils.isEquals(bean.getLookDate(), "暂无") ? "" : bean.getLookDate());
-        remark.setText(bean.getRemark());
+        if (StringUtils.isEmpty(bean.getLookDate())) {
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            Date curDate = new Date(System.currentTimeMillis());
+            String str = formatter.format(curDate);
+            date.setText(str);
+        } else {
+            date.setText(bean.getLookDate());
+        }
+        remark.setText(bean.getMemo());
 
     }
 
@@ -263,13 +264,13 @@ public class EquipmentScanDetailsResultActivity extends BaseActionBarActivity {
                     ToastUtils.show(mContext, "盘点日期不能为空,请选择盘点日期");
                     return;
                 }
-                if (StringUtils.isEmpty(remark.getText().toString())) {
+                /*if (StringUtils.isEmpty(remark.getText().toString())) {
                     ToastUtils.show(mContext, "备注不能为空,请填写备注");
                     return;
-                }
+                }*/
                 bean.setUseStatus(pdStatelist.get((Integer) useStatus.getTag()).getMy_id());
                 bean.setLookDate(date.getText().toString());
-                bean.setRemark(remark.getText().toString());
+                bean.setMemo(remark.getText().toString());
                 if (null != propertyBean) {//不等于空
                     if (StringUtils.isEquals(propertyBean.getSTATUS(), UPDATELOAD_TAG_TRUE)) {//已上传
                         nextScan("\n" + "该盘点的设备信息已上传服务器不能修改,请继续扫描下一个设备" + "\n");
@@ -281,44 +282,12 @@ public class EquipmentScanDetailsResultActivity extends BaseActionBarActivity {
                         }
                     }
                 }
-
-
-                if (null != propertyBean && !propertyBean.isPDABind()) {
-                    bindShow("\n" + "您还未绑定还该盘点单，请先连网绑定再开始盘点！" + "\n");
-                } else {
-                    saveDB();
-                }
+                saveDB();
                 break;
 
         }
     }
 
-    //扫描下一个
-    public void bindShow(String title) {
-        NormalDialog dialogBind = new NormalDialog(mContext);
-        dialogBind.content(title)//
-                .btnNum(2)
-                .isTitleShow(false).contentGravity(Gravity.CENTER_HORIZONTAL)
-                .btnText("取消", "确定")//
-                .show();
-        dialogBind.setCancelable(false);
-        dialogBind.setCanceledOnTouchOutside(false);
-        dialogBind.setOnBtnClickL(
-                new OnBtnClickL() {//left btn click listener
-                    @Override
-                    public void onBtnClick(View v, Dialog dialog) {
-                        dialog.dismiss();
-                    }
-                },
-                new OnBtnClickL() {//right btn click listener
-                    @Override
-                    public void onBtnClick(View v, Dialog dialog) {//next
-                        dialog.dismiss();
-                        padBind();
-                    }
-                }
-        );
-    }
 
     private void saveDB() {
         boolean saveTag = equipmentPresenter.scanUpdate(mContext, bean);
@@ -332,27 +301,6 @@ public class EquipmentScanDetailsResultActivity extends BaseActionBarActivity {
         }
     }
 
-    private void padBind() {
-        if (NetUtils.isConnected(mContext)) {
-            HttpRequestUtils.getInstance().postFormBuilder(PDABIND, getPDABindParams()).build().execute(new ResultCallback(mContext) {
-                @Override
-                public void onCusResponse(BaseJson response) {
-                    String jsonBean = (String) response.getData();
-                    if (!StringUtils.isEmpty(jsonBean) && StringUtils.isEquals("1", jsonBean)) {
-                        propertyBean.setPDABind(true);
-                        properyPresenter.update(mContext, propertyBean);
-                        ToastUtils.show(mContext, "绑定成功,请点击保存继续盘点！");
-                    } else {
-                        ToastUtils.show(mContext, "绑定失败,请重试！");
-                    }
-                }
-
-
-            });
-        } else {
-            ToastUtils.show(mContext, "绑定必须要连网，请连接网络再试！");
-        }
-    }
 
     private Map<String, String> getPDABindParams() {
         return HttpParamsUtils.getPDABindParams(propertyBean.getPDDH(), BaseApplication.userBean.getEquId(), BaseApplication.userBean.getLoginName());

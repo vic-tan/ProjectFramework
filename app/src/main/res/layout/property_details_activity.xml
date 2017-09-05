@@ -23,26 +23,13 @@
         android:layout_alignParentBottom="true"
         android:layout_centerVertical="true">
 
-        <com.tlf.basic.uikit.roundview.RoundTextView
-            android:id="@+id/updateLoadBtn"
-            android:layout_width="420px"
-            android:layout_height="100px"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="100px"
-            android:gravity="center"
-            android:text="上传盘点单"
-            android:textColor="@color/white"
-            android:textSize="42px"
-            abv:rv_backgroundColor="#159588"
-            abv:rv_backgroundPressColor="#72159588"
-            abv:rv_cornerRadius="200px"/>
 
         <com.tlf.basic.uikit.roundview.RoundTextView
             android:id="@+id/lookeEqBtn"
             android:layout_width="420px"
             android:layout_height="100px"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="40px"
+            android:layout_marginLeft="100px"
             android:gravity="center"
             android:text="开始盘点"
             android:textColor="@color/white"
@@ -51,13 +38,27 @@
             abv:rv_backgroundPressColor="#72159588"
             abv:rv_cornerRadius="200px"/>
 
-
+        <com.tlf.basic.uikit.roundview.RoundTextView
+            android:id="@+id/updateLoadBtn"
+            android:layout_width="420px"
+            android:layout_height="100px"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="40px"
+            android:gravity="center"
+            android:text="上传盘点单"
+            android:textColor="@color/white"
+            android:textSize="42px"
+            abv:rv_backgroundColor="#159588"
+            abv:rv_backgroundPressColor="#72159588"
+            abv:rv_cornerRadius="200px"/>
     </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/opt"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_below="@id/actionbar">
 
         <LinearLayout
@@ -180,6 +181,16 @@
                     android:orientation="vertical"
                     android:paddingBottom="30px">
 
+                    <TextView
+                        android:id="@+id/dh"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10px"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="盘点人:"
+                        android:textColor="@color/txt_color"
+                        android:textSize="40px"/>
 
                     <TextView
                         android:id="@+id/name"
@@ -249,14 +260,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#F0FCFF"
-                android:paddingLeft="50px"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingLeft="50px">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -285,8 +296,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -315,7 +326,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -344,8 +356,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -382,14 +394,14 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:paddingBottom="15px"
-                        android:paddingLeft="100px"
+                        android:paddingLeft="50px"
                         android:paddingTop="20px">
 
                         <TextView
                             android:id="@+id/qeSumNum"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="设  备："
+                            android:text="设备数量："
                             android:textColor="@color/txt_desc_color"
                             android:textSize="35px"/>
 
@@ -404,8 +416,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -434,8 +446,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <LinearLayout
                         android:layout_width="match_parent"

@@ -3,7 +3,6 @@ package com.ytd.framework.main.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import org.litepal.annotation.Column;
 import org.litepal.crud.DataSupport;
 
 /**
@@ -13,19 +12,9 @@ import org.litepal.crud.DataSupport;
 public class EntrepotBean extends DataSupport implements Parcelable {
 
     private String Name;
-    @Column(ignore = true)
-    private String Id;
-    private String StoreId;
+    private String my_id;
     private String OtherId;
 
-    public String getStoreId() {
-        return StoreId;
-    }
-
-
-    public void setStoreId(String storeId) {
-        StoreId = storeId;
-    }
 
     public String getName() {
         return Name;
@@ -35,12 +24,12 @@ public class EntrepotBean extends DataSupport implements Parcelable {
         Name = name;
     }
 
-    public String getId() {
-        return Id;
+    public String getMy_id() {
+        return my_id;
     }
 
-    public void setId(String id) {
-        Id = id;
+    public void setMy_id(String my_id) {
+        this.my_id = my_id;
     }
 
     public String getOtherId() {
@@ -62,15 +51,13 @@ public class EntrepotBean extends DataSupport implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.Name);
-        dest.writeString(this.Id);
-        dest.writeString(this.StoreId);
+        dest.writeString(this.my_id);
         dest.writeString(this.OtherId);
     }
 
     protected EntrepotBean(Parcel in) {
         this.Name = in.readString();
-        this.Id = in.readString();
-        this.StoreId = in.readString();
+        this.my_id = in.readString();
         this.OtherId = in.readString();
     }
 

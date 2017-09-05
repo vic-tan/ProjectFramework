@@ -76,7 +76,7 @@ public class EquipmentSearchActivity extends BaseScannerReceiverActivity {
                 holder.setText(R.id.eqType, "设备型号：" + bean.getSBBH());
                 holder.setText(R.id.propertyID, "资产编号：" + bean.getEqId());
                 holder.setText(R.id.useAddress, "使用科室：" + bean.getKSMC());
-                holder.setText(R.id.propertyStutas, "资产状态:" + bean.getPropertyStatus());
+                holder.setText(R.id.propertyStutas, "资产状态:" + bean.getSBZT());
                 holder.setText(R.id.startDate, "启用日期：" + bean.getQYRQ());
                 holder.setText(R.id.unitName, bean.getDW());
                 ImageView selectTag = holder.getView(R.id.selectTag);

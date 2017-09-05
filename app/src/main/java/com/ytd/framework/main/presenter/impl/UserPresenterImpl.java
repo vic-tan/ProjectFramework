@@ -26,7 +26,15 @@ public class UserPresenterImpl extends BasePresenterImpl implements IUserPresent
             dbUser.delete();
         }
         bean.save();
+    }
 
+    @Override
+    public void replaceUser(UserBean replaceUser) {
+        UserBean dbUser = findLoginUser(getUserBean());
+        if (null != dbUser) {
+            dbUser.delete();
+        }
+        replaceUser.save();
     }
 
 

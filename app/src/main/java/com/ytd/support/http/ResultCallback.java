@@ -48,7 +48,7 @@ public abstract class ResultCallback extends Callback<BaseJson> {
         if ("".equals(responseBody) || null == responseBody || "null".equals(responseBody)) {
             return responseBody;
         }
-        return responseBody.replace("\"ID\":", "\"my_id\":");
+        return responseBody.replace("\"ID\":", "\"my_id\":").replace("\"Id\":", "\"my_id\":");
     }
 
     @Override

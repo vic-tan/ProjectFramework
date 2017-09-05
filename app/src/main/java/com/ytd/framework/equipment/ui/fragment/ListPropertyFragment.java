@@ -136,7 +136,7 @@ public class ListPropertyFragment extends BaseLocalAbsRefreshFragment {
                 holder.setText(R.id.start_num, bean.getFinshNum());
                 holder.setText(R.id.end_num, "/" + bean.getTotalNum());
                 if (!StringUtils.isEmpty(bean.getRQ())) {
-                    holder.setText(R.id.data, bean.getRQ().substring(0, 10));
+                    holder.setText(R.id.data, bean.getRQ());
                 }
                 holder.getConvertView().setOnClickListener(new View.OnClickListener() {
                     @Override

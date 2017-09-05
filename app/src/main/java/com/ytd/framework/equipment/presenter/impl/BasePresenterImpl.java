@@ -27,11 +27,11 @@ public class BasePresenterImpl {
 
     public String empty(String str) {
         if (StringUtils.isEmpty(str)) {
-            return "暂无";
+            return "";
         } else if (null == str) {
-            return "暂无";
+            return "";
         } else if ("null" == str) {
-            return "暂无";
+            return "";
         } else {
             return str;
         }

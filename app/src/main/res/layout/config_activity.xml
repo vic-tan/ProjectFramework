@@ -21,7 +21,6 @@
             android:id="@+id/user_account_edit"
             style="@style/update_psd_edit"
             android:layout_marginLeft="9dp"
-            android:text="http://1811o171v6.iask.in"
             android:layout_toRightOf="@+id/user_url_text"/>
     </RelativeLayout>
 
@@ -43,7 +42,7 @@
             android:id="@+id/user_pwd_edit"
             style="@style/update_psd_edit"
             android:layout_marginLeft="9dp"
-            android:text="9AE122E1F3F88A1C"
+            android:inputType="textPassword"
             android:layout_toRightOf="@+id/user_new_password_text"/>
     </RelativeLayout>
 

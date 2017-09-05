@@ -294,7 +294,7 @@ public class AddPropertyFragment extends Fragment {
                             getPDStateList(jsonBean.getItemList().get(0).getPDDH(), hud);
                         } else {
                             hud.dismiss();
-                            ToastUtils.show(getActivity(), "没有查到您要的资源！");
+                            ToastUtils.show(getActivity(), "系统中不存在该盘点单号！");
                         }
                     }
 
@@ -387,7 +387,7 @@ public class AddPropertyFragment extends Fragment {
                 } else {
                     pageIndex = 1;
                     hud.dismiss();
-                    ToastUtils.show(getActivity(), "没有查到您要的资源！");
+                    ToastUtils.show(getActivity(), "系统中不存在该盘点单号！");
                 }
             }
 
@@ -482,7 +482,7 @@ public class AddPropertyFragment extends Fragment {
                 myHandler.sendEmptyMessage(2);
             }
         } else {
-            ToastUtils.show(getActivity(), "没有查到您要的资源！");
+            ToastUtils.show(getActivity(), "系统中不存在该盘点单号！");
             hud.dismiss();
         }
     }

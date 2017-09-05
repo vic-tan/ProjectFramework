@@ -3,10 +3,14 @@ package com.ytd.framework.equipment.ui.activity;
 import android.view.View;
 import android.widget.TextView;
 
+import com.tlf.basic.utils.ListUtils;
 import com.tlf.basic.utils.StartActUtils;
 import com.ytd.common.ui.activity.actionbar.BaseScannerReceiverActivity;
 import com.ytd.framework.R;
 import com.ytd.framework.equipment.bean.EquipmentBean;
+import com.ytd.framework.main.bean.PDStateBean;
+import com.ytd.framework.main.presenter.IPDStatePresenter;
+import com.ytd.framework.main.presenter.impl.PDStatePresenterImpl;
 import com.ytd.framework.main.ui.activity.CameraScanActivity;
 import com.ytd.uikit.actionbar.ActionBarOptViewTagLevel;
 import com.ytd.uikit.actionbar.OnOptClickListener;
@@ -14,6 +18,11 @@ import com.ytd.uikit.actionbar.OnOptClickListener;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 首页界面
@@ -34,6 +43,10 @@ public class EquipmentDetailsActivity extends BaseScannerReceiverActivity {
     @ViewById
     TextView eqStandard;
     @ViewById
+    TextView SBXH;
+    @ViewById
+    TextView SBZT;
+    @ViewById
     TextView unitName;
     @ViewById
     TextView startDate;
@@ -49,7 +62,9 @@ public class EquipmentDetailsActivity extends BaseScannerReceiverActivity {
     TextView saveAddress;
 
     private EquipmentBean bean;
-
+    IPDStatePresenter statePresenter;
+    List<PDStateBean> pdStatelist;
+    Map<String, PDStateBean> map;
 
     @AfterViews
     void init() {
@@ -62,23 +77,37 @@ public class EquipmentDetailsActivity extends BaseScannerReceiverActivity {
                         CameraScanActivity.class);
             }
         });
+        pdStatelist = new ArrayList<>();
+        statePresenter = new PDStatePresenterImpl();
+        pdStatelist = statePresenter.findAll();
+        map = new HashMap<>();
+        if (!ListUtils.isEmpty(pdStatelist)) {
+            for (PDStateBean forBean : pdStatelist) {
+                map.put(forBean.getMy_id(), forBean);
+            }
+        }
         setData();
     }
 
     private void setData() {
-
         title.setText("资产名称：" + bean.getSBMC());
+        SBXH.setText("设备型号：" + bean.getSBXH());
+        if(map.containsKey(bean.getSBZT())){
+            SBZT.setText("设备状态：" + map.get(bean.getSBZT()).getName());
+        }else{
+            SBZT.setText("设备状态：");
+        }
         address.setText("资产编号：" + bean.getSBBH());
         eqNumber.setText("资产条码号：" + bean.getSBTMBH());
         useAddress.setText("使用科室：" + bean.getKSMC());
-        eqStandard.setText("资产规格：：" + bean.getEqStandard());
+        eqStandard.setText("资产规格：" + bean.getSBGG());
         unitName.setText("单位：" + bean.getDW());
         startDate.setText("启用日期：" + bean.getQYRQ());
         startProperty.setText("原值：" + bean.getYZ());
         endProperty.setText("净值：" + bean.getJZ());
         oldProperty.setText("折旧：" + bean.getZJ());
-        eqType.setText("资产分类：" + bean.getSBBH());
-        saveAddress.setText("存放地点：" + bean.getSaveAddress());
+        eqType.setText("资产分类：" + bean.getMC());
+        saveAddress.setText("存放地点：" + bean.getCFDD());
 
 
 

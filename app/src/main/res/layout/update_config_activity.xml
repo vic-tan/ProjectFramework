@@ -48,7 +48,8 @@
             android:id="@+id/user_pwd_edit"
             style="@style/update_psd_edit"
             android:layout_marginLeft="9dp"
-            android:layout_toRightOf="@+id/user_new_password_text"/>
+            android:layout_toRightOf="@+id/user_new_password_text"
+            android:inputType="textPassword"/>
     </RelativeLayout>
 
     <View
@@ -57,22 +58,69 @@
         android:background="@color/own_line"
         android:visibility="visible"/>
 
+    <RelativeLayout
+        android:id="@+id/ck_layout"
+        style="@style/update_psd_item">
 
-    <com.tlf.basic.uikit.roundview.RoundTextView
-        android:id="@+id/login"
+        <TextView
+            android:id="@+id/ck_layout_tilte"
+            style="@style/update_psd_title"
+            android:text="仓库配置:"/>
+
+        <TextView
+            android:id="@+id/ck_edit"
+            style="@style/update_psd_edit"
+            android:layout_marginLeft="9dp"
+            android:layout_marginRight="70px"
+            android:layout_toRightOf="@+id/ck_layout_tilte"/>
+
+
+        <ImageView
+            android:id="@+id/ck_down"
+            android:layout_width="50px"
+            android:layout_height="40px"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="30px"
+            android:layout_marginRight="20px"
+            android:background="@mipmap/down"/>
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/ck_layout_line"
         android:layout_width="match_parent"
-        android:layout_height="140px"
-        android:layout_gravity="center"
-        android:layout_marginLeft="30px"
-        android:layout_marginRight="30px"
-        android:layout_marginTop="80px"
-        android:gravity="center"
-        android:text="修改配置"
-        android:textColor="@color/white"
-        android:textSize="50px"
-        rv:rv_backgroundColor="@color/base_button_bg_normal"
-        rv:rv_backgroundPressColor="@color/base_button_bg_pressed"
-        rv:rv_cornerRadius="15px"/>
+        android:layout_height="0.1dp"
+        android:background="@color/own_line"
+        android:visibility="visible"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.tlf.basic.uikit.roundview.RoundTextView
+            android:id="@+id/login"
+            android:layout_width="match_parent"
+            android:layout_height="140px"
+            android:layout_gravity="center"
+            android:layout_marginLeft="30px"
+            android:layout_marginRight="30px"
+            android:layout_marginTop="80px"
+            android:gravity="center"
+            android:text="修改配置"
+            android:textColor="@color/white"
+            android:textSize="50px"
+            rv:rv_backgroundColor="@color/base_button_bg_normal"
+            rv:rv_backgroundPressColor="@color/base_button_bg_pressed"
+            rv:rv_cornerRadius="15px"/>
+
+        <ListView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="230px"
+            android:layout_height="wrap_content"
+            android:background="#F3F3F3"
+            />
+    </RelativeLayout>
 
 
 </com.tlf.basic.base.autolayout.AutoLinearLayout>

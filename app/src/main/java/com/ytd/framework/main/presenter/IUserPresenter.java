@@ -10,6 +10,8 @@ public interface IUserPresenter {
 
     void save(UserBean bean);//保存数据
 
+    void replaceUser(UserBean replaceUser);//替换保存
+
     UserBean findLoginUser(UserBean bean);
 
 }

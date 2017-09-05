@@ -40,7 +40,6 @@ import com.ytd.framework.main.presenter.impl.ConfigPresenterImpl;
 import com.ytd.framework.main.presenter.impl.EntrepotPresenterImpl;
 import com.ytd.framework.main.presenter.impl.PDStatePresenterImpl;
 import com.ytd.framework.main.presenter.impl.UserPresenterImpl;
-import com.ytd.framework.main.ui.BaseApplication;
 import com.ytd.framework.main.ui.service.CheckAppUpdateService;
 import com.ytd.framework.main.ui.service.TokenService;
 import com.ytd.support.http.DialogCallback;
@@ -63,6 +62,7 @@ import java.util.Map;
 import okhttp3.Call;
 
 import static com.ytd.framework.main.presenter.impl.SplashPresenterImpl.FIRST_LAUNCHER_APP_TAG;
+import static com.ytd.framework.main.ui.BaseApplication.userBean;
 import static com.ytd.support.constants.fixed.UrlConstants.GETPDSTATELIST;
 import static com.ytd.support.constants.fixed.UrlConstants.GETSTORELIST;
 import static com.ytd.support.constants.fixed.UrlConstants.LOGIN;
@@ -76,7 +76,7 @@ import static com.ytd.support.constants.fixed.UrlConstants.LOGIN;
 public class LoginActivity extends BaseActivity {
 
     public static final String TAG = LoginActivity.class.getSimpleName();
-
+    public static final String FRIST_LOGIN = "frist_login";
     @ViewById
     MClearEditText user_account_edit;
 
@@ -134,6 +134,7 @@ public class LoginActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 ckEdit.setText(listData.get(i).getName());
                 list.setVisibility(View.GONE);
+                selectBean = listData.get(i);
             }
         });
     }
@@ -148,7 +149,7 @@ public class LoginActivity extends BaseActivity {
                     EntrepotBeanList jsonBean = new Gson().fromJson(new Gson().toJson(response.getData()), EntrepotBeanList.class);
                     if (null != jsonBean && !ListUtils.isEmpty(jsonBean.getItemList())) {
                         entrepotPresenter.save(jsonBean.getItemList());
-                        setStoreBean(jsonBean.getItemList());
+                        setStoreBean(entrepotPresenter.findAll());
                     }
                 }
 
@@ -195,11 +196,10 @@ public class LoginActivity extends BaseActivity {
     private void setStoreBean(List<EntrepotBean> setList) {
         if (!ListUtils.isEmpty(setList)) {
             listData.addAll(setList);
-            ckEdit.setText(setList.get(0).getName());
-            selectBean = setList.get(0);
+            ckEdit.setText(listData.get(0).getName());
+            selectBean = listData.get(0);
         }
     }
-
 
     private Map<String, String> getLoginParams() {
         String pwd = "";
@@ -278,12 +278,10 @@ public class LoginActivity extends BaseActivity {
             if (null == selectBean) {
                 userBean.setStoreId("0101");
             } else {
-                if (StringUtils.isEmpty(selectBean.getStoreId())) {
-                    userBean.setStoreId(selectBean.getId());
-                } else {
-                    userBean.setStoreId(selectBean.getStoreId());
-                }
+                userBean.setStoreId(selectBean.getMy_id());
+
             }
+            userBean.setStoreName(ckEdit.getText().toString());
             UserBean loginUser = userPresenter.findLoginUser(userBean);
             if (null == loginUser) {
                 ToastUtils.show(mContext, "离线登录失败，查看仓库及用户名或者密码是否正确");
@@ -305,7 +303,7 @@ public class LoginActivity extends BaseActivity {
         if (interval > sevenDay) {
             ToastUtils.show(mContext, "离线登录七天有效，您离线已过期，请连接网络在线登录");
         } else {
-            BaseApplication.userBean = loginUser;
+            userBean = loginUser;
             StartActUtils.start(mContext, HomeActivity_.class);
             StartActUtils.finish(mContext);
         }
@@ -359,11 +357,12 @@ public class LoginActivity extends BaseActivity {
         jsonBean.setLoginName(user_account_edit.getText().toString());
         jsonBean.setPwd(pwd);
         if (null != selectBean) {
-            jsonBean.setStoreId(selectBean.getId());
+            jsonBean.setStoreId(selectBean.getMy_id());
             jsonBean.setStoreName(selectBean.getName());
         }
         userPresenter.save(jsonBean);
-        BaseApplication.userBean = jsonBean;
+        SPUtils.putBoolean(FRIST_LOGIN,false);
+        userBean = jsonBean;
     }
 
 

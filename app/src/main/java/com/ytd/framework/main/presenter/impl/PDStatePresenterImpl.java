@@ -1,7 +1,6 @@
 package com.ytd.framework.main.presenter.impl;
 
 import com.ytd.framework.equipment.presenter.impl.BasePresenterImpl;
-import com.ytd.framework.main.bean.EntrepotBean;
 import com.ytd.framework.main.bean.PDStateBean;
 import com.ytd.framework.main.presenter.IPDStatePresenter;
 
@@ -18,7 +17,7 @@ public class PDStatePresenterImpl extends BasePresenterImpl implements IPDStateP
 
     @Override
     public void save(List<PDStateBean> list) {
-        DataSupport.deleteAll(EntrepotBean.class);
+        DataSupport.deleteAll(PDStateBean.class);
         for (PDStateBean forBean : list) {
             forBean.save();
         }

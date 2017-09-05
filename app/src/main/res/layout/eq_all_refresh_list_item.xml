@@ -82,19 +82,6 @@
             android:layout_marginLeft="40px"
             android:orientation="vertical">
 
-
-            <TextView
-                android:id="@+id/eqType"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10px"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text="设备型号："
-                android:textColor="@color/txt_desc_color"
-                android:textSize="32px"/>
-
-
             <TextView
                 android:id="@+id/propertyID"
                 android:layout_width="match_parent"
@@ -116,6 +103,18 @@
                 android:text="使用科室:"
                 android:textColor="@color/txt_desc_color"
                 android:textSize="32px"/>
+
+            <TextView
+                android:id="@+id/eqType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10px"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="设备型号："
+                android:textColor="@color/txt_desc_color"
+                android:textSize="32px"/>
+
 
             <TextView
                 android:id="@+id/startDate"

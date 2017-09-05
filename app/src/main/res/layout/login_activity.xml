@@ -103,7 +103,6 @@
                 android:gravity="start"
                 android:hint="请输入工号或账号"
                 android:maxLines="1"
-                android:text="@string/login_name"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
                 android:textCursorDrawable="@null"
@@ -143,7 +142,6 @@
                 android:hint="请输入密码"
                 android:inputType="textPassword"
                 android:maxLines="1"
-                android:text="123456"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
                 android:textCursorDrawable="@null"
@@ -182,6 +180,7 @@
         android:layout_width="850px"
         android:layout_height="wrap_content"
         android:layout_below="@id/ck_layout"
+        android:background="#F3F3F3"
         android:layout_centerHorizontal="true"/>
 
 

@@ -92,6 +92,36 @@
                         android:background="@color/list_line"/>
                 </LinearLayout>
 
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingBottom="15px"
+                        android:paddingLeft="50px"
+                        android:paddingTop="20px">
+
+                        <TextView
+                            android:id="@+id/SBXH"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="资产名称："
+                            android:textColor="@color/txt_desc_color"
+                            android:textSize="32px"/>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1.5px"
+                        android:background="@color/list_line"/>
+                </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -413,6 +443,36 @@
                         android:layout_height="1.5px"
                         android:background="@color/list_line"/>
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingBottom="15px"
+                        android:paddingLeft="50px"
+                        android:paddingTop="20px">
+
+                        <TextView
+                            android:id="@+id/SBZT"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="设备状态："
+                            android:textColor="@color/txt_desc_color"
+                            android:textSize="32px"/>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1.5px"
+                        android:background="@color/list_line"/>
+                </LinearLayout>
+
 
 
             </LinearLayout>

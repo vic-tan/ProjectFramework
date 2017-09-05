@@ -17,6 +17,7 @@
         />
 
 
+
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
@@ -591,6 +592,7 @@
                         android:layout_width="740px"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="20px"
+                        android:layout_marginBottom="140px"
                         android:layout_toRightOf="@id/date_titile"
                         app:rv_backgroundColor="@color/whisper"
                         app:rv_cornerRadius="15px">
@@ -629,6 +631,7 @@
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+
 
     <com.tlf.basic.uikit.roundview.RoundTextView
         android:id="@+id/saveBtn"

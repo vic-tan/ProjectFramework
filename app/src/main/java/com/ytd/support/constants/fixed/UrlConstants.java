@@ -33,11 +33,6 @@ public class UrlConstants {
     //回传
     public static final String UPLOADINVENTORYITEMLIST = "/api/Inventory/UploadInventoryItemList";
 
-    //分页测试列表
-    public static final String LIST_URL = DOMAIN_NAME + "/train/class/publicList";
-
-    //分页测试列表
-//    public static final String LIST_URL = DOMAIN_NAME + "/news/newsList";
 
 
 }
