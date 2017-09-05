@@ -202,7 +202,7 @@ public class PropertyDetailsActivity extends BaseScannerReceiverActivity {
         switch (v.getId()) {
             case R.id.updateLoadBtn://上传
                 final List<EquipmentBean> updateList = equipmentPresenter.findByUpdateTag(mContext, bean.getPDDH(), EquipmentBean.UPDATE_TAG);
-               /* if (ListUtils.isEmpty(updateList)) {
+                if (ListUtils.isEmpty(updateList)) {
                     bindShow("\n" + "您没有盘点过设备！请先去盘点再上传" + "\n");
                     return;
                 }
@@ -210,7 +210,7 @@ public class PropertyDetailsActivity extends BaseScannerReceiverActivity {
                     int cuont = Integer.parseInt(bean.getTotalNum()) - updateList.size();
                     bindShow("\n" + "您还有" + cuont + "个设备未盘点，请先去盘点" + "\n");
                     return;
-                }*/
+                }
 
                 if (bindPDA()) {//绑定
                     beDefeated.clear();
@@ -238,6 +238,28 @@ public class PropertyDetailsActivity extends BaseScannerReceiverActivity {
             return false;
         }
         return true;
+    }
+
+    //扫描下一个
+    public void bindShow(String title) {
+        NormalDialog dialogBind = new NormalDialog(mContext);
+        dialogBind.content(title)//
+                .btnNum(1)
+                .isTitleShow(false).contentGravity(Gravity.CENTER_HORIZONTAL)
+                .btnText("确定")//
+                .show();
+        dialogBind.setCancelable(false);
+        dialogBind.setCanceledOnTouchOutside(false);
+        dialogBind.setOnBtnClickL(
+                new OnBtnClickL() {//left btn click listener
+                    @Override
+                    public void onBtnClick(View v, Dialog dialog) {
+                        dialog.dismiss();
+                        StartActUtils.start(mContext, EquipmentActivity_.class, "bean", bean);
+//                        StartActUtils.finish(mContext);
+                    }
+                }
+        );
     }
 
     //

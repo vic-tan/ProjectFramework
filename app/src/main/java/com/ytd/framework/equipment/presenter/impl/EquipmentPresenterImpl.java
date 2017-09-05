@@ -82,6 +82,7 @@ public class EquipmentPresenterImpl extends BasePresenterImpl implements IEquipm
             bean.setLookDate(empty(bean.getLookDate()));
             bean.setUpdateTag(empty(bean.getUpdateTag(), "0"));
             bean.setSBZT(empty(bean.getSBZT()));
+            bean.setMemo(empty(bean.getMemo()));
         }
         return bean;
 

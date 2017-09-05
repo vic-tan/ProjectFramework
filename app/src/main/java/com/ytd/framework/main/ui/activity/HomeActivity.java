@@ -12,7 +12,6 @@ import com.ytd.framework.R;
 import com.ytd.framework.main.adapter.HomeNavigatorFragmentAdapter;
 import com.ytd.framework.main.ui.navigator.FragmentNavigator;
 import com.ytd.framework.main.ui.view.HomeNavigatorView;
-import com.ytd.support.utils.HttpRequestUtils;
 import com.ytd.uikit.actionbar.ActionBarOptViewTagLevel;
 import com.ytd.uikit.actionbar.OnOptClickListener;
 
@@ -63,7 +62,7 @@ public class HomeActivity extends BaseScannerReceiverActivity implements HomeNav
             bottomNavigatorView.setOnBottomNavigatorViewItemClickListener(this);
         }
         setCurrentTab(mNavigator.getCurrentPosition());
-        HttpRequestUtils.getInstance().console(this);
+//        HttpRequestUtils.getInstance().console(this);
     }
 
 
