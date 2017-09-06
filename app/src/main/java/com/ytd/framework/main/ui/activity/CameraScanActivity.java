@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import com.tlf.basic.uikit.kprogresshud.KProgressHUD;
 import com.tlf.basic.utils.ListUtils;
 import com.tlf.basic.utils.StartActUtils;
+import com.tlf.basic.utils.StringUtils;
 import com.tlf.basic.utils.ToastUtils;
 import com.ytd.common.ui.activity.actionbar.BaseActionBarActivity;
 import com.ytd.framework.R;
@@ -26,11 +27,13 @@ import java.util.Map;
 import cn.bingoogolapple.qrcode.core.QRCodeView;
 import cn.bingoogolapple.qrcode.zbar.ZBarView;
 
+import static com.ytd.framework.equipment.bean.PropertyBean.UPDATELOAD_TAG_TRUE;
+
 /**
  * Created by tanlifei on 2017/8/14.
  */
 
-public class CameraScanActivity extends BaseActionBarActivity implements QRCodeView.Delegate,AdapterView.OnClickListener {
+public class CameraScanActivity extends BaseActionBarActivity implements QRCodeView.Delegate, AdapterView.OnClickListener {
     private static final String TAG = CameraScanActivity.class.getSimpleName();
     private QRCodeView mQRCodeView;
     protected IEquipmentPresenter equipmentPresenter;
@@ -60,9 +63,13 @@ public class CameraScanActivity extends BaseActionBarActivity implements QRCodeV
     @Override
     protected void onStart() {
         super.onStart();
-        mQRCodeView.startCamera();
-        mQRCodeView.showScanRect();
-        mQRCodeView.startSpot();
+        try {
+            mQRCodeView.startCamera();
+            mQRCodeView.showScanRect();
+            mQRCodeView.startSpot();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -87,21 +94,41 @@ public class CameraScanActivity extends BaseActionBarActivity implements QRCodeV
 
     //查询单
     public void findScanResult(String scanResult) {
-        //TODO 改testScanID
-        List<EquipmentBean> list = equipmentPresenter.findScanCode(mContext, scanResult);
-        if (ListUtils.isEmpty(list)) {
-            hud.dismiss();
+        try {
+            List<EquipmentBean> list = equipmentPresenter.findScanCode(mContext, scanResult);
+            if (ListUtils.isEmpty(list)) {
+                hud.dismiss();
+                ToastUtils.show(mContext, "没有找到您扫描的设备信息!");
+                mQRCodeView.startSpot();
+            } else {
+                if (!ListUtils.isEmpty(list)) {
+                    if (list.size() > 1) {
+                        for (EquipmentBean forBean : list) {
+                            PropertyBean propertyBean = properyPresenter.findById(mContext, forBean.getPDDH());
+                            if (!StringUtils.isEquals(propertyBean.getSTATUS(), UPDATELOAD_TAG_TRUE)) {
+                                hud.dismiss();
+                                Map<String, Object> map = new HashMap<>();
+                                map.put("bean", list.get(0));
+                                map.put("scanTag", 1);
+                                map.put("propertyBean", propertyBean);
+                                StartActUtils.start(mContext, EquipmentScanDetailsResultActivity_.class, map);
+                            }
+                        }
+                    } else {
+                        PropertyBean propertyBean = properyPresenter.findById(mContext, list.get(0).getPDDH());
+                        hud.dismiss();
+                        Map<String, Object> map = new HashMap<>();
+                        map.put("bean", list.get(0));
+                        map.put("scanTag", 1);
+                        map.put("propertyBean", propertyBean);
+                        StartActUtils.start(mContext, EquipmentScanDetailsResultActivity_.class, map);
+                    }
+                }
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
             ToastUtils.show(mContext, "没有找到您扫描的设备信息!");
-            mQRCodeView.startSpot();
-        } else {
-            PropertyBean propertyBean = properyPresenter.findById(mContext,list.get(0).getPDDH());
-//            ToastUtils.show(mContext, scanResult);
-            hud.dismiss();
-            Map<String, Object> map = new HashMap<>();
-            map.put("bean", list.get(0));
-            map.put("scanTag", 1);
-            map.put("propertyBean",propertyBean);
-            StartActUtils.start(mContext, EquipmentScanDetailsResultActivity_.class, map);
         }
 
     }

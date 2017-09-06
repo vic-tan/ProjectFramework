@@ -109,10 +109,6 @@
             android:name=".main.ui.activity.TestScanActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".equipment.ui.activity.EquipmentReactionScanActivity_"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"/>
-        <activity
             android:name=".main.ui.activity.CameraScanActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"/>

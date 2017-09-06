@@ -36,9 +36,7 @@ import com.ytd.framework.equipment.presenter.impl.ProperyPresenterImpl;
 import com.ytd.framework.main.bean.PDStateBean;
 import com.ytd.framework.main.presenter.IPDStatePresenter;
 import com.ytd.framework.main.presenter.impl.PDStatePresenterImpl;
-import com.ytd.framework.main.ui.BaseApplication;
 import com.ytd.framework.main.ui.activity.CameraScanActivity;
-import com.ytd.support.utils.HttpParamsUtils;
 import com.ytd.support.utils.ResUtils;
 import com.ytd.uikit.actionbar.ActionBarOptViewTagLevel;
 import com.ytd.uikit.actionbar.OnOptClickListener;
@@ -58,7 +56,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import static com.ytd.common.bean.params.BaseEventbusParams.RE_SCAN_START;
 import static com.ytd.framework.equipment.bean.EquipmentBean.LOOKSTATUS_TAG_TRUE;
@@ -256,33 +253,33 @@ public class EquipmentScanDetailsResultActivity extends BaseActionBarActivity {
                 selectDate();
                 break;
             case R.id.saveBtn://
-                if (StringUtils.isEmpty(useStatus.getText().toString())) {
-                    ToastUtils.show(mContext, "资产状态不能为空,请选择资产状态");
-                    return;
-                }
-                if (StringUtils.isEmpty(date.getText().toString())) {
-                    ToastUtils.show(mContext, "盘点日期不能为空,请选择盘点日期");
-                    return;
-                }
-                /*if (StringUtils.isEmpty(remark.getText().toString())) {
-                    ToastUtils.show(mContext, "备注不能为空,请填写备注");
-                    return;
-                }*/
-                bean.setUseStatus(pdStatelist.get((Integer) useStatus.getTag()).getMy_id());
-                bean.setLookDate(date.getText().toString());
-                bean.setMemo(remark.getText().toString());
-                if (null != propertyBean) {//不等于空
-                    if (StringUtils.isEquals(propertyBean.getSTATUS(), UPDATELOAD_TAG_TRUE)) {//已上传
-                        nextScan("\n" + "该盘点的设备信息已上传服务器不能修改,请继续扫描下一个设备" + "\n");
+                try {
+                    if (StringUtils.isEmpty(useStatus.getText().toString())) {
+                        ToastUtils.show(mContext, "资产状态不能为空,请选择资产状态");
                         return;
-                    } else {//未上传
-                        if (StringUtils.isEquals(bean.getState(), LOOKSTATUS_TAG_TRUE)) {//是否已经盘点过
-                            updateScan("\n" + "该盘点的设备信息已盘点过了，是否重新修改保存 ?" + "\n");
+                    }
+                    if (StringUtils.isEmpty(date.getText().toString())) {
+                        ToastUtils.show(mContext, "盘点日期不能为空,请选择盘点日期");
+                        return;
+                    }
+                    bean.setUseStatus(pdStatelist.get((Integer) useStatus.getTag()).getMy_id());
+                    bean.setLookDate(date.getText().toString());
+                    bean.setMemo(remark.getText().toString());
+                    if (null != propertyBean) {//不等于空
+                        if (StringUtils.isEquals(propertyBean.getSTATUS(), UPDATELOAD_TAG_TRUE)) {//已上传
+                            nextScan("\n" + "该盘点的设备信息已上传服务器不能修改,请继续扫描下一个设备" + "\n");
                             return;
+                        } else {//未上传
+                            if (StringUtils.isEquals(bean.getState(), LOOKSTATUS_TAG_TRUE)) {//是否已经盘点过
+                                updateScan("\n" + "该盘点的设备信息已盘点过了，是否重新修改保存 ?" + "\n");
+                                return;
+                            }
                         }
                     }
+                    saveDB();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-                saveDB();
                 break;
 
         }
@@ -290,21 +287,27 @@ public class EquipmentScanDetailsResultActivity extends BaseActionBarActivity {
 
 
     private void saveDB() {
-        boolean saveTag = equipmentPresenter.scanUpdate(mContext, bean);
-        if (saveTag) {
+        try {
+            boolean saveTag = false;
+            if (scanTag == 3) {
+                saveTag = equipmentPresenter.selfScanUpdate(mContext, bean, propertyBean.getPDDH());
+            } else {
+                saveTag = equipmentPresenter.scanUpdate(mContext, bean);
+            }
+            if (saveTag) {
+                hud.dismiss();
+                EventBus.getDefault().post(
+                        new BaseEventbusParams(RE_SCAN_START, "scan"));
+                nextScan("\n" + "操作成功,请继续扫描下一个设备" + "\n");
+            } else {
+                hud.dismiss();
+            }
+        } catch (Exception e) {
             hud.dismiss();
-            EventBus.getDefault().post(
-                    new BaseEventbusParams(RE_SCAN_START, "scan"));
-            nextScan("\n" + "操作成功,请继续扫描下一个设备" + "\n");
-        } else {
-            hud.dismiss();
+            e.printStackTrace();
         }
     }
 
-
-    private Map<String, String> getPDABindParams() {
-        return HttpParamsUtils.getPDABindParams(propertyBean.getPDDH(), BaseApplication.userBean.getEquId(), BaseApplication.userBean.getLoginName());
-    }
 
     //扫描下一个
     public void updateScan(String title) {

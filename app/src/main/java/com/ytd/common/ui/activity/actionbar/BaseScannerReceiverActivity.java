@@ -12,6 +12,7 @@ import com.tlf.basic.uikit.dialog.widget.NormalDialog;
 import com.tlf.basic.uikit.kprogresshud.KProgressHUD;
 import com.tlf.basic.utils.ListUtils;
 import com.tlf.basic.utils.StartActUtils;
+import com.tlf.basic.utils.StringUtils;
 import com.tlf.basic.utils.ToastUtils;
 import com.tlf.basic.utils.ViewFindUtils;
 import com.ytd.common.ui.activity.BaseActivity;
@@ -30,6 +31,8 @@ import com.ytd.uikit.actionbar.OnBackClickListener;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.ytd.framework.equipment.bean.PropertyBean.UPDATELOAD_TAG_TRUE;
 
 /**
  * Created by ytd on 15/12/17.
@@ -129,13 +132,37 @@ public abstract class BaseScannerReceiverActivity extends BaseActivity {
                 hud.dismiss();
                 ToastUtils.show(mContext, "没有找到您扫描的设备信息!");
             } else {
-                PropertyBean propertyBean = properyPresenter.findById(mContext, list.get(0).getPDDH());
+                if (!ListUtils.isEmpty(list)) {
+                    if (list.size() > 1) {
+                        for (EquipmentBean forBean : list) {
+                            PropertyBean propertyBean = properyPresenter.findById(mContext, forBean.getPDDH());
+                            if (!StringUtils.isEquals(propertyBean.getSTATUS(), UPDATELOAD_TAG_TRUE)) {
+                                hud.dismiss();
+                                Map<String, Object> map = new HashMap<>();
+                                map.put("bean", list.get(0));
+                                map.put("scanTag", 0);
+                                map.put("propertyBean", propertyBean);
+                                StartActUtils.start(mContext, EquipmentScanDetailsResultActivity_.class, map);
+                            }
+                        }
+                    } else {
+                        PropertyBean propertyBean = properyPresenter.findById(mContext, list.get(0).getPDDH());
+                        hud.dismiss();
+                        Map<String, Object> map = new HashMap<>();
+                        map.put("bean", list.get(0));
+                        map.put("scanTag", 0);
+                        map.put("propertyBean", propertyBean);
+                        StartActUtils.start(mContext, EquipmentScanDetailsResultActivity_.class, map);
+                    }
+                }
+
+             /*   PropertyBean propertyBean = properyPresenter.findById(mContext, list.get(0).getPDDH());
                 hud.dismiss();
                 Map<String, Object> map = new HashMap<>();
                 map.put("bean", list.get(0));
                 map.put("scanTag", 0);
                 map.put("propertyBean", propertyBean);
-                StartActUtils.start(mContext, EquipmentScanDetailsResultActivity_.class, map);
+                StartActUtils.start(mContext, EquipmentScanDetailsResultActivity_.class, map);*/
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -24,11 +24,13 @@ public interface IEquipmentPresenter {
     List<EquipmentBean> findByState(Context mContext, String propertyId, String state);//盘点状态查询
 
     List<EquipmentBean> findScanCode(Context mContext, String eqId);//扫码查询
+    List<EquipmentBean> selfFindScanCode(Context mContext, String eqId,String PDDH);//扫码查询
 
 
     boolean update(Context mContext, EquipmentBean equipmentBean);
 
     boolean scanUpdate(Context mContext, EquipmentBean equipmentBean);
+    boolean selfScanUpdate(Context mContext, EquipmentBean equipmentBean,String PDDH);//手动扫描
 
     void updateFinsh(Context mContext, List<EquipmentBean> updateList, List<EquipmentBean> failList);
 

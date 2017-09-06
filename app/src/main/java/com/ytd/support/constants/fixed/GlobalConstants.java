@@ -17,26 +17,26 @@ public class GlobalConstants {
     /**
      * 针对全局未捕获异常，保存到本志文件路径
      */
-    public static final String CRASH_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator+ "basic_framework/crash";
+    public static final String CRASH_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator+ "ytd/crash";
 
     /**
      * 针对全局图片缓存路径
      */
-    public static final String IMAGES_CACHE_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "basic_framework/images/cache/";
+    public static final String IMAGES_CACHE_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "ytd/images/cache/";
 
     /**
      * 针对全局拍照编辑图片路径
      */
-    public static final String IMAGES_EDIT_PHOTO_PATH = Environment.getExternalStorageDirectory() + "/DCIM/basic_framework/images/edit_photo/";
+    public static final String IMAGES_EDIT_PHOTO_PATH = Environment.getExternalStorageDirectory() + "/DCIM/ytd/images/edit_photo/";
 
     /**
      * 针对全局拍照图片路径
      */
-    public static final String IMAGES_TAKE_PHOTO_PATH = Environment.getExternalStorageDirectory() + "/DCIM/basic_framework/images/take_photo/";
+    public static final String IMAGES_TAKE_PHOTO_PATH = Environment.getExternalStorageDirectory() + "/DCIM/ytd/images/take_photo/";
     /**
      * 文件下载保存路径
      */
-    public static final String DOWNLOAD_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "basic_framework/download";
+    public static final String DOWNLOAD_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "ytd/download";
 
     /**
      * 缓存在app 目录下的 路径

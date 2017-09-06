@@ -501,18 +501,4 @@ public class PropertyDetailsActivity extends BaseScannerReceiverActivity {
         return HttpParamsUtils.uploadInventoryItemList(bean.getPDDH(), BaseApplication.userBean.getEquId(), BaseApplication.userBean.getLoginName(), BaseApplication.userBean.getStoreId(), str);
     }
 
-
-    private void simulateProgressUpdate() {
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            int currentProgress;
-
-            @Override
-            public void run() {
-                currentProgress += 1;
-                supperHud.setProgress(currentProgress);
-            }
-        }, 100);
-    }
-
 }
