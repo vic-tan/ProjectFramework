@@ -42,7 +42,7 @@
             android:id="@+id/user_pwd_edit"
             style="@style/update_psd_edit"
             android:layout_marginLeft="9dp"
-            android:inputType="textPassword"
+            android:text="9AE122E1F3F88A1C"
             android:layout_toRightOf="@+id/user_new_password_text"/>
     </RelativeLayout>
 

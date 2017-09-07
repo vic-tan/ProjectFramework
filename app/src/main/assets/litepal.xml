@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <litepal>
     <dbname value="ytd"/>
-    <version value="10"/>
+    <version value="12"/>
     <storage value="ytd/database"/>
     <list>
         <mapping class="com.ytd.framework.main.bean.PDStateBean"/>

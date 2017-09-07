@@ -135,10 +135,17 @@
             android:background="@mipmap/own_fangxiang"/>
     </com.tlf.basic.uikit.roundview.RoundRelativeLayout>
 
-    <View
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="2px"
-        android:background="@color/own_line"/>
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:layout_marginLeft="150px"
+            android:background="@color/own_line"/>
+    </LinearLayout>
 
     <com.tlf.basic.uikit.roundview.RoundRelativeLayout
         android:id="@+id/config_layout"

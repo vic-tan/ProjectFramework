@@ -76,7 +76,7 @@ import static com.ytd.support.constants.fixed.UrlConstants.LOGIN;
 public class LoginActivity extends BaseActivity {
 
     public static final String TAG = LoginActivity.class.getSimpleName();
-    public static final String FRIST_LOGIN = "frist_login";
+    public static final String LOGIN_NAME = "login_name";
     @ViewById
     MClearEditText user_account_edit;
 
@@ -137,6 +137,7 @@ public class LoginActivity extends BaseActivity {
                 selectBean = listData.get(i);
             }
         });
+        user_account_edit.setText(SPUtils.getString(LOGIN_NAME, "") + "");
     }
 
 
@@ -304,6 +305,7 @@ public class LoginActivity extends BaseActivity {
             ToastUtils.show(mContext, "离线登录七天有效，您离线已过期，请连接网络在线登录");
         } else {
             userBean = loginUser;
+            SPUtils.putString(LOGIN_NAME, user_account_edit.getText().toString());
             StartActUtils.start(mContext, HomeActivity_.class);
             StartActUtils.finish(mContext);
         }
@@ -361,7 +363,7 @@ public class LoginActivity extends BaseActivity {
             jsonBean.setStoreName(selectBean.getName());
         }
         userPresenter.save(jsonBean);
-        SPUtils.putBoolean(FRIST_LOGIN,false);
+        SPUtils.putString(LOGIN_NAME, user_account_edit.getText().toString());
         userBean = jsonBean;
     }
 

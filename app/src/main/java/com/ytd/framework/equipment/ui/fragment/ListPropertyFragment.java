@@ -149,8 +149,7 @@ public class ListPropertyFragment extends BaseLocalAbsRefreshFragment {
                     @Override
                     public void onClick(View view) {
                         if (StringUtils.isEquals(bean.getSTATUS(), "0")) {
-                            ToastUtils.show(getActivity(), "未上传完成，不能删除");
-//                            NormalDialogStyleTwo(bean, position);
+                            NormalDialog(bean, position);
                         } else {
                             NormalDialogStyleTwo(bean, position);
                         }
@@ -162,6 +161,30 @@ public class ListPropertyFragment extends BaseLocalAbsRefreshFragment {
         };
     }
 
+
+    private void NormalDialog(final PropertyBean bean, final int position) {
+        final NormalDialog dialog = new NormalDialog(getActivity());
+        dialog.isTitleShow(false);
+        dialog.contentGravity(Gravity.CENTER);
+        dialog.content("\n" + "您还未上传盘点单,确定要删除该盘点单吗？？" + "\n")
+                .show();
+
+        dialog.setOnBtnClickL(
+                new OnBtnClickL() {
+                    @Override
+                    public void onBtnClick(View v, Dialog dialog) {
+                        dialog.dismiss();
+                    }
+                },
+                new OnBtnClickL() {
+                    @Override
+                    public void onBtnClick(View v, Dialog dialog) {
+                        delete(bean, position);
+                        dialog.dismiss();
+                    }
+                });
+
+    }
 
     private void NormalDialogStyleTwo(final PropertyBean bean, final int position) {
         final NormalDialog dialog = new NormalDialog(getActivity());
